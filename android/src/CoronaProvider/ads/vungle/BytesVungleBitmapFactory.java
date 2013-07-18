@@ -38,7 +38,7 @@ import android.graphics.BitmapFactory;
  */
 public class BytesVungleBitmapFactory implements VungleBitmapFactory {
 
-	private Map<String,byte[]> bytesMap = new HashMap<String,byte[]>();
+	private final Map<String,byte[]> bytesMap = new HashMap<String,byte[]>();
 
 	public static BytesVungleBitmapFactory getInstance() {
 		return LazyInitializationSingletonWrapper.instance;
