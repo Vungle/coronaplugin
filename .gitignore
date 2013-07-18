@@ -1,0 +1,10 @@
+xcuserdata/
+xcshareddata/
+.DS_Store
+android/.buildpath
+android/.classpath
+android/.project
+android/bin
+android/gen
+ios/.buildpath
+ios/.project
