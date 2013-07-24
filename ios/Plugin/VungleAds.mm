@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 #import "CoronaRuntime.h"
 #import "vunglepub.h"
+#import "VGBytesAssetLoader.h"
 
 static const char* kINCENTIVIZED_AD_TYPE = "incentivized";
 
@@ -272,7 +273,12 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
         NSString* str = [NSString stringWithUTF8String:appId];
         [VGVunglePub startWithPubAppID:str];
 		[VGVunglePub setDelegate:_delegate];
-		
+
+		// set the new asset loader
+		VGBytesAssetLoader* loader = [[VGBytesAssetLoader alloc] init];
+		[VGVunglePub setAssetLoader:loader];
+		[loader release];
+
 		fListener = ( CoronaLuaIsListener( L, listenerIndex, "adsRequest" ) ? CoronaLuaNewRef( L, listenerIndex ) : NULL );
 		_delegate.vungle = this;
         result = true;

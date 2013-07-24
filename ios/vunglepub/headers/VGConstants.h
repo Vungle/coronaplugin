@@ -31,7 +31,7 @@
  */
 
 
-#define kVGInternalBuildNumber @"1.3.3"
+#define kVGInternalBuildNumber @"1.3.4"
 #define kStatusBarOffset 20
 #define kAdViewUpwardAnimDuration   0.5
 #define kAdViewForMovieDuration     0.8

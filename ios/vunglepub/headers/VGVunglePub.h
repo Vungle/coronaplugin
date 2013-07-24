@@ -59,6 +59,18 @@ typedef  id<VGVunglePubDelegate>  VGVungleDelegate;
 
 /******************************************************************************/
 /*                                                                            */
+/*    VGVungleAssetLoader protocol                                            */
+/*                                                                            */
+/******************************************************************************/
+
+@protocol VGAssetLoader<NSObject>
+- (NSData*)vungleLoadAsset:(NSString*)path;
+- (UIImage*)vungleLoadImage:(NSString*)path;
+@end
+
+
+/******************************************************************************/
+/*                                                                            */
 /***  VGVunglePub class                                                     ***/
 /*                                                                            */
 /******************************************************************************/
@@ -160,6 +172,16 @@ typedef  id<VGVunglePubDelegate>  VGVungleDelegate;
 
 +(void)setBaseUrl:(VGConfigBaseUrl)URL;
 
+
+/**
+ * Sets the asset loader
+ */
++ (void)setAssetLoader:(id<VGAssetLoader>)assetLoader;
+
+/**
+ * get the current asset loader
+ */
++ (id<VGAssetLoader>)assetLoader;
 @end
 
 
