@@ -39,6 +39,7 @@
 		  android:configChanges="keyboardHidden|orientation|screenSize"
 		  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 		/>
+		<service android:name="com.vungle.sdk.VungleIntentService"/>
 
 		<!-- The main Corona activity that runs the Corona project. -->
 		<activity android:name="com.ansca.corona.CoronaActivity"

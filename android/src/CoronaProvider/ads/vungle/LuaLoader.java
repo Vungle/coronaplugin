@@ -44,7 +44,7 @@ import com.vungle.sdk.VunglePub;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "Corona/Vungle";
-	private static final String VERSION = "1.0.0";
+	private static final String VERSION = "1.1.0";
 	private static final Locale LOCALE = Locale.US;
 
 	// show() ad types
