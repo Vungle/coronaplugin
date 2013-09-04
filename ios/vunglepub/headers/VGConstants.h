@@ -31,7 +31,7 @@
  */
 
 
-#define kVGInternalBuildNumber @"1.3.4"
+#define kVGInternalBuildNumber @"1.4.2"
 #define kStatusBarOffset 20
 #define kAdViewUpwardAnimDuration   0.5
 #define kAdViewForMovieDuration     0.8
@@ -54,7 +54,7 @@
 //if kIsRemoveMuteButtonFromAlliOS == NO then show mute button in iOS 2.x to iOS 4.x and do not show in iOS 5.x and later
 #define kIsRemoveMuteButtonFromAlliOS      NO
 
-#define kInAppStoreEnabled                 NO
+#define kInAppStoreEnabled                 YES
 
 //Convertions 
 #define degreesToRadian(x) (M_PI * x / 180.0)
