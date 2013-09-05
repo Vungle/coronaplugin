@@ -309,7 +309,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	 */
 	public int isAdAvailable(LuaState luaState) {
 		final boolean isDebug = (luaState.getTop() > 0 ? luaState.toBoolean(1) : false);
-		VunglePub.isVideoAvailable(isDebug);
+		luaState.pushBoolean(
+			VunglePub.isVideoAvailable(isDebug));
 		return 1;
 	}
 
