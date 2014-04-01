@@ -45,7 +45,6 @@
 		A498B81816D70EE80091A148 /* CoronaResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A498B81716D70EE80091A148 /* CoronaResources.bundle */; };
 		A4E2537F166AE3DC00DCDC2C /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E2537E166AE3DC00DCDC2C /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A4E253E5166DE7E000DCDC2C /* libads-vungle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E253E2166DE7C800DCDC2C /* libads-vungle.a */; };
-		A4F0615A16854336009C7C8F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4F0615916854336009C7C8F /* FacebookSDK.framework */; };
 		A9CAF0751767C34500CC76E7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CAF0741767C34500CC76E7 /* libz.dylib */; };
 		A9F4C575178F6AAE0075B743 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4C574178F6AAE0075B743 /* CoreVideo.framework */; };
 		A9F4C59F17988BE90075B743 /* build.settings in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59417988BE90075B743 /* build.settings */; };
@@ -59,6 +58,8 @@
 		A9F4C5A717988BE90075B743 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59C17988BE90075B743 /* Icon@2x.png */; };
 		A9F4C5A817988BE90075B743 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59D17988BE90075B743 /* main.lua */; };
 		A9F4C5A917988BE90075B743 /* space.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59E17988BE90075B743 /* space.png */; };
+		B519EFB618E4A2F800F0E3A1 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A484112315114F700074BD57 /* GLKit.framework */; };
+		B519EFC218EB7CF500F0E3A1 /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B519EFC118EB7CF500F0E3A1 /* VungleSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,7 +123,6 @@
 		A498B81716D70EE80091A148 /* CoronaResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = CoronaResources.bundle; path = CoronaEnterprise/Corona/ios/resource/CoronaResources.bundle; sourceTree = SOURCE_ROOT; };
 		A4E2537E166AE3DC00DCDC2C /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		A4E253DA166DE7C800DCDC2C /* Plugin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Plugin.xcodeproj; sourceTree = "<group>"; };
-		A4F0615916854336009C7C8F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "CoronaEnterprise/Plugins/sdk-facebook/ios/FacebookSDK.framework"; sourceTree = "<group>"; };
 		A9CAF0741767C34500CC76E7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A9F4C574178F6AAE0075B743 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A9F4C59417988BE90075B743 /* build.settings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.settings; sourceTree = "<group>"; };
@@ -136,6 +136,7 @@
 		A9F4C59C17988BE90075B743 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		A9F4C59D17988BE90075B743 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		A9F4C59E17988BE90075B743 /* space.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space.png; sourceTree = "<group>"; };
+		B519EFC118EB7CF500F0E3A1 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VungleSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B519EFB618E4A2F800F0E3A1 /* GLKit.framework in Frameworks */,
 				A9F4C575178F6AAE0075B743 /* CoreVideo.framework in Frameworks */,
 				A9CAF0751767C34500CC76E7 /* libz.dylib in Frameworks */,
 				A489DE2B16854301007FB757 /* Accounts.framework in Frameworks */,
@@ -168,6 +170,7 @@
 				A484118515128D5D0074BD57 /* MobileCoreServices.framework in Frameworks */,
 				A484118615128D5D0074BD57 /* OpenAL.framework in Frameworks */,
 				A484112615114F700074BD57 /* OpenGLES.framework in Frameworks */,
+				B519EFC218EB7CF500F0E3A1 /* VungleSDK.framework in Frameworks */,
 				A484118715128D5D0074BD57 /* QuartzCore.framework in Frameworks */,
 				A484118815128D5D0074BD57 /* Security.framework in Frameworks */,
 				A484118915128D5D0074BD57 /* StoreKit.framework in Frameworks */,
@@ -176,7 +179,6 @@
 				A484111E15114F700074BD57 /* UIKit.framework in Frameworks */,
 				A447B67C16675195009EA762 /* libplayer.a in Frameworks */,
 				A4E253E5166DE7E000DCDC2C /* libads-vungle.a in Frameworks */,
-				A4F0615A16854336009C7C8F /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,11 +225,11 @@
 		A484111C15114F700074BD57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B519EFC118EB7CF500F0E3A1 /* VungleSDK.framework */,
 				A9F4C574178F6AAE0075B743 /* CoreVideo.framework */,
 				A489DE2816854301007FB757 /* Accounts.framework */,
 				A489DE2916854301007FB757 /* AdSupport.framework */,
 				A489DE2A16854301007FB757 /* Social.framework */,
-				A4F0615916854336009C7C8F /* FacebookSDK.framework */,
 				A484116315128D5C0074BD57 /* AddressBook.framework */,
 				A484116415128D5C0074BD57 /* AddressBookUI.framework */,
 				A484116515128D5C0074BD57 /* AudioToolbox.framework */,
@@ -551,7 +553,8 @@
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
+					"\\\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\\\"",
+					/Users/emma/Code/coronaplugin/ios,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -578,7 +581,8 @@
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
+					"\\\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\\\"",
+					/Users/emma/Code/coronaplugin/ios,
 				);
 				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

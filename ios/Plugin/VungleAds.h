@@ -10,8 +10,8 @@
 
 #include <string>
 #import <UIKit/UIKit.h>
+#import <VungleSDK/VungleSDK.h>
 #include "CoronaLua.h"
-#import "vunglepub.h"
 
 // ----------------------------------------------------------------------------
 
@@ -55,8 +55,8 @@ class Vungle
 
 	public:
         bool Init(lua_State* L, const char* appId, int listenerIndex);
-		bool Show(bool animated, bool showClose);
-		bool ShowIncentivized(bool animated, bool showClose, const std::string& userTag = "");
+		bool Show(bool showClose, NSUInteger orientations);
+		bool ShowIncentivized(bool showClose, NSUInteger orientations, const std::string& userTag="");
 
 	public:
 		void DispatchEvent(bool isError, const char* eventName, NSDictionary* opts = nil) const;
@@ -75,13 +75,13 @@ class Vungle
 
 // ----------------------------------------------------------------------------
 
-@interface VungleDelegate : NSObject <VGVunglePubDelegate> {
+@interface VungleDelegate : NSObject <VungleSDKDelegate> {
 	Corona::Vungle* vungle;
 }
 @property Corona::Vungle* vungle;
--(void)vungleMoviePlayed:(VGPlayData*)playData;
--(void)vungleViewDidDisappear:(UIViewController*)viewController;
--(void)vungleViewWillAppear:(UIViewController*)viewController;
+-(void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo willPresentProductSheet:(BOOL)willPresentProductSheet;
+-(void)vungleSDKwillCloseProductSheet:(id)productSheet;
+-(void)vungleSDKwillShowAd;
 @end
 
 #endif // _IOSMyAdsProvider_H__

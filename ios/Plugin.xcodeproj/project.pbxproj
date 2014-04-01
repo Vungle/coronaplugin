@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A4E63355167568D500F37549 /* VungleAds.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4E63354167568D500F37549 /* VungleAds.mm */; };
-		A97CE74A17A083B800426A8F /* VGBytesAssetLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A97CE74917A0835500426A8F /* VGBytesAssetLoader.m */; };
-		A9CAF0731767C27000CC76E7 /* libvunglepub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CAF0631767C27000CC76E7 /* libvunglepub.a */; };
+		A97CE74A17A083B800426A8F /* VungleBytesAssetLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A97CE74917A0835500426A8F /* VungleBytesAssetLoader.m */; };
+		B519EFBF18EB5D6C00F0E3A1 /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B519EFBE18EB5D6C00F0E3A1 /* VungleSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,20 +28,15 @@
 		A4E253B6166D6FB300DCDC2C /* libads-vungle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libads-vungle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4E63353167568D500F37549 /* VungleAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VungleAds.h; path = Plugin/VungleAds.h; sourceTree = "<group>"; };
 		A4E63354167568D500F37549 /* VungleAds.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VungleAds.mm; path = Plugin/VungleAds.mm; sourceTree = "<group>"; };
-		A97CE74517A0835500426A8F /* vg_button_close.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_button_close.png.h; sourceTree = "<group>"; };
-		A97CE74617A0835500426A8F /* vg_button_mute_plain.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_button_mute_plain.png.h; sourceTree = "<group>"; };
-		A97CE74717A0835500426A8F /* vg_button_mute_selected.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_button_mute_selected.png.h; sourceTree = "<group>"; };
-		A97CE74817A0835500426A8F /* VGBytesAssetLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VGBytesAssetLoader.h; sourceTree = "<group>"; };
-		A97CE74917A0835500426A8F /* VGBytesAssetLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VGBytesAssetLoader.m; sourceTree = "<group>"; };
-		A9CAF0631767C27000CC76E7 /* libvunglepub.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvunglepub.a; sourceTree = "<group>"; };
-		A9CAF0671767C27000CC76E7 /* VGAdType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGAdType.h; sourceTree = "<group>"; };
-		A9CAF0681767C27000CC76E7 /* VGAssertMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGAssertMacros.h; sourceTree = "<group>"; };
-		A9CAF0691767C27000CC76E7 /* VGConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGConstants.h; sourceTree = "<group>"; };
-		A9CAF06A1767C27000CC76E7 /* VGPlayData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGPlayData.h; sourceTree = "<group>"; };
-		A9CAF06B1767C27000CC76E7 /* VGStatusData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGStatusData.h; sourceTree = "<group>"; };
-		A9CAF06C1767C27000CC76E7 /* VGUserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGUserData.h; sourceTree = "<group>"; };
-		A9CAF06D1767C27000CC76E7 /* VGVunglePub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VGVunglePub.h; sourceTree = "<group>"; };
-		A9CAF0721767C27000CC76E7 /* vunglepub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vunglepub.h; sourceTree = "<group>"; };
+		A97CE74817A0835500426A8F /* VungleBytesAssetLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VungleBytesAssetLoader.h; sourceTree = "<group>"; };
+		A97CE74917A0835500426A8F /* VungleBytesAssetLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VungleBytesAssetLoader.m; sourceTree = "<group>"; };
+		B519EFB818EB5BF300F0E3A1 /* __vungle.db.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = __vungle.db.h; sourceTree = "<group>"; };
+		B519EFB918EB5BF300F0E3A1 /* vg_close.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_close.png.h; sourceTree = "<group>"; };
+		B519EFBA18EB5BF300F0E3A1 /* vg_cta.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_cta.png.h; sourceTree = "<group>"; };
+		B519EFBB18EB5BF300F0E3A1 /* vg_mute_off.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_mute_off.png.h; sourceTree = "<group>"; };
+		B519EFBC18EB5BF300F0E3A1 /* vg_mute_on.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_mute_on.png.h; sourceTree = "<group>"; };
+		B519EFBD18EB5BF300F0E3A1 /* vg_timer.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_timer.png.h; sourceTree = "<group>"; };
+		B519EFBE18EB5D6C00F0E3A1 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VungleSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9CAF0731767C27000CC76E7 /* libvunglepub.a in Frameworks */,
+				B519EFBF18EB5D6C00F0E3A1 /* VungleSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +63,7 @@
 		A484110E15114F700074BD57 = {
 			isa = PBXGroup;
 			children = (
-				A9CAF0611767C27000CC76E7 /* vunglepub */,
+				B519EFBE18EB5D6C00F0E3A1 /* VungleSDK.framework */,
 				A97CE74417A0835500426A8F /* VGBytesAssetLoader */,
 				A447B609165D72A6009EA762 /* PluginLibrary */,
 				A484111A15114F700074BD57 /* Products */,
@@ -86,45 +81,16 @@
 		A97CE74417A0835500426A8F /* VGBytesAssetLoader */ = {
 			isa = PBXGroup;
 			children = (
-				A97CE74517A0835500426A8F /* vg_button_close.png.h */,
-				A97CE74617A0835500426A8F /* vg_button_mute_plain.png.h */,
-				A97CE74717A0835500426A8F /* vg_button_mute_selected.png.h */,
-				A97CE74817A0835500426A8F /* VGBytesAssetLoader.h */,
-				A97CE74917A0835500426A8F /* VGBytesAssetLoader.m */,
+				B519EFB818EB5BF300F0E3A1 /* __vungle.db.h */,
+				B519EFB918EB5BF300F0E3A1 /* vg_close.png.h */,
+				B519EFBA18EB5BF300F0E3A1 /* vg_cta.png.h */,
+				B519EFBB18EB5BF300F0E3A1 /* vg_mute_off.png.h */,
+				B519EFBC18EB5BF300F0E3A1 /* vg_mute_on.png.h */,
+				B519EFBD18EB5BF300F0E3A1 /* vg_timer.png.h */,
+				A97CE74817A0835500426A8F /* VungleBytesAssetLoader.h */,
+				A97CE74917A0835500426A8F /* VungleBytesAssetLoader.m */,
 			);
 			path = VGBytesAssetLoader;
-			sourceTree = "<group>";
-		};
-		A9CAF0611767C27000CC76E7 /* vunglepub */ = {
-			isa = PBXGroup;
-			children = (
-				A9CAF0621767C27000CC76E7 /* bin */,
-				A9CAF0661767C27000CC76E7 /* headers */,
-				A9CAF0721767C27000CC76E7 /* vunglepub.h */,
-			);
-			path = vunglepub;
-			sourceTree = "<group>";
-		};
-		A9CAF0621767C27000CC76E7 /* bin */ = {
-			isa = PBXGroup;
-			children = (
-				A9CAF0631767C27000CC76E7 /* libvunglepub.a */,
-			);
-			path = bin;
-			sourceTree = "<group>";
-		};
-		A9CAF0661767C27000CC76E7 /* headers */ = {
-			isa = PBXGroup;
-			children = (
-				A9CAF0671767C27000CC76E7 /* VGAdType.h */,
-				A9CAF0681767C27000CC76E7 /* VGAssertMacros.h */,
-				A9CAF0691767C27000CC76E7 /* VGConstants.h */,
-				A9CAF06A1767C27000CC76E7 /* VGPlayData.h */,
-				A9CAF06B1767C27000CC76E7 /* VGStatusData.h */,
-				A9CAF06C1767C27000CC76E7 /* VGUserData.h */,
-				A9CAF06D1767C27000CC76E7 /* VGVunglePub.h */,
-			);
-			path = headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,7 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4E63355167568D500F37549 /* VungleAds.mm in Sources */,
-				A97CE74A17A083B800426A8F /* VGBytesAssetLoader.m in Sources */,
+				A97CE74A17A083B800426A8F /* VungleBytesAssetLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +204,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = "/tmp/ads-myprovider.dst";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/emma/Code/coronaplugin/ios,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LIBRARY_SEARCH_PATHS = (
@@ -257,6 +227,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = "/tmp/ads-myprovider.dst";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/emma/Code/coronaplugin/ios,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LIBRARY_SEARCH_PATHS = (
