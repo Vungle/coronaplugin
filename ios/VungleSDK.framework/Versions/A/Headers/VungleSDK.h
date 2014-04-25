@@ -19,7 +19,7 @@ extern NSString* VungleSDKVersion;
 
 @protocol VungleAssetLoader<NSObject>
 /**
- * should return a valid NSData containing the (raw) data of an image for the specified
+ * should return a valid NSData containing the (raw) data of the asset for the specified
  * path or nil.
  */
 - (NSData*)vungleLoadAsset:(NSString*)path;
@@ -84,12 +84,6 @@ extern NSString* VungleSDKVersion;
  * Pass options to decide what type of ad to show.
  */
 - (void)playAd:(UIViewController *)viewController withOptions:(id)options;
-
-/**
- * Will play a streaming ad, presenting the view over the passed viewController as a modal.
- * Pass options to decide what type of ad to show.
- */
-- (void)playStreamingAd:(UIViewController*)viewController withOptions:(id)options;
 
 /**
  * returns YES if there's a valid ad ready to play.
