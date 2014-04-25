@@ -553,8 +553,8 @@
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\\\"",
-					/Users/emma/Code/coronaplugin/ios,
+					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -581,8 +581,8 @@
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\\\"",
-					/Users/emma/Code/coronaplugin/ios,
+					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
+					"$(SRCROOT)",
 				);
 				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

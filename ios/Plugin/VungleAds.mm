@@ -279,6 +279,7 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
 		[sdk setAssetLoader:loader];
 		[loader release];
 
+		[sdk performSelector:@selector(setPluginName:) withObject:@"corona"];
         [sdk startWithAppId:str];
 		sdk.delegate = _delegate;
 

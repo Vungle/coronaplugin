@@ -206,14 +206,10 @@
 				DSTROOT = "/tmp/ads-myprovider.dst";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/emma/Code/coronaplugin/ios,
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/vunglepub/bin",
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -229,14 +225,10 @@
 				DSTROOT = "/tmp/ads-myprovider.dst";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/emma/Code/coronaplugin/ios,
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/vunglepub/bin",
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
