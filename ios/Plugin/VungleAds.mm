@@ -165,9 +165,9 @@ int Vungle::Show(lua_State *L) {
 			lua_getfield(L, kPARAM_TABLE_INDEX, kORIENTATIONS);
 			if (!lua_isnil(L, -1)) {
 				orientations = lua_tointeger(L, -1);
-				NSLog(@"orientations: %ud", orientations);
+				NSLog(@"orientations: %lud", (unsigned long)orientations);
 			} else {
-				NSLog(@"orientations: %ud (default)", orientations);
+				NSLog(@"orientations: %lud (default)", (unsigned long)orientations);
 			}
 			lua_pop(L, 1);
 			
@@ -279,15 +279,15 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
 		[sdk setAssetLoader:loader];
 		[loader release];
 
-		[sdk performSelector:@selector(setPluginName:) withObject:@"corona"];
-        [sdk startWithAppId:str];
+		[sdk performSelector:@selector(setPluginName:version:) withObject:@"corona" withObject:kVERSION];
+		[sdk startWithAppId:str];
 		sdk.delegate = _delegate;
 
 		fListener = ( CoronaLuaIsListener( L, listenerIndex, "adsRequest" ) ? CoronaLuaNewRef( L, listenerIndex ) : NULL );
 		_delegate.vungle = this;
-        result = true;
-    }
-    
+		result = true;
+	}
+
     return result;
 }
 
