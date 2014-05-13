@@ -312,7 +312,7 @@ bool Vungle::ShowIncentivized(bool showClose, NSUInteger orientations, const std
 	}
 	return false;
 }
-	
+
 void
 Vungle::DispatchEvent(bool isError, const char* eventName, NSDictionary* opts) const
 {
