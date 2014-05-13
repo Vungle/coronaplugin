@@ -23,7 +23,6 @@ static const char* kINCENTIVIZED_AD_TYPE = "incentivized";
 static const char* kIS_ANIMATED_KEY = "isAnimated";
 static const bool  kIS_ANIMATED_DEFAULT = true;
 static const char* kORIENTATIONS = "orientations";
-static const bool  kIS_BACK_BUTTON_ENABLED_DEFAULT = false;
 static const char* kIS_SOUND_ENABLED_KEY = "isSoundEnabled";
 static const bool  kIS_SOUND_ENABLED_DEFAULT = true;
 static const char* kIS_CLOSE_SHOWN_KEY = "isCloseShown";
@@ -35,7 +34,7 @@ static const NSString* kEVENT_TYPE_KEY = @"type";
 static const NSString* kAD_START_EVENT_TYPE = @"adStart";
 static const NSString* kAD_VIEW_EVENT_TYPE = @"adView";
 static const NSString* kAD_END_EVENT_TYPE = @"adEnd";
-static const NSString* kVERSION = @"1.1.3";
+static const NSString* kVERSION = @"2.0.0";
 
 // ----------------------------------------------------------------------------
 
