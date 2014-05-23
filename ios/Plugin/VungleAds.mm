@@ -28,6 +28,7 @@ static const bool  kIS_SOUND_ENABLED_DEFAULT = true;
 static const char* kIS_CLOSE_SHOWN_KEY = "isCloseShown";
 static const bool  kIS_CLOSE_SHOWN_DEFAULT = true;
 static const char* kUSERNAME_KEY = "username";
+static const char* kIS_COMPLETED_VIEW = "isCompletedView";
 
 // events
 static const NSString* kEVENT_TYPE_KEY = @"type";
@@ -49,7 +50,7 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
 
 - (void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo willPresentProductSheet:(BOOL)willPresentProductSheet {
     NSNumber* playTime = [viewInfo objectForKey:@"playTime"] ? [viewInfo objectForKey:@"playTime"] : @(0);
-    vungle->DispatchEvent(false, [kAD_VIEW_EVENT_TYPE UTF8String], @{@"secondsWatched": playTime});
+    vungle->DispatchEvent(false, [kAD_VIEW_EVENT_TYPE UTF8String], @{@"secondsWatched": playTime, @"isCompletedView": [viewInfo objectForKey:@"completedView"]});
     if (!willPresentProductSheet) {
         vungle->DispatchEvent(false, [kAD_END_EVENT_TYPE UTF8String]);
     }
