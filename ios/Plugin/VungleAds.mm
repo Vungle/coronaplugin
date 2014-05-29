@@ -35,7 +35,7 @@ static const NSString* kEVENT_TYPE_KEY = @"type";
 static const NSString* kAD_START_EVENT_TYPE = @"adStart";
 static const NSString* kAD_VIEW_EVENT_TYPE = @"adView";
 static const NSString* kAD_END_EVENT_TYPE = @"adEnd";
-static const NSString* kVERSION = @"2.0.0";
+static const NSString* kVERSION = @"2.0.1";
 
 // ----------------------------------------------------------------------------
 
