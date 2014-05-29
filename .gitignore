@@ -8,3 +8,4 @@ android/bin
 android/gen
 ios/.buildpath
 ios/.project
+ios/build/
