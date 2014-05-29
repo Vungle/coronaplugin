@@ -10,7 +10,7 @@
 
 #include <string>
 #import <UIKit/UIKit.h>
-#import <VungleSDK/VungleSDK.h>
+#import "VungleSDK.h"
 #include "CoronaLua.h"
 
 // ----------------------------------------------------------------------------

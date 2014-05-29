@@ -59,7 +59,6 @@
 		A9F4C5A817988BE90075B743 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59D17988BE90075B743 /* main.lua */; };
 		A9F4C5A917988BE90075B743 /* space.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59E17988BE90075B743 /* space.png */; };
 		B519EFB618E4A2F800F0E3A1 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A484112315114F700074BD57 /* GLKit.framework */; };
-		B519EFC218EB7CF500F0E3A1 /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B519EFC118EB7CF500F0E3A1 /* VungleSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +135,6 @@
 		A9F4C59C17988BE90075B743 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		A9F4C59D17988BE90075B743 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		A9F4C59E17988BE90075B743 /* space.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space.png; sourceTree = "<group>"; };
-		B519EFC118EB7CF500F0E3A1 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VungleSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +168,6 @@
 				A484118515128D5D0074BD57 /* MobileCoreServices.framework in Frameworks */,
 				A484118615128D5D0074BD57 /* OpenAL.framework in Frameworks */,
 				A484112615114F700074BD57 /* OpenGLES.framework in Frameworks */,
-				B519EFC218EB7CF500F0E3A1 /* VungleSDK.framework in Frameworks */,
 				A484118715128D5D0074BD57 /* QuartzCore.framework in Frameworks */,
 				A484118815128D5D0074BD57 /* Security.framework in Frameworks */,
 				A484118915128D5D0074BD57 /* StoreKit.framework in Frameworks */,
@@ -225,7 +222,6 @@
 		A484111C15114F700074BD57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B519EFC118EB7CF500F0E3A1 /* VungleSDK.framework */,
 				A9F4C574178F6AAE0075B743 /* CoreVideo.framework */,
 				A489DE2816854301007FB757 /* Accounts.framework */,
 				A489DE2916854301007FB757 /* AdSupport.framework */,
@@ -554,7 +550,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
-					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -582,7 +577,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
-					"$(SRCROOT)",
 				);
 				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

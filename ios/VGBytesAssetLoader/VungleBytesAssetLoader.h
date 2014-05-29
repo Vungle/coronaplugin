@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <VungleSDK/VungleSDK.h>
+#import "VungleSDK.h"
 
 @interface VungleBytesAssetLoader : NSObject <VungleAssetLoader>
 - (NSData*)vungleLoadAsset:(NSString*)path;

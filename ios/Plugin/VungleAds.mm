@@ -13,7 +13,7 @@
 #include <string>
 
 #import <Foundation/Foundation.h>
-#import <VungleSDK/VungleSDK.h>
+#import "VungleSDK.h"
 #import "CoronaRuntime.h"
 #import "VungleBytesAssetLoader.h"
 
