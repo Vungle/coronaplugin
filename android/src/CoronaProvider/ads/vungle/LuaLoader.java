@@ -43,14 +43,14 @@ import com.vungle.publisher.Orientation;
 import com.vungle.publisher.VunglePub;
 import com.vungle.publisher.env.WrapperFramework;
 import com.vungle.publisher.inject.Injector;
-import com.vungle.publisher.log.Logger;
+import com.vungle.log.Logger;
 
 /**
  * <p>Vungle AdsProvider plugin.</p>
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "2_0_1";
+	private static final String VERSION = "2_0_2";
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -84,6 +84,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	static final String AD_END_EVENT_TYPE = "adEnd";
 	static final String CACHED_AD_AVAILABLE_EVENT_TYPE = "cachedAdAvailable";
 	static final String CORONA_AD_PROVIDER_NAME = "vungle";
+	static final String WAS_CALL_TO_ACTION_CLICKED_KEY = "wasCallToActionClicked";
 
 	private static final String DEFAULT_CORONA_APPLICATION_ID = "defaultCoronaApplicationId";
 	private final VunglePub vunglePub = VunglePub.getInstance();
@@ -157,11 +158,29 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			injector.setWrapperFrameworkVersion(VERSION);
 			injector.setBitmapFactory(BytesBitmapFactory.getInstance(applicationContext));
 			final VunglePub vunglePub = this.vunglePub;
-			vunglePub.init(applicationContext, applicationId);
+			isSuccess = vunglePub.init(applicationContext, applicationId);
 			vunglePub.setEventListener(new EventListener() {
 				@Override
-				public void onAdEnd() {
-					sendEmptyEvent(AD_END_EVENT_TYPE);
+				public void onAdEnd(final boolean wasCallToActionClicked) {
+					if (luaListener != CoronaLua.REFNIL) {
+						taskDispatcher.send(
+							new CoronaRuntimeTask() {
+								@Override
+								public void executeUsing(CoronaRuntime coronaRuntime) {
+									final String eventType = AD_END_EVENT_TYPE;
+									try {
+										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, eventType, false);
+										asyncLuaState.pushBoolean(wasCallToActionClicked);
+										asyncLuaState.setField(-2, WAS_CALL_TO_ACTION_CLICKED_KEY);
+										CoronaLua.dispatchEvent(asyncLuaState, luaListener, 0);
+									}
+									catch (Exception exception) {
+										Logger.e(TAG, "Unable to dispatch event " + eventType, exception);
+									}
+								}
+							}
+						);
+					}
 				}
 
 				@Override
@@ -178,7 +197,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 								public void executeUsing(CoronaRuntime coronaRuntime) {
 									final String eventType = AD_START_EVENT_TYPE;
 									try {
-										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, true);
+										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, eventType, true);
 										asyncLuaState.pushString(reason);
 										asyncLuaState.setField(-2, CoronaLuaEvent.RESPONSE_KEY);
 										CoronaLua.dispatchEvent(asyncLuaState, luaListener, 0);
@@ -206,9 +225,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 								public void executeUsing(CoronaRuntime coronaRuntime) {
 									final String eventType = AD_VIEW_EVENT_TYPE;
 									try {
-										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, false);
-										asyncLuaState.pushString(eventType);
-										asyncLuaState.setField(-2, EVENT_TYPE_KEY);
+										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, eventType, false);
 										asyncLuaState.pushBoolean(isCompletedView);
 										asyncLuaState.setField(-2, AD_VIEW_IS_COMPLETED_VIEW_KEY);
 										asyncLuaState.pushNumber(watchedMillis / 1000.0);
@@ -233,9 +250,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 								@Override
 								public void executeUsing(CoronaRuntime coronaRuntime) {
 									try {
-										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, false);
-										asyncLuaState.pushString(eventType);
-										asyncLuaState.setField(-2, EVENT_TYPE_KEY);
+										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, eventType, false);
 										CoronaLua.dispatchEvent(asyncLuaState, luaListener, 0);
 									}
 									catch (Exception exception) {
@@ -247,14 +262,15 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 					}
 				}
 
-				private LuaState createBaseEvent(CoronaRuntime coronaRuntime, boolean isError) {
+				private LuaState createBaseEvent(CoronaRuntime coronaRuntime, String eventType, boolean isError) {
 					final LuaState currentLuaState = coronaRuntime.getLuaState();
 					LuaLoader.this.createBaseEvent(currentLuaState, isError);
+					currentLuaState.pushString(eventType);
+					currentLuaState.setField(-2, EVENT_TYPE_KEY);
 					return currentLuaState;
 				}
 			});
 			vunglePub.onResume();
-			isSuccess = true;
 		}
 		luaState.pushBoolean(isSuccess);
 		return 1;
@@ -355,8 +371,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	 *                       isAutoRotation:       true || false*,
 	 *                       isBackButtonEnabled:  true || false*,
 	 *                       isSoundEnabled:       true* || false,
-	 *                       username:             string          (optional, only used for incentivized ad type),
-	 *                       isCloseShown:         true* || false  (only used for incentivized ad type)
+	 *                       username:             string          (optional, only used for incentivized ad type)
 	 *                     }
 	 * @return <code>0</code>.
 	 */

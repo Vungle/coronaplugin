@@ -2,6 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="CoronaProvider.ads.myAdsProvider"
           android:versionCode="2"
-          android:versionName="2.0.0">
+          android:versionName="2.0.2">
 	<application/>
 </manifest>

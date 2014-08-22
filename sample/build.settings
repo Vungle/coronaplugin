@@ -1,0 +1,51 @@
+settings =
+{
+	orientation = {
+		default = "portrait", 
+		-- supported = { "portrait", },
+		-- supported = { "landscapeLeft", "landscapeRight" },
+		-- supported = { "landscapeLeft", "landscapeRight", "portrait", "portraitUpsideDown", },
+		supported = { "landscapeLeft", "landscapeRight", "portrait" }
+	},
+	android =
+	{
+	},
+	iphone =
+	{
+		plist =
+		{
+			-- UIApplicationExitsOnSuspend = true, -- default is false
+			CFBundleIconFile = "Icon.png",
+			CFBundleIconFiles =
+			{
+				"Icon.png", 
+				"Icon@2x.png", 
+				"Icon-60.png",
+				"Icon-60@2x.png",
+				"Icon-72.png", 
+				"Icon-72@2x.png",
+				"Icon-76.png",
+				"Icon-76@2x.png", 
+				"Icon-Small.png", 
+				"Icon-Small@2x.png",
+				"Icon-Small-40.png",
+				"Icon-Small-40@2x.png",
+				"Icon-Small-50.png", 
+				"Icon-Small-50@2x.png", 
+			},
+		},
+	},
+	plugins =
+	{
+		-- key is the name passed to Lua's 'require()'
+		["CoronaProvider.ads.vungle"] =
+		{
+			-- required
+			publisherId = "com.vungle",
+		},
+		["plugin.google.play.services"] =
+		{
+			publisherId = "com.coronalabs"
+		},
+	}
+}

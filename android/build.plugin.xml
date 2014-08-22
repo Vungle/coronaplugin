@@ -83,12 +83,12 @@
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
     <target name="-pre-clean">
-        <delete verbose="true">
-            <fileset dir="libs">
-                <include name="JNLua.jar"/>
-                <include name="Corona.jar"/>
-            </fileset>
-        </delete>
+	<delete verbose="true">
+		<fileset dir="libs">
+			<include name="JNLua.jar"/>
+			<include name="Corona.jar"/>
+		</fileset>
+	</delete>
     </target>
 
     <macrodef name="copy-libs">
