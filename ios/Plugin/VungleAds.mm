@@ -294,8 +294,8 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
 bool Vungle::Show(bool showClose, NSUInteger orientations) {
 	VungleSDK* sdk = [VungleSDK sharedSDK];
     if ([sdk isCachedAdAvailable]) {
-        [sdk playAd:_controller withOptions:@{@"showClose": @(showClose),
-                                              @"orientations": @(orientations)}];
+        [sdk playAd:_controller withOptions:@{VunglePlayAdOptionKeyShowClose: @(showClose),
+                                              VunglePlayAdOptionKeyOrientations: @(orientations)}];
 		return true;
 	}
 	return false;
@@ -305,10 +305,10 @@ bool Vungle::ShowIncentivized(bool showClose, NSUInteger orientations, const std
 	NSString* userString = [NSString stringWithUTF8String:userTag.c_str()];
     VungleSDK* sdk = [VungleSDK sharedSDK];
 	if ([sdk isCachedAdAvailable]) {
-        [sdk playAd:_controller withOptions:@{@"showClose": @(showClose),
-                                              @"orientations": @(orientations),
-                                              @"incentivized": @(YES),
-                                              @"userInfo": @{@"user": userString}}];
+        [sdk playAd:_controller withOptions:@{VunglePlayAdOptionKeyShowClose: @(showClose),
+                                              VunglePlayAdOptionKeyOrientations: @(orientations),
+                                              VunglePlayAdOptionKeyIncentivized: @(YES),
+                                              VunglePlayAdOptionKeyUser: userString}];
 		return true;
 	}
 	return false;
