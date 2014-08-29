@@ -10,6 +10,21 @@
 #import <UIKit/UIKit.h>
 
 extern NSString* VungleSDKVersion;
+extern NSString* VunglePlayAdOptionKeyIncentivized;
+extern NSString* VunglePlayAdOptionKeyShowClose;
+extern NSString* VunglePlayAdOptionKeyOrientations;
+extern NSString* VunglePlayAdOptionKeyUser;
+extern NSString* VunglePlayAdOptionKeyPlacement;
+extern NSString* VunglePlayAdOptionKeyExtraInfoDictionary;
+extern NSString* VunglePlayAdOptionKeyExtra1;
+extern NSString* VunglePlayAdOptionKeyExtra2;
+extern NSString* VunglePlayAdOptionKeyExtra3;
+extern NSString* VunglePlayAdOptionKeyExtra4;
+extern NSString* VunglePlayAdOptionKeyExtra5;
+extern NSString* VunglePlayAdOptionKeyExtra6;
+extern NSString* VunglePlayAdOptionKeyExtra7;
+extern NSString* VunglePlayAdOptionKeyExtra8;
+extern NSString* VunglePlayAdOptionKeyLargeButtons;
 
 @protocol VungleSDKLogger <NSObject>
 - (void)vungleSDKLog:(NSString*)message;
@@ -32,6 +47,7 @@ extern NSString* VungleSDKVersion;
 
 
 @protocol VungleSDKDelegate <NSObject>
+@optional
 /**
  * if implemented, this will get called when the SDK is about to show an ad. This point
  * might be a good time to pause your game, and turn off any sound you might be playing.
@@ -55,6 +71,12 @@ extern NSString* VungleSDKVersion;
  * if implemented, this will get called when the product sheet is about to be closed.
  */
 - (void)vungleSDKwillCloseProductSheet:(id)productSheet;
+
+/**
+ * if implemented, this will get called when there is an ad cached and ready to be shown.
+ */
+- (void)vungleSDKhasCachedAdAvailable;
+
 @end
 
 @interface VungleSDK : NSObject
@@ -63,6 +85,7 @@ extern NSString* VungleSDKVersion;
 @property (strong) id<VungleAssetLoader> assetLoader;
 @property (strong) NSString* incentivizedAlertText;
 @property (assign) BOOL muted;
+@property (readonly) NSMutableDictionary* globalOptions;
 
 /**
  * Returns the singleton instance.
