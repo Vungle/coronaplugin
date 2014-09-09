@@ -2,13 +2,13 @@
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
 
-	<info organisation="com.vungle" module="coronaplugin" revision="2.0.3-SNAPSHOT"/>
+	<info organisation="com.vungle" module="coronaplugin" revision="2.0.3"/>
 	<configurations defaultconfmapping="compile->default,compile; runtime">
 		<conf name="compile" description="compile time dependencies"/>
 		<conf name="runtime" extends="compile" description="compile time dependencies"/>
 	</configurations>
 	<dependencies>
-		<dependency org="com.vungle" name="vungle-publisher" rev="3.2.1-SNAPSHOT"/>
+		<dependency org="com.vungle" name="vungle-publisher" rev="3.2.1"/>
 	</dependencies>
 
 </ivy-module>

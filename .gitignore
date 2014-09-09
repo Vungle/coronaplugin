@@ -1,12 +1,20 @@
+# android
+/android/libs/
+gen/
+
+# eclipse
+bin/
+.classpath
+.project
+.settings/
+
+# gradle
+.gradle/
+build/
+
+# macos
 .DS_Store
+
+.buildpath
 xcshareddata/
 xcuserdata/
-/android/.buildpath
-/android/.classpath
-/android/.project
-/android/bin
-/android/gen
-/android/libs
-/ios/.buildpath
-/ios/.project
-/ios/build/
