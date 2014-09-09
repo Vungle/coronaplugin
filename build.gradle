@@ -1,0 +1,21 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		maven {
+			credentials {
+				username = System.getenv('VUNGLE_MAVEN_USERNAME')
+				password = System.getenv('VUNGLE_MAVEN_PASSWORD')
+			}
+			url 'https://nexus.vungle.com/mnt2/nexus/content/repositories/public/'
+		}
+	}
+	dependencies {
+		classpath 'com.vungle:gradle-tools:1.0.2'
+	}
+}
+
+subprojects {
+	apply plugin: 'vungleRepositories'
+
+	group = 'com.vungle'
+}
