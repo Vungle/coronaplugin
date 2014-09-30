@@ -50,7 +50,7 @@ import com.vungle.log.Logger;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "2.0.3";
+	private static final String VERSION = "2.0.4";
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -156,7 +156,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			final Injector injector = Injector.getInstance();
 			injector.setWrapperFramework(WrapperFramework.corona);
 			injector.setWrapperFrameworkVersion(VERSION);
-			injector.setBitmapFactory(BytesBitmapFactory.getInstance(applicationContext));
 			final VunglePub vunglePub = this.vunglePub;
 			isSuccess = vunglePub.init(applicationContext, applicationId);
 			vunglePub.setEventListener(new EventListener() {
