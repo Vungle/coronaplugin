@@ -1,11 +1,13 @@
 #!/bin/sh
 
-IOS_SDK=7.1
-CORONA_RELEASE=2014.2264
+IOS_SDK=8.0
+CORONA_RELEASES="2014.2264 2014.2430"
 
 xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj clean
 xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj clean
 xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj build
 xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj build
-cp build/Release-iphoneos/libads-vungle.a ../release/plugins/${CORONA_RELEASE}/iphone/libads-vungle.a
-cp build/Release-iphonesimulator/libads-vungle.a ../release/plugins/${CORONA_RELEASE}/iphone-sim/libads-vungle.a
+for version in $CORONA_RELEASES; do
+	cp build/Release-iphoneos/libads-vungle.a ../release/plugins/${version}/iphone/libads-vungle.a
+	cp build/Release-iphonesimulator/libads-vungle.a ../release/plugins/${version}/iphone-sim/libads-vungle.a
+done
