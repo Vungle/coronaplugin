@@ -82,6 +82,7 @@ class Vungle
 -(void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo willPresentProductSheet:(BOOL)willPresentProductSheet;
 -(void)vungleSDKwillCloseProductSheet:(id)productSheet;
 -(void)vungleSDKwillShowAd;
+- (void)vungleSDKhasCachedAdAvailable;
 @end
 
 #endif // _IOSMyAdsProvider_H__

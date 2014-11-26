@@ -35,6 +35,7 @@ static const NSString* kEVENT_TYPE_KEY = @"type";
 static const NSString* kAD_START_EVENT_TYPE = @"adStart";
 static const NSString* kAD_VIEW_EVENT_TYPE = @"adView";
 static const NSString* kAD_END_EVENT_TYPE = @"adEnd";
+static const NSString* kAD_AD_AVAILABLE_EVENT_TYPE = @"cachedAdAvailable";
 static const NSString* kVERSION = @"2_0_5";
 
 // ----------------------------------------------------------------------------
@@ -63,6 +64,11 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
 - (void)vungleSDKwillShowAd {
 	vungle->DispatchEvent(false, [kAD_START_EVENT_TYPE UTF8String]);
 }
+
+- (void)vungleSDKhasCachedAdAvailable {
+	vungle->DispatchEvent(false, [kAD_AD_AVAILABLE_EVENT_TYPE UTF8String]);
+}
+
 @end
 
 // ----------------------------------------------------------------------------
