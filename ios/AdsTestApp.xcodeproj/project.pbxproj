@@ -50,10 +50,6 @@
 		A9F4C59F17988BE90075B743 /* build.settings in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59417988BE90075B743 /* build.settings */; };
 		A9F4C5A017988BE90075B743 /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59517988BE90075B743 /* config.lua */; };
 		A9F4C5A117988BE90075B743 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59617988BE90075B743 /* Icon-72.png */; };
-		A9F4C5A217988BE90075B743 /* Icon-hdpi.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59717988BE90075B743 /* Icon-hdpi.png */; };
-		A9F4C5A317988BE90075B743 /* Icon-ldpi.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59817988BE90075B743 /* Icon-ldpi.png */; };
-		A9F4C5A417988BE90075B743 /* Icon-mdpi.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59917988BE90075B743 /* Icon-mdpi.png */; };
-		A9F4C5A517988BE90075B743 /* Icon-xhdpi.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59A17988BE90075B743 /* Icon-xhdpi.png */; };
 		A9F4C5A617988BE90075B743 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59B17988BE90075B743 /* Icon.png */; };
 		A9F4C5A717988BE90075B743 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59C17988BE90075B743 /* Icon@2x.png */; };
 		A9F4C5A817988BE90075B743 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59D17988BE90075B743 /* main.lua */; };
@@ -127,10 +123,6 @@
 		A9F4C59417988BE90075B743 /* build.settings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.settings; sourceTree = "<group>"; };
 		A9F4C59517988BE90075B743 /* config.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.lua; sourceTree = "<group>"; };
 		A9F4C59617988BE90075B743 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		A9F4C59717988BE90075B743 /* Icon-hdpi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-hdpi.png"; sourceTree = "<group>"; };
-		A9F4C59817988BE90075B743 /* Icon-ldpi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-ldpi.png"; sourceTree = "<group>"; };
-		A9F4C59917988BE90075B743 /* Icon-mdpi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-mdpi.png"; sourceTree = "<group>"; };
-		A9F4C59A17988BE90075B743 /* Icon-xhdpi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-xhdpi.png"; sourceTree = "<group>"; };
 		A9F4C59B17988BE90075B743 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		A9F4C59C17988BE90075B743 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		A9F4C59D17988BE90075B743 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
@@ -298,10 +290,6 @@
 				A9F4C59417988BE90075B743 /* build.settings */,
 				A9F4C59517988BE90075B743 /* config.lua */,
 				A9F4C59617988BE90075B743 /* Icon-72.png */,
-				A9F4C59717988BE90075B743 /* Icon-hdpi.png */,
-				A9F4C59817988BE90075B743 /* Icon-ldpi.png */,
-				A9F4C59917988BE90075B743 /* Icon-mdpi.png */,
-				A9F4C59A17988BE90075B743 /* Icon-xhdpi.png */,
 				A9F4C59B17988BE90075B743 /* Icon.png */,
 				A9F4C59C17988BE90075B743 /* Icon@2x.png */,
 				A9F4C59D17988BE90075B743 /* main.lua */,
@@ -390,10 +378,6 @@
 				A9F4C59F17988BE90075B743 /* build.settings in Resources */,
 				A9F4C5A017988BE90075B743 /* config.lua in Resources */,
 				A9F4C5A117988BE90075B743 /* Icon-72.png in Resources */,
-				A9F4C5A217988BE90075B743 /* Icon-hdpi.png in Resources */,
-				A9F4C5A317988BE90075B743 /* Icon-ldpi.png in Resources */,
-				A9F4C5A417988BE90075B743 /* Icon-mdpi.png in Resources */,
-				A9F4C5A517988BE90075B743 /* Icon-xhdpi.png in Resources */,
 				A9F4C5A617988BE90075B743 /* Icon.png in Resources */,
 				A9F4C5A717988BE90075B743 /* Icon@2x.png in Resources */,
 				A9F4C5A817988BE90075B743 /* main.lua in Resources */,
