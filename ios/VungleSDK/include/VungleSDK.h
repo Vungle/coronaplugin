@@ -11,7 +11,7 @@
 
 extern NSString* VungleSDKVersion;
 extern NSString* VunglePlayAdOptionKeyIncentivized;
-extern NSString* VunglePlayAdOptionKeyShowClose;
+extern NSString* VunglePlayAdOptionKeyShowClose __deprecated_msg("Set this option on the Vungle dashboard instead.");
 extern NSString* VunglePlayAdOptionKeyOrientations;
 extern NSString* VunglePlayAdOptionKeyUser;
 extern NSString* VunglePlayAdOptionKeyPlacement;
@@ -25,6 +25,12 @@ extern NSString* VunglePlayAdOptionKeyExtra6;
 extern NSString* VunglePlayAdOptionKeyExtra7;
 extern NSString* VunglePlayAdOptionKeyExtra8;
 extern NSString* VunglePlayAdOptionKeyLargeButtons;
+
+typedef enum {
+	VungleSDKErrorInvalidPlayAdOption = 1,
+	VungleSDKErrorInvalidPlayAdExtraKey,
+	VungleSDKErrorCannotPlayAd
+} VungleSDKErrorCode;
 
 @protocol VungleSDKLogger <NSObject>
 - (void)vungleSDKLog:(NSString*)message;
@@ -99,14 +105,32 @@ extern NSString* VunglePlayAdOptionKeyLargeButtons;
 
 /**
  * Will play an ad, presenting the view over the passed viewController as a modal.
+ * @deprecated This method is deprecated starting in version 3.0.11
+ * @note Please use instead:
+ * @code playAd:error:
  */
-- (void)playAd:(UIViewController*)viewController;
+- (void)playAd:(UIViewController*)viewController __attribute__((deprecated));
 
 /**
  * Will play an ad, presenting the view over the passed viewController as a modal.
  * Pass options to decide what type of ad to show.
+ * @deprecated This method is deprecated starting in version 3.0.11
+ * @note Please use instead: 
+ * @code playAd:withOptions:error:
  */
-- (void)playAd:(UIViewController *)viewController withOptions:(id)options;
+- (void)playAd:(UIViewController *)viewController withOptions:(id)options __attribute__((deprecated));
+
+/**
+ * Will play an ad, presenting the view over the passed viewController as a modal.
+ * Return an error if there is one.
+ */
+- (BOOL)playAd:(UIViewController*)viewController error:(NSError**)error;
+
+/**
+ * Will play an ad, presenting the view over the passed viewController as a modal.
+ * Pass options to decide what type of ad to show. Return an error if there is one.
+ */
+- (BOOL)playAd:(UIViewController *)viewController withOptions:(id)options error:(NSError**)error;
 
 /**
  * returns YES if there's a valid ad ready to play.
