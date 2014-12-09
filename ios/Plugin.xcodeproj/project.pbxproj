@@ -219,6 +219,14 @@
 		A4E253C0166D6FB300DCDC2C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+					armv7s,
+				);
+				"ARCHS[sdk=iphoneos*]" = (
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+					armv7s,
+				);
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = "/tmp/ads-myprovider.dst";
@@ -227,6 +235,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/VungleSDK",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/AdsTestApp-dhlfnbrohalvaveworztusvgoayc/Build/Products/Debug-iphonesimulator",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/AdsTestApp-dhlfnbrohalvaveworztusvgoayc/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Release-iphonesimulator",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -237,7 +248,14 @@
 		A4E253C1166D6FB300DCDC2C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+					armv7s,
+				);
+				"ARCHS[sdk=iphoneos*]" = (
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+					armv7s,
+				);
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DSTROOT = "/tmp/ads-myprovider.dst";
@@ -246,6 +264,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/VungleSDK",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/AdsTestApp-dhlfnbrohalvaveworztusvgoayc/Build/Products/Debug-iphonesimulator",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/AdsTestApp-dhlfnbrohalvaveworztusvgoayc/Build/Products/Debug-iphoneos",
+					"$(PROJECT_DIR)/build/Release-iphonesimulator",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
