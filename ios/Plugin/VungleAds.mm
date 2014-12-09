@@ -36,7 +36,7 @@ static const NSString* kAD_START_EVENT_TYPE = @"adStart";
 static const NSString* kAD_VIEW_EVENT_TYPE = @"adView";
 static const NSString* kAD_END_EVENT_TYPE = @"adEnd";
 static const NSString* kAD_AD_AVAILABLE_EVENT_TYPE = @"cachedAdAvailable";
-static const NSString* kVERSION = @"2_0_5";
+static const NSString* kVERSION = @"2_0_6";
 
 // ----------------------------------------------------------------------------
 
