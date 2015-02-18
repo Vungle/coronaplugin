@@ -158,7 +158,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			injector.setWrapperFrameworkVersion(VERSION);
 			final VunglePub vunglePub = this.vunglePub;
 			isSuccess = vunglePub.init(applicationContext, applicationId);
-			vunglePub.setEventListener(new EventListener() {
+			vunglePub.setEventListeners(new EventListener() {
 				@Override
 				public void onAdEnd(final boolean wasCallToActionClicked) {
 					if (luaListener != CoronaLua.REFNIL) {
@@ -209,10 +209,12 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 						);
 					}
 				}
-
+				
 				@Override
-				public void onCachedAdAvailable() {
-					sendEmptyEvent(CACHED_AD_AVAILABLE_EVENT_TYPE);
+				public void onAdPlayableChanged(boolean arg) {
+					if (arg) {
+						sendEmptyEvent(CACHED_AD_AVAILABLE_EVENT_TYPE);
+					}
 				}
 
 				@Override
@@ -342,7 +344,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	 * @return <code>1</code> (the number of return values).
 	 */
 	public int isCachedAdAvailable(LuaState luaState) {
-		luaState.pushBoolean(vunglePub.isCachedAdAvailable());
+		luaState.pushBoolean(vunglePub.isAdPlayable());
 		return 1;
 	}
 

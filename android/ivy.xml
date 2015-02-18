@@ -8,7 +8,7 @@
 		<conf name="runtime" extends="compile" description="compile time dependencies"/>
 	</configurations>
 	<dependencies>
-		<dependency org="com.vungle" name="vungle-publisher-adaptive-id" rev="3.2.2"/>
+		<dependency org="com.vungle" name="vungle-publisher-adaptive-id" rev="3.3.0"/>
 	</dependencies>
 
 </ivy-module>
