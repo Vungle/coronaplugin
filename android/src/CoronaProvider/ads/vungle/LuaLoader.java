@@ -50,7 +50,7 @@ import com.vungle.log.Logger;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "2.1.0";
+	private static final String VERSION = "2.1.2";
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -60,6 +60,11 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	static final String IS_CACHED_AD_AVAILABLE_METHOD = "isAdAvailable";
 	static final String SHOW_CACHE_FILES_METHOD = "showCacheFiles";
 	static final String SHOW_METHOD = "show";
+    static final String SHOWEX_METHOD = "showEx";
+    static final String CLEAR_CACHE_METHOD = "clearCache";
+    static final String CLEAR_SLEEP_METHOD = "clearSleep";
+    static final String SET_SOUND_ENABLED_METHOD = "setSoundEnabled";
+    static final String ENABLE_LOGGING_METHOD = "enableLogging";
 
 	// show() ad types
 //	private static final String INTERSTITIAL_AD_TYPE = "interstitial";
@@ -68,10 +73,13 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	// show() ad properties and defaults
 	private static final String IS_AUTO_ROTATION_KEY = "isAutoRotation";
 	private static final boolean IS_AUTO_ROTATION_DEFAULT = false;
+    private static final String IS_IMMERSIVE_KEY = "immersive";
+    private static final boolean IS_IMMERSIVE_DEFAULT = false;
+    
 	private static final String IS_BACK_BUTTON_IMMEDIATELY_ENABLED_KEY = "isBackButtonEnabled";
 	private static final boolean IS_BACK_BUTTON_IMMEDIATELY_ENABLED_DEFAULT = false;
 	private static final String IS_SOUND_ENABLED_KEY = "isSoundEnabled";
-	private static final boolean IS_SOUND_ENABLED_DEFAULT = true;
+	private static boolean IS_SOUND_ENABLED_DEFAULT = true;
 	private static final String INCENTIVIZED_USER_ID_KEY = "username";
 
 	// events
@@ -108,7 +116,12 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			new InitWrapper(),
 			new IsCachedAdAvailableWrapper(),
 			new ShowCacheFilesWrapper(),
-			new ShowWrapper()
+			new ShowWrapper(),
+            new ShowExWrapper(),
+            new ClearCacheWrapper(),
+            new ClearSleepWrapper(),
+            new SetSoundEnabledWrapper(),
+            new EnableLoggingWrapper()
 		});
 		// add fallback test app id
 		luaState.pushString(DEFAULT_CORONA_APPLICATION_ID);
@@ -443,7 +456,186 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		vunglePub.playAd(adConfig);
 		return 0;
 	}
+    
+    private class ShowExWrapper implements NamedJavaFunction {
+        ShowExWrapper() {}
+        
+        @Override
+        public String getName() {
+            return SHOWEX_METHOD;
+        }
+        
+        // N.B. not called on UI thread
+        @Override
+        public int invoke(LuaState luaState) {
+            return showEx(luaState);
+        }
+    }
+    
+    public int showEx(LuaState luaState) {
+        final String METHOD_NAME = SHOW_METHOD + "(): ";
+        final AdConfig adConfig = new AdConfig();
+        final int numberOfArguments = luaState.getTop();
+        // get the lower case ad type if it exists:
+        if (numberOfArguments >= 1 && luaState.isTable(1)) {
+            
+            luaState.getField(1, "isAutoRotation");
+            if (!luaState.isNil(-1)) {
+                adConfig.setOrientation(luaState.toBoolean(-1) ? Orientation.autoRotate : Orientation.matchVideo);
+            }
+            luaState.getField(1, "isSoundEnabled");
+            if (!luaState.isNil(-1)) {
+                adConfig.setSoundEnabled(luaState.toBoolean(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "incentivized");
+            if (!luaState.isNil(-1)) {
+                adConfig.setIncentivized(luaState.toBoolean(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "immersive");
+            if (!luaState.isNil(-1)) {
+                adConfig.setImmersiveMode(luaState.toBoolean(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "userTag");
+            if (!luaState.isNil(-1)) {
+                adConfig.setIncentivizedUserId(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "alertTitle");
+            if (!luaState.isNil(-1)) {
+                adConfig.setIncentivizedCancelDialogTitle(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "alertText");
+            if (!luaState.isNil(-1)) {
+                adConfig.setIncentivizedCancelDialogBodyText(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "alertClose");
+            if (!luaState.isNil(-1)) {
+                adConfig.setIncentivizedCancelDialogCloseButtonText(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "alertContinue");
+            if (!luaState.isNil(-1)) {
+                adConfig.setIncentivizedCancelDialogKeepWatchingButtonText(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "placement");
+            if (!luaState.isNil(-1)) {
+                adConfig.setPlacement(luaState.toString(-1));
+            }
+            luaState.pop(1);
 
+
+            luaState.getField(1, "key1");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra1(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "key2");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra2(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "key3");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra3(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "key4");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra4(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "key5");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra5(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "key6");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra6(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "key7");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra7(luaState.toString(-1));
+            }
+            luaState.pop(1);
+            luaState.getField(1, "key8");
+            if (!luaState.isNil(-1)) {
+                adConfig.setExtra8(luaState.toString(-1));
+            }
+            luaState.pop(1);
+
+        }
+        vunglePub.playAd(adConfig);
+        return 0;
+    }
+
+    private class ClearCacheWrapper implements NamedJavaFunction {
+        ClearCacheWrapper() {}
+        
+        @Override
+        public String getName() {
+            return CLEAR_CACHE_METHOD;
+        }
+        
+        // N.B. not called on UI thread
+        @Override
+        public int invoke(LuaState luaState) {
+            return 0;
+        }
+    }
+    
+    private class ClearSleepWrapper implements NamedJavaFunction {
+        ClearSleepWrapper() {}
+        
+        @Override
+        public String getName() {
+            return CLEAR_SLEEP_METHOD;
+        }
+        
+        // N.B. not called on UI thread
+        @Override
+        public int invoke(LuaState luaState) {
+            return 0;
+        }
+    }
+    
+    private class SetSoundEnabledWrapper implements NamedJavaFunction {
+        SetSoundEnabledWrapper() {}
+        
+        @Override
+        public String getName() {
+            return SET_SOUND_ENABLED_METHOD;
+        }
+        
+        // N.B. not called on UI thread
+        @Override
+        public int invoke(LuaState luaState) {
+            IS_SOUND_ENABLED_DEFAULT = luaState.toBoolean(1);
+            return 0;
+        }
+    }
+    
+    private class EnableLoggingWrapper implements NamedJavaFunction {
+        EnableLoggingWrapper() {}
+        
+        @Override
+        public String getName() {
+            return ENABLE_LOGGING_METHOD;
+        }
+        
+        // N.B. not called on UI thread
+        @Override
+        public int invoke(LuaState luaState) {
+            return 0;
+        }
+    }
 	/**
 	 * @deprecated
 	 */
