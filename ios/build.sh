@@ -1,6 +1,6 @@
 #!/bin/sh
 
-IOS_SDK=8.1
+IOS_SDK=8.2
 CORONA_RELEASES="2013.1137 2014.2264 2014.2430"
 
 xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj clean

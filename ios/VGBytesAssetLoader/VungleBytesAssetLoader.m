@@ -14,6 +14,7 @@
 #include "vg_mute_off.png.h"
 #include "vg_timer.png.h"
 #include "vg_cta.png.h"
+#include "vg_privacy.png.h"
 #include "__vungle.db.h"
 
 @implementation VungleBytesAssetLoader
@@ -30,7 +31,9 @@
 		return [NSData dataWithBytes:vg_timer_png length:sizeof(vg_timer_png)];
 	} else if ([path isEqualToString:@"__vungle.db"]) {
 		return [NSData dataWithBytes:__vungle_db length:sizeof(__vungle_db)];
-	}
+    } else if ([path isEqualToString:@"vg_privacy.png"]) {
+        return [NSData dataWithBytes:vg_privacy_png length:sizeof(vg_privacy_png)];
+    }
 	return nil;
 }
 

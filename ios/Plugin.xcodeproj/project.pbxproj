@@ -25,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		84950E0C1B4BE15A004F8E1E /* vg_privacy.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_privacy.png.h; sourceTree = "<group>"; };
 		A4E253B6166D6FB300DCDC2C /* libads-vungle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libads-vungle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4E63353167568D500F37549 /* VungleAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VungleAds.h; path = Plugin/VungleAds.h; sourceTree = "<group>"; };
 		A4E63354167568D500F37549 /* VungleAds.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VungleAds.mm; path = Plugin/VungleAds.mm; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 			children = (
 				B52BED331A267F3E007ABC12 /* __vungle.db.h */,
 				B519EFB918EB5BF300F0E3A1 /* vg_close.png.h */,
+				84950E0C1B4BE15A004F8E1E /* vg_privacy.png.h */,
 				B519EFBA18EB5BF300F0E3A1 /* vg_cta.png.h */,
 				B519EFBB18EB5BF300F0E3A1 /* vg_mute_off.png.h */,
 				B519EFBC18EB5BF300F0E3A1 /* vg_mute_on.png.h */,
