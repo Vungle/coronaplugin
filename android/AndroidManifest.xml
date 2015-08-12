@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mycompany.AdsTestApp"
+          package="com.vungle.VungleCoronaTest"
           android:versionCode="1"
-          android:versionName="1.0"
+          android:versionName="1.1"
 	      android:installLocation="auto">
 	<!--
 	 Set the minimum and target Android API levels here to inform the app store what OS versions this app supports.
@@ -28,7 +28,7 @@
 	 The "name" attribute should be set to the name of the class that extends/inherits from the Application class.
 	 The "label" attribute sets the name of the application as how it is shown to the end-user.
 	 -->
-	<application android:label="AdsTestApp"
+	<application android:label="VungleCoronaTest"
 	             android:hardwareAccelerated="true"
 	             android:debuggable="true">
 
@@ -42,7 +42,7 @@
 		<activity android:name="com.ansca.corona.CoronaActivity"
 		          android:screenOrientation="portrait"
 		          android:configChanges="keyboardHidden|orientation|screenSize"
-		          android:label="AdsTestApp"
+		          android:label="VungleCoronaTest"
 		          android:launchMode="singleTask"
 		          android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 			<intent-filter>
@@ -65,7 +65,7 @@
 		
 		<!-- Corona content provider required by the video player and mail app to access this app's local files. -->
 		<provider android:name="com.ansca.corona.storage.FileContentProvider"
-		          android:authorities="com.mycompany.AdsTestApp.files"
+		          android:authorities="com.vungle.VungleCoronaTest.files"
 		          android:exported="true" />
 		
 		<!-- Corona service used to perform background operations such as managing notifications. -->
@@ -93,7 +93,7 @@
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
 				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-				<category android:name="com.mycompany.AdsTestApp" />
+				<category android:name="com.vungle.VungleCoronaTest" />
 			</intent-filter>
 		</receiver>
 

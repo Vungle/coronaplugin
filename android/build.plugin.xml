@@ -84,14 +84,17 @@
 	<import file="${sdk.dir}/tools/ant/build.xml" />
 
 	<target name="-pre-clean">
+<!--
 		<delete failonerror="false" verbose="true">
 			<fileset dir="libs" includes="*.jar"/>
 		</delete>
+-->
 	</target>
 
 	<target name="resolve" description="Retrieve Ivy dependencies">
-		<property name="ivy.lib.dir" value="${ivy.project.dir}/libs"/>
+<!--		<property name="ivy.lib.dir" value="${ivy.project.dir}/libs"/>
 		<ivy:retrieve/>
+-->
 	</target>
 
 	<target name="-pre-build" depends="resolve"/>

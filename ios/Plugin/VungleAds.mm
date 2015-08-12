@@ -36,7 +36,7 @@ static const NSString* kAD_START_EVENT_TYPE = @"adStart";
 static const NSString* kAD_VIEW_EVENT_TYPE = @"adView";
 static const NSString* kAD_END_EVENT_TYPE = @"adEnd";
 static const NSString* kAD_AD_AVAILABLE_EVENT_TYPE = @"cachedAdAvailable";
-static const NSString* kVERSION = @"2_1_0";
+static const NSString* kVERSION = @"3_1_2";
 
 // ----------------------------------------------------------------------------
 
@@ -278,10 +278,11 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
     if ( appId )
     {
         NSString* str = [NSString stringWithUTF8String:appId];
+        // set the new asset loader
+        VungleBytesAssetLoader* loader = [[VungleBytesAssetLoader alloc] init];
+        [VungleSDK setupSDKWithAssetLoader:loader];
         VungleSDK* sdk = [VungleSDK sharedSDK];
 
-		// set the new asset loader
-		VungleBytesAssetLoader* loader = [[VungleBytesAssetLoader alloc] init];
 		[sdk setAssetLoader:loader];
 		[loader release];
 
@@ -347,7 +348,7 @@ Vungle::DispatchEvent(bool isError, const char* eventName, NSDictionary* opts) c
 			NSValue* val = [opts objectForKey:key];
 			if ([val isKindOfClass:[NSNumber class]]) {
 				NSNumber* n = (NSNumber*)val;
-				if (strcmp([n objCType], @encode(BOOL)) == 0) {
+				if ((strcmp([n objCType], @encode(BOOL)) == 0) || (strcmp([n objCType], @encode(char)) == 0)) {
 					lua_pushboolean(L, [n boolValue]);
 				} else {
 					lua_pushnumber(L, [(NSNumber*)val doubleValue]);
