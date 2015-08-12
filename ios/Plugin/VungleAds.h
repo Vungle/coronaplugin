@@ -48,6 +48,11 @@ class Vungle
 		static int Hide(lua_State* L);
 		static int showCacheFiles(lua_State* L);
 		static int adIsAvailable(lua_State* L);
+        static int clearCache(lua_State* L);
+        static int clearSleep(lua_State* L);
+        static int setSoundEnabled(lua_State* L);
+        static int enableLogging(lua_State* L);
+        static int showEx(lua_State* L);
 
 	public:
 		Vungle( id<CoronaRuntime> runtime );
@@ -56,6 +61,7 @@ class Vungle
 	public:
         bool Init(lua_State* L, const char* appId, int listenerIndex);
 		bool Show(bool showClose, NSUInteger orientations);
+        bool ShowEx(NSDictionary* options);
 		bool ShowIncentivized(bool showClose, NSUInteger orientations, const std::string& userTag="");
 
 	public:

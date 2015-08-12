@@ -17,6 +17,13 @@
 #import "CoronaRuntime.h"
 #import "VungleBytesAssetLoader.h"
 
+// Converts C style string to NSString
+#define GetStringParam( _x_ ) ( _x_ != NULL ) ? [NSString stringWithUTF8String:_x_] : [NSString stringWithUTF8String:""]
+
+// Converts C style string to NSString as long as it isnt empty
+#define GetStringParamOrNil( _x_ ) ( _x_ != NULL && strlen( _x_ ) ) ? [NSString stringWithUTF8String:_x_] : nil
+
+
 static const char* kINCENTIVIZED_AD_TYPE = "incentivized";
 
 // show() ad properties and defaults
@@ -97,7 +104,8 @@ Vungle::Open( lua_State *L )
 
 	if ( result )
 	{
-		const luaL_Reg kFunctions[] =
+
+        const luaL_Reg kFunctions[] =
 		{
 			{ "init", Vungle::Init },
 			{ "hide", Vungle::Hide },
@@ -105,6 +113,11 @@ Vungle::Open( lua_State *L )
 			{ "getVersionString", Vungle::versionString },
 			{ "isAdAvailable", Vungle::adIsAvailable },
 			{ "showCacheFiles", Vungle::showCacheFiles },
+            { "showEx", Vungle::showEx },
+            { "clearCache", Vungle::clearCache },
+            { "clearSleep", Vungle::clearSleep },
+            { "setSoundEnabled", Vungle::setSoundEnabled },
+            { "enableLogging", Vungle::enableLogging },
 			{ NULL, NULL }
 		};
         
@@ -223,6 +236,135 @@ int Vungle::Show(lua_State *L) {
 	return 1;
 }
 
+NSNumber* makeOrientation(int code) {
+    NSNumber* orientationMask;
+    switch( code )
+    {
+        case 0:
+            orientationMask = @(UIInterfaceOrientationMaskPortrait);
+            break;
+        case 1:
+            orientationMask = @(UIInterfaceOrientationMaskLandscapeLeft);
+            break;
+        case 2:
+            orientationMask = @(UIInterfaceOrientationMaskLandscapeRight);
+            break;
+        case 3:
+            orientationMask = @(UIInterfaceOrientationMaskPortraitUpsideDown);
+            break;
+        case 4:
+            orientationMask = @(UIInterfaceOrientationMaskLandscape);
+            break;
+        case 5:
+            orientationMask = @(UIInterfaceOrientationMaskAll);
+            break;
+        case 6:
+            orientationMask = @(UIInterfaceOrientationMaskAllButUpsideDown);
+            break;
+        default:
+            orientationMask = @(UIInterfaceOrientationMaskAllButUpsideDown);
+    }
+    return orientationMask;
+}
+
+
+int Vungle::showEx(lua_State *L) {
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    lua_getfield(L, 1, "incentivized");
+    if (!lua_isnil(L, -1)) {
+        [options setValue:[NSNumber numberWithBool:lua_toboolean(L, -1)] forKey:VunglePlayAdOptionKeyIncentivized];
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "orientation");
+    if (!lua_isnil(L, -1)) {
+        options[VunglePlayAdOptionKeyOrientations] = makeOrientation(lua_tointeger(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "large");
+    if (!lua_isnil(L, -1)) {
+        [options setValue:[NSNumber numberWithBool:lua_toboolean(L, -1)] forKey:VunglePlayAdOptionKeyLargeButtons];
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "userTag");
+    if (!lua_isnil(L, -1)) {
+        options[VunglePlayAdOptionKeyUser] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "alertTitle");
+    if (!lua_isnil(L, -1)) {
+        options[VunglePlayAdOptionKeyIncentivizedAlertTitleText] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "alertText");
+    if (!lua_isnil(L, -1)) {
+        options[VunglePlayAdOptionKeyIncentivizedAlertBodyText] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "closeText");
+    if (!lua_isnil(L, -1)) {
+        options[VunglePlayAdOptionKeyIncentivizedAlertCloseButtonText] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "continueText");
+    if (!lua_isnil(L, -1)) {
+        options[VunglePlayAdOptionKeyIncentivizedAlertContinueButtonText] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "placement");
+    if (!lua_isnil(L, -1)) {
+        options[VunglePlayAdOptionKeyPlacement] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+
+    NSMutableDictionary *extra = [NSMutableDictionary dictionary];
+    lua_getfield(L, 1, "key1");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra1] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "key2");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra2] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "key3");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra3] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "key4");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra4] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "key5");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra5] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "key6");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra6] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "key7");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra7] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "key8");
+    if (!lua_isnil(L, -1)) {
+        extra[VunglePlayAdOptionKeyExtra8] = GetStringParam(lua_tostring(L, -1));
+    }
+    lua_pop(L, 1);
+    options[VunglePlayAdOptionKeyExtraInfoDictionary] = extra;
+
+    bool success = vungleProvider->ShowEx(options);
+
+    lua_pushboolean(L, success);
+    return 1;
+}
+
 // TODO remove
 int Vungle::setBackButtonEnabled(lua_State* L) {
 	lua_pushboolean(L, true);
@@ -253,6 +395,32 @@ int Vungle::adIsAvailable(lua_State* L) {
 	return 1;
 }
 
+int Vungle::clearCache(lua_State* L) {
+    [[VungleSDK sharedSDK] clearCache];
+    lua_pushboolean(L, true);
+    return 1;
+}
+    
+int Vungle::clearSleep(lua_State* L) {
+    [[VungleSDK sharedSDK] clearSleep];
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+int Vungle::setSoundEnabled(lua_State* L) {
+    bool enable = lua_toboolean( L, 1 );
+    [[VungleSDK sharedSDK] setMuted: !enable];
+    lua_pushboolean(L, true);
+    return 1;
+}
+
+int Vungle::enableLogging(lua_State* L) {
+    bool enable = lua_toboolean( L, 1 );
+    [[VungleSDK sharedSDK] setLoggingEnabled: enable];
+    lua_pushboolean(L, true);
+    return 1;
+}
+    
 // ----------------------------------------------------------------------------
 
 Vungle::Vungle( id<CoronaRuntime> runtime )
@@ -309,6 +477,15 @@ bool Vungle::Show(bool showClose, NSUInteger orientations) {
 	return false;
 }
 	
+bool Vungle::ShowEx(NSDictionary* options) {
+    VungleSDK* sdk = [VungleSDK sharedSDK];
+    if ([sdk isCachedAdAvailable]) {
+        [sdk playAd:_controller withOptions:options];
+        return true;
+    }
+    return false;
+}
+
 bool Vungle::ShowIncentivized(bool showClose, NSUInteger orientations, const std::string& userTag) {
 	NSString* userString = [NSString stringWithUTF8String:userTag.c_str()];
     VungleSDK* sdk = [VungleSDK sharedSDK];
