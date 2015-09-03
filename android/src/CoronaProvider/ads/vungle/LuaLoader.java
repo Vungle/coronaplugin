@@ -50,7 +50,7 @@ import com.vungle.log.Logger;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "2.1.2";
+	private static final String VERSION = "3.3.2";
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
