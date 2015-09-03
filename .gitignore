@@ -1,5 +1,11 @@
 # android
 gen/
+android/assets
+
+#ios
+ios/*.ipa
+ios/*.xcarchive
+ios/DerivedData
 
 # eclipse
 bin/

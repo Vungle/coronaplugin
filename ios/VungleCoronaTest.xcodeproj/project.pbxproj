@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8460BC831B7B90B000BA3240 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 8460BC821B7B90B000BA3240 /* main.lua */; };
 		A447B610165D72FB009EA762 /* AppCoronaDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A447B60F165D72FB009EA762 /* AppCoronaDelegate.mm */; };
 		A447B6671666FD02009EA762 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A447B6641666FD02009EA762 /* MainWindow-iPad.xib */; };
 		A447B6681666FD02009EA762 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A447B6651666FD02009EA762 /* MainWindow.xib */; };
@@ -47,13 +48,6 @@
 		A4E253E5166DE7E000DCDC2C /* libads-vungle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4E253E2166DE7C800DCDC2C /* libads-vungle.a */; };
 		A9CAF0751767C34500CC76E7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CAF0741767C34500CC76E7 /* libz.dylib */; };
 		A9F4C575178F6AAE0075B743 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4C574178F6AAE0075B743 /* CoreVideo.framework */; };
-		A9F4C59F17988BE90075B743 /* build.settings in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59417988BE90075B743 /* build.settings */; };
-		A9F4C5A017988BE90075B743 /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59517988BE90075B743 /* config.lua */; };
-		A9F4C5A117988BE90075B743 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59617988BE90075B743 /* Icon-72.png */; };
-		A9F4C5A617988BE90075B743 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59B17988BE90075B743 /* Icon.png */; };
-		A9F4C5A717988BE90075B743 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59C17988BE90075B743 /* Icon@2x.png */; };
-		A9F4C5A817988BE90075B743 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59D17988BE90075B743 /* main.lua */; };
-		A9F4C5A917988BE90075B743 /* space.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4C59E17988BE90075B743 /* space.png */; };
 		B519EFB618E4A2F800F0E3A1 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A484112315114F700074BD57 /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -75,13 +69,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8460BC821B7B90B000BA3240 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		A447B60E165D72FB009EA762 /* AppCoronaDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCoronaDelegate.h; sourceTree = SOURCE_ROOT; };
 		A447B60F165D72FB009EA762 /* AppCoronaDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppCoronaDelegate.mm; sourceTree = SOURCE_ROOT; };
 		A447B6641666FD02009EA762 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "CoronaEnterprise/Corona/ios/resource/MainWindow-iPad.xib"; sourceTree = SOURCE_ROOT; };
 		A447B6651666FD02009EA762 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainWindow.xib; path = CoronaEnterprise/Corona/ios/resource/MainWindow.xib; sourceTree = SOURCE_ROOT; };
 		A447B6691666FD43009EA762 /* CoronaSDK3rdPartyLicenses.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CoronaSDK3rdPartyLicenses.txt; path = CoronaEnterprise/Corona/shared/resource/CoronaSDK3rdPartyLicenses.txt; sourceTree = SOURCE_ROOT; };
 		A447B67116670028009EA762 /* libplayer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libplayer.a; path = CoronaEnterprise/Corona/ios/lib/libplayer.a; sourceTree = SOURCE_ROOT; };
-		A484111915114F700074BD57 /* AdsTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdsTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A484111915114F700074BD57 /* VungleCoronaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VungleCoronaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A484111D15114F700074BD57 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A484111F15114F700074BD57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A484112115114F700074BD57 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,13 +115,6 @@
 		A4E253DA166DE7C800DCDC2C /* Plugin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Plugin.xcodeproj; sourceTree = "<group>"; };
 		A9CAF0741767C34500CC76E7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A9F4C574178F6AAE0075B743 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		A9F4C59417988BE90075B743 /* build.settings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.settings; sourceTree = "<group>"; };
-		A9F4C59517988BE90075B743 /* config.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.lua; sourceTree = "<group>"; };
-		A9F4C59617988BE90075B743 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		A9F4C59B17988BE90075B743 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		A9F4C59C17988BE90075B743 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		A9F4C59D17988BE90075B743 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
-		A9F4C59E17988BE90075B743 /* space.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +194,7 @@
 		A484111A15114F700074BD57 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A484111915114F700074BD57 /* AdsTestApp.app */,
+				A484111915114F700074BD57 /* VungleCoronaTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -287,13 +275,7 @@
 		A9F4C59317988BE90075B743 /* Corona */ = {
 			isa = PBXGroup;
 			children = (
-				A9F4C59417988BE90075B743 /* build.settings */,
-				A9F4C59517988BE90075B743 /* config.lua */,
-				A9F4C59617988BE90075B743 /* Icon-72.png */,
-				A9F4C59B17988BE90075B743 /* Icon.png */,
-				A9F4C59C17988BE90075B743 /* Icon@2x.png */,
-				A9F4C59D17988BE90075B743 /* main.lua */,
-				A9F4C59E17988BE90075B743 /* space.png */,
+				8460BC821B7B90B000BA3240 /* main.lua */,
 			);
 			name = Corona;
 			path = ../release/samples;
@@ -302,9 +284,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A484111815114F700074BD57 /* AdsTestApp */ = {
+		A484111815114F700074BD57 /* VungleCoronaTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A484114215114F700074BD57 /* Build configuration list for PBXNativeTarget "AdsTestApp" */;
+			buildConfigurationList = A484114215114F700074BD57 /* Build configuration list for PBXNativeTarget "VungleCoronaTest" */;
 			buildPhases = (
 				A484111715114F700074BD57 /* Resources */,
 				A484111515114F700074BD57 /* Sources */,
@@ -319,9 +301,9 @@
 			dependencies = (
 				A4E253E4166DE7D800DCDC2C /* PBXTargetDependency */,
 			);
-			name = AdsTestApp;
+			name = VungleCoronaTest;
 			productName = CoronaSampleApp;
-			productReference = A484111915114F700074BD57 /* AdsTestApp.app */;
+			productReference = A484111915114F700074BD57 /* VungleCoronaTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -332,7 +314,7 @@
 			attributes = {
 				LastUpgradeCheck = 0420;
 			};
-			buildConfigurationList = A484111315114F700074BD57 /* Build configuration list for PBXProject "AdsTestApp" */;
+			buildConfigurationList = A484111315114F700074BD57 /* Build configuration list for PBXProject "VungleCoronaTest" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -350,7 +332,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				A484111815114F700074BD57 /* AdsTestApp */,
+				A484111815114F700074BD57 /* VungleCoronaTest */,
 			);
 		};
 /* End PBXProject section */
@@ -371,17 +353,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A484112C15114F700074BD57 /* InfoPlist.strings in Resources */,
+				8460BC831B7B90B000BA3240 /* main.lua in Resources */,
 				A447B6671666FD02009EA762 /* MainWindow-iPad.xib in Resources */,
 				A447B6681666FD02009EA762 /* MainWindow.xib in Resources */,
 				A447B66A1666FD43009EA762 /* CoronaSDK3rdPartyLicenses.txt in Resources */,
 				A498B81816D70EE80091A148 /* CoronaResources.bundle in Resources */,
-				A9F4C59F17988BE90075B743 /* build.settings in Resources */,
-				A9F4C5A017988BE90075B743 /* config.lua in Resources */,
-				A9F4C5A117988BE90075B743 /* Icon-72.png in Resources */,
-				A9F4C5A617988BE90075B743 /* Icon.png in Resources */,
-				A9F4C5A717988BE90075B743 /* Icon@2x.png in Resources */,
-				A9F4C5A817988BE90075B743 /* main.lua in Resources */,
-				A9F4C5A917988BE90075B743 /* space.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +461,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"ARCHS[sdk=iphoneos*]" = armv7;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iOS Development: Sergey Korotkov (66467CH54Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: Sergey Korotkov (66467CH54Q)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -500,6 +477,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/CoronaEnterprise/Corona/shared/include/Corona ${SRCROOT}/CoronaEnterprise/Corona/shared/include/lua ${SRCROOT}/CoronaEnterprise/Corona/ios/include/Corona";
@@ -511,7 +489,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"ARCHS[sdk=iphoneos*]" = armv7;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iOS Development: Sergey Korotkov (66467CH54Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iOS Development: Sergey Korotkov (66467CH54Q)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -520,6 +499,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/CoronaEnterprise/Corona/shared/include/Corona ${SRCROOT}/CoronaEnterprise/Corona/shared/include/lua ${SRCROOT}/CoronaEnterprise/Corona/ios/include/Corona";
@@ -530,6 +510,7 @@
 		A484114315114F700074BD57 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Vungle, Inc.";
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,7 +527,8 @@
 					"\"$(SRCROOT)/CoronaEnterprise/Corona/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = VungleCoronaTest;
+				PROVISIONING_PROFILE = "";
 				SEPARATE_STRIP = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
@@ -557,6 +539,7 @@
 		A484114415114F700074BD57 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Vungle, Inc.";
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -573,7 +556,8 @@
 					"\"$(SRCROOT)/CoronaEnterprise/Corona/ios/lib\"",
 				);
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = VungleCoronaTest;
+				PROVISIONING_PROFILE = "";
 				SEPARATE_STRIP = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
@@ -584,7 +568,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A484111315114F700074BD57 /* Build configuration list for PBXProject "AdsTestApp" */ = {
+		A484111315114F700074BD57 /* Build configuration list for PBXProject "VungleCoronaTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A484114015114F700074BD57 /* Debug */,
@@ -593,7 +577,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A484114215114F700074BD57 /* Build configuration list for PBXNativeTarget "AdsTestApp" */ = {
+		A484114215114F700074BD57 /* Build configuration list for PBXNativeTarget "VungleCoronaTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A484114315114F700074BD57 /* Debug */,

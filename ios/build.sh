@@ -1,13 +1,9 @@
-#!/bin/sh
+set -ve
+currentPath=$(pwd)
+echo "Path:" $currentPath
 
-IOS_SDK=8.2
-CORONA_RELEASES="2013.1137 2014.2264 2014.2430"
+[ -f ./VungleCoronaTest.ipa ] && rm ./VungleCoronaTest.ipa
 
-xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj clean
-xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj clean
-xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj build
-xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj build
-for version in $CORONA_RELEASES; do
-	cp build/Release-iphoneos/libads-vungle.a ../release/plugins/${version}/iphone/libads-vungle.a
-	cp build/Release-iphonesimulator/libads-vungle.a ../release/plugins/${version}/iphone-sim/libads-vungle.a
-done
+xcodebuild -target VungleCoronaTest -project VungleCoronaTest.xcodeproj clean
+xcodebuild -project VungleCoronaTest.xcodeproj -scheme AdsTestApp archive -archivePath ./VungleCoronaTest.xcarchive
+xcodebuild -exportArchive -exportFormat ipa -archivePath "./VungleCoronaTest.xcarchive/" -exportPath "./VungleCoronaTest.ipa" -exportProvisioningProfile "Vungle In House Distribution"
