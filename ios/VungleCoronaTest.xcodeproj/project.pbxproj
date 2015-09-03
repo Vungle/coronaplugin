@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8460BC831B7B90B000BA3240 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 8460BC821B7B90B000BA3240 /* main.lua */; };
+		84A1411F1B9896D200A73D55 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 84A1411E1B9896D200A73D55 /* app */; };
 		A447B610165D72FB009EA762 /* AppCoronaDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A447B60F165D72FB009EA762 /* AppCoronaDelegate.mm */; };
 		A447B6671666FD02009EA762 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A447B6641666FD02009EA762 /* MainWindow-iPad.xib */; };
 		A447B6681666FD02009EA762 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A447B6651666FD02009EA762 /* MainWindow.xib */; };
@@ -69,7 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8460BC821B7B90B000BA3240 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
+		84A1411E1B9896D200A73D55 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; name = app; path = "../../corona-test-app/app"; sourceTree = "<group>"; };
 		A447B60E165D72FB009EA762 /* AppCoronaDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCoronaDelegate.h; sourceTree = SOURCE_ROOT; };
 		A447B60F165D72FB009EA762 /* AppCoronaDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppCoronaDelegate.mm; sourceTree = SOURCE_ROOT; };
 		A447B6641666FD02009EA762 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "CoronaEnterprise/Corona/ios/resource/MainWindow-iPad.xib"; sourceTree = SOURCE_ROOT; };
@@ -187,7 +187,7 @@
 				A447B66F16670015009EA762 /* CoronaEnterprise */,
 				A484111C15114F700074BD57 /* Frameworks */,
 				A484111A15114F700074BD57 /* Products */,
-				A9F4C59317988BE90075B743 /* Corona */,
+				84A1411E1B9896D200A73D55 /* app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -272,15 +272,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A9F4C59317988BE90075B743 /* Corona */ = {
-			isa = PBXGroup;
-			children = (
-				8460BC821B7B90B000BA3240 /* main.lua */,
-			);
-			name = Corona;
-			path = ../release/samples;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -352,8 +343,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A1411F1B9896D200A73D55 /* app in Resources */,
 				A484112C15114F700074BD57 /* InfoPlist.strings in Resources */,
-				8460BC831B7B90B000BA3240 /* main.lua in Resources */,
 				A447B6671666FD02009EA762 /* MainWindow-iPad.xib in Resources */,
 				A447B6681666FD02009EA762 /* MainWindow.xib in Resources */,
 				A447B66A1666FD43009EA762 /* CoronaSDK3rdPartyLicenses.txt in Resources */,
@@ -376,7 +367,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "if [ ! -d \"$CORONA_ROOT\" ]\nthen\n\t# Assume symlink location\n\tCORONA_ROOT=$PROJECT_DIR/CoronaEnterprise\nfi\n\nif [ ! -d \"$CORONA_ROOT\" ]\nthen\n    echo \"Could not find Corona Enterprise directory\"\n    exit -1\nfi\n\n# -------------------------------------------------------------------\n\nexport TARGET_PLATFORM=ios\nCORONA_MAC_BIN=$CORONA_ROOT/Corona/mac/bin\nCORONA_SHARED_BIN=$CORONA_ROOT/Corona/shared/bin\nexport LUA_CPATH=\"$CORONA_MAC_BIN/?.so\"\nexport CORONA_ASSETS_DIR=\"${SRCROOT}/../release/samples\"\n\"$CORONA_MAC_BIN\"/lua -e \"package.path='$CORONA_SHARED_BIN/?.lua;$CORONA_SHARED_BIN/?/init.lua;'..package.path\" \"$CORONA_SHARED_BIN\"/Compile.lua mac \"$CORONA_ROOT\"\nif [ $? -ne 0 ]\nthen\n    echo \"Exiting due to errors (above)\"\n    exit -1\nfi\n";
+			shellScript = "if [ ! -d \"$CORONA_ROOT\" ]\nthen\n\t# Assume symlink location\n\tCORONA_ROOT=$PROJECT_DIR/CoronaEnterprise\nfi\n\nif [ ! -d \"$CORONA_ROOT\" ]\nthen\n    echo \"Could not find Corona Enterprise directory\"\n    exit -1\nfi\n\n# -------------------------------------------------------------------\n\nexport TARGET_PLATFORM=ios\nCORONA_MAC_BIN=$CORONA_ROOT/Corona/mac/bin\nCORONA_SHARED_BIN=$CORONA_ROOT/Corona/shared/bin\nexport LUA_CPATH=\"$CORONA_MAC_BIN/?.so\"\nexport CORONA_ASSETS_DIR=\"${SRCROOT}/../../corona-test-app/app\"\n\"$CORONA_MAC_BIN\"/lua -e \"package.path='$CORONA_SHARED_BIN/?.lua;$CORONA_SHARED_BIN/?/init.lua;'..package.path\" \"$CORONA_SHARED_BIN\"/Compile.lua mac \"$CORONA_ROOT\"\nif [ $? -ne 0 ]\nthen\n    echo \"Exiting due to errors (above)\"\n    exit -1\nfi\n";
 		};
 		A484118B15128E320074BD57 /* build.settings to Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;

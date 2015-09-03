@@ -94,7 +94,7 @@
             <env key="PROJECT_DIR" value="${basedir}"/>
             <env key="CORONA_COPY_PNG_PRESERVE" value="--preserve"/>
             <env key="CONFIGURATION" value="${ant.project.invoked-targets}"/>
-            <env key="CORONA_ASSETS_DIR" value="${basedir}/../../coronaplugin-release/samples"/>
+            <env key="CORONA_ASSETS_DIR" value="${basedir}/../../corona-test-app/app"/>
             <env key="CORONA_TARGET_RESOURCES_DIR" value="${basedir}/assets"/>
             <env key="CORONA_TARGET_EXECUTABLE_DIR" value="${basedir}/assets"/>
 		</exec>
