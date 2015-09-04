@@ -57,6 +57,20 @@ RELATIVE_PATH_TOOL=$CORONA_PATH/Corona/mac/bin/relativePath.sh
 CORONA_PATH=`"$RELATIVE_PATH_TOOL" "$path" "$CORONA_PATH"`
 echo CORONA_PATH: $CORONA_PATH
 
+if [ -f ../version.ver ]; then
+    version=$(cat ../version.ver)
+else
+    version="1.0"
+fi
+echo "Version:" $version
+d1=$(date +%s)
+#25.05.2015 16:00 MSK
+build=$(expr $d1 / 60 - 23875980)
+echo "Build:" $build
+
+sed -E -i .bak "s/android:versionName=\"[0-9]+\.[0-9]+\"/android:versionName=\"$version.$build\"/g" AndroidManifest.xml
+
+exit -1
 # Do not continue if we do not have the path to the Android SDK.
 if [ -z "$SDK_PATH" ]
 then
@@ -89,3 +103,7 @@ echo "Using Corona Enterprise Dir: $CORONA_PATH"
 # Build the Test project via the Ant build system.
 ant clean release -D"CoronaEnterpriseDir"="$CORONA_PATH"
 checkError
+
+[ -f ./VungleCoronaTest.apk ] && rm ./VungleCoronaTest.apk
+cp ./bin/VungleCoronaTest-release.apk ./VungleCoronaTest.apk
+#puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk

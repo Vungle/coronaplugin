@@ -1,6 +1,7 @@
 # android
 gen/
 android/assets
+android/*.apk
 
 #ios
 ios/*.ipa
@@ -23,3 +24,4 @@ build/
 .buildpath
 xcshareddata/
 xcuserdata/
+*.bak
