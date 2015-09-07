@@ -105,4 +105,4 @@ checkError
 
 [ -f ./VungleCoronaTest.apk ] && rm ./VungleCoronaTest.apk
 cp ./bin/VungleCoronaTest-release.apk ./VungleCoronaTest.apk
-#puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
+puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
