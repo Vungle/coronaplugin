@@ -70,7 +70,6 @@ echo "Build:" $build
 
 sed -E -i .bak "s/android:versionName=\"[0-9]+\.[0-9]+\"/android:versionName=\"$version.$build\"/g" AndroidManifest.xml
 
-exit -1
 # Do not continue if we do not have the path to the Android SDK.
 if [ -z "$SDK_PATH" ]
 then
