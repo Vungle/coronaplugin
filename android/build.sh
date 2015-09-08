@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -ve
 # ------------------------------------------------------------------------------------------
 # Builds the sample project from the command line.
 #
