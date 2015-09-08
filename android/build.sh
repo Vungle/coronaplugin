@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -ve
 # ------------------------------------------------------------------------------------------
 # Builds the sample project from the command line.
 #
@@ -7,6 +8,8 @@
 # 1) Provide the path as a comman line argument. For example:  build.sh <MyAndroidSdkPath>
 # 2) Set the path to an environment variable named "ANDROID_SDK".
 # ------------------------------------------------------------------------------------------
+
+PATH="$PATH:/usr/local/bin"
 
 #
 # Checks exit value for error
