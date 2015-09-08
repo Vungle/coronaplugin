@@ -9,6 +9,8 @@ set -ve
 # 2) Set the path to an environment variable named "ANDROID_SDK".
 # ------------------------------------------------------------------------------------------
 
+PATH="$PATH:/usr/local/bin"
+
 #
 # Checks exit value for error
 # 
