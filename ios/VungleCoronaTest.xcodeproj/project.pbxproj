@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		84A1411F1B9896D200A73D55 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 84A1411E1B9896D200A73D55 /* app */; };
+		84A1412C1BA05F3C00A73D55 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A1412B1BA05F3C00A73D55 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A447B610165D72FB009EA762 /* AppCoronaDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A447B60F165D72FB009EA762 /* AppCoronaDelegate.mm */; };
 		A447B6671666FD02009EA762 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A447B6641666FD02009EA762 /* MainWindow-iPad.xib */; };
 		A447B6681666FD02009EA762 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = A447B6651666FD02009EA762 /* MainWindow.xib */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		84A1411E1B9896D200A73D55 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; name = app; path = "../../corona-test-app/app"; sourceTree = "<group>"; };
+		84A1412B1BA05F3C00A73D55 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		A447B60E165D72FB009EA762 /* AppCoronaDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCoronaDelegate.h; sourceTree = SOURCE_ROOT; };
 		A447B60F165D72FB009EA762 /* AppCoronaDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppCoronaDelegate.mm; sourceTree = SOURCE_ROOT; };
 		A447B6641666FD02009EA762 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "CoronaEnterprise/Corona/ios/resource/MainWindow-iPad.xib"; sourceTree = SOURCE_ROOT; };
@@ -122,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A1412C1BA05F3C00A73D55 /* WebKit.framework in Frameworks */,
 				B519EFB618E4A2F800F0E3A1 /* GLKit.framework in Frameworks */,
 				A9F4C575178F6AAE0075B743 /* CoreVideo.framework in Frameworks */,
 				A9CAF0751767C34500CC76E7 /* libz.dylib in Frameworks */,
@@ -202,6 +205,7 @@
 		A484111C15114F700074BD57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84A1412B1BA05F3C00A73D55 /* WebKit.framework */,
 				A9F4C574178F6AAE0075B743 /* CoreVideo.framework */,
 				A489DE2816854301007FB757 /* Accounts.framework */,
 				A489DE2916854301007FB757 /* AdSupport.framework */,
@@ -542,7 +546,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Corona/ios/lib\"",
 				);
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = VungleCoronaTest;
 				PROVISIONING_PROFILE = "";
 				SEPARATE_STRIP = YES;
@@ -571,7 +578,10 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Corona/ios/lib\"",
 				);
-				OTHER_LDFLAGS = "-all_load";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = VungleCoronaTest;
 				PROVISIONING_PROFILE = "";
 				SEPARATE_STRIP = YES;
