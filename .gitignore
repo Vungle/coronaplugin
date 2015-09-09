@@ -24,3 +24,5 @@ build/
 .buildpath
 xcuserdata/
 *.bak
+
+plugins.tgz

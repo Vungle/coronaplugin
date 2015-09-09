@@ -109,3 +109,8 @@ else
 	echo "ERROR: Could not create '$path/bin/${PLUGIN_NAME}.jar'"
 	exit -1	
 fi
+
+cp ./bin/CoronaProvider.ads.vungle.jar ../plugins/2014.2264/android/CoronaProvider.ads.vungle.jar
+cp ./libs/vunglePub.jar ../plugins/2014.2264/android/vunglePub.jar
+cp ./bin/CoronaProvider.ads.vungle.jar ../plugins/2014.2430/android/CoronaProvider.ads.vungle.jar
+cp ./libs/vunglePub.jar ../plugins/2014.2430/android/vunglePub.jar

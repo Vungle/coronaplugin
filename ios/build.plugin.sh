@@ -8,6 +8,6 @@ xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xco
 xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj build
 xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj build
 for version in $CORONA_RELEASES; do
-	cp build/Release-iphoneos/libads-vungle.a ../release/plugins/${version}/iphone/libads-vungle.a
-	cp build/Release-iphonesimulator/libads-vungle.a ../release/plugins/${version}/iphone-sim/libads-vungle.a
+	cp build/Release-iphoneos/libads-vungle.a ../plugins/${version}/iphone/libads-vungle.a
+	cp build/Release-iphonesimulator/libads-vungle.a ../plugins/${version}/iphone-sim/libads-vungle.a
 done
