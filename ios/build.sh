@@ -15,6 +15,12 @@ echo "Build:" $build
 
 sed -E -i .bak "s/\<string\>[0-9]+\.[0-9]+\<\/string\>/<string>$version.$build<\/string>/g" App-Info.plist
 
+pluginVersion=$(cat ../plugin_version.txt)
+_pluginVersion=$(echo "$pluginVersion" | sed "s/\./_/g")
+sub="@\"$_pluginVersion\";//plugin version. Do not delete this comment"
+sed -E -i .bak "s#@\"[0-9]+_[0-9]+_[0-9]+\";//plugin version. Do not delete this comment#$sub#g" Plugin/VungleAds.mm
+rm Plugin/VungleAds.mm.bak
+
 [ -f ./VungleCoronaTest.ipa ] && rm ./VungleCoronaTest.ipa
 
 xcodebuild -target VungleCoronaTest -project VungleCoronaTest.xcodeproj clean
