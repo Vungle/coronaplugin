@@ -73,6 +73,11 @@ echo "Build:" $build
 
 sed -E -i .bak "s/android:versionName=\"[0-9]+\.[0-9]+\"/android:versionName=\"$version.$build\"/g" AndroidManifest.xml
 
+pluginVersion=$(cat ../plugin_version.txt)
+sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
+sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/CoronaProvider/ads/vungle/LuaLoader.java
+rm src/CoronaProvider/ads/vungle/LuaLoader.java.bak
+
 # Do not continue if we do not have the path to the Android SDK.
 if [ -z "$SDK_PATH" ]
 then

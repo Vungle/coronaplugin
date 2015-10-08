@@ -88,6 +88,11 @@ PLUGIN_NAME=`find src -name LuaLoader.java`
 # Remove 'src/' prefix and 'LuaLoader.java' suffix. Replace '/' with '.'
 PLUGIN_NAME=`echo $PLUGIN_NAME | sed -E "s#src/##" | sed -E "s#/LuaLoader.java##" | sed -E "s#/#.#g"`
 
+#Update plugin version in the LuaLoader.java according to plugin_version.txt file
+pluginVersion=$(cat ../plugin_version.txt)
+sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
+sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/CoronaProvider/ads/vungle/LuaLoader.java
+rm src/CoronaProvider/ads/vungle/LuaLoader.java.bak
 
 ## Clean
 ant -buildfile build.plugin.xml -D"manifest.file"="$ANDROID_MANIFEST" -DCoronaEnterpriseDir="$CORONA_PATH" clean
