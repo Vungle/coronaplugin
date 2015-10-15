@@ -43,6 +43,7 @@ static const NSString* kAD_START_EVENT_TYPE = @"adStart";
 static const NSString* kAD_VIEW_EVENT_TYPE = @"adView";
 static const NSString* kAD_END_EVENT_TYPE = @"adEnd";
 static const NSString* kAD_AD_AVAILABLE_EVENT_TYPE = @"cachedAdAvailable";
+static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
 static const NSString* kVERSION = @"3_1_2";
 
 // ----------------------------------------------------------------------------
@@ -75,6 +76,15 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
 
 - (void)vungleSDKhasCachedAdAvailable {
 	vungle->DispatchEvent(false, [kAD_AD_AVAILABLE_EVENT_TYPE UTF8String]);
+}
+
+@end
+
+@implementation VungleLogger
+@synthesize vungle;
+
+- (void)vungleSDKLog:(NSString *)message {
+    vungle->DispatchEvent(false, [kAD_LOG_EVENT_TYPE UTF8String], @{@"message": message});
 }
 
 @end
@@ -430,13 +440,16 @@ Vungle::Vungle( id<CoronaRuntime> runtime )
 {
 	_controller = [runtime.appViewController retain];
 	_delegate = [[VungleDelegate alloc] init];
+    _logger = [[VungleLogger alloc] init];
 }
 
 Vungle::~Vungle()
 {
 	CoronaLuaDeleteRef( fRuntime.L, fListener );
     [_controller release];
-	[_delegate release];
+    [_delegate release];
+    [[VungleSDK sharedSDK] detachLogger:_logger];
+	[_logger release];
 	[fAppId release];
 }
 
@@ -458,6 +471,9 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
 		[sdk performSelector:@selector(setPluginName:version:) withObject:@"corona" withObject:kVERSION];
 		[sdk startWithAppId:str];
 		sdk.delegate = _delegate;
+        _logger.vungle = this;
+        [sdk attachLogger:_logger];
+        [sdk setLoggingEnabled:true];
 
 		fListener = ( CoronaLuaIsListener( L, listenerIndex, "adsRequest" ) ? CoronaLuaNewRef( L, listenerIndex ) : NULL );
 		_delegate.vungle = this;
