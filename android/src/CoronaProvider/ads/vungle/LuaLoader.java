@@ -395,7 +395,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		final int PARAM_TABLE_INDEX = 2;
 		final int numberOfArguments = luaState.getTop();
 		final AdConfig adConfig = new AdConfig();
-		config.setTransitionAnimationEnabled(false);
+		adConfig.setTransitionAnimationEnabled(false);
 		// get the lower case ad type if it exists:
 		final String adType = 
 			(numberOfArguments >= AD_TYPE_INDEX ? 
@@ -476,7 +476,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     public int showEx(LuaState luaState) {
         final String METHOD_NAME = SHOW_METHOD + "(): ";
         final AdConfig adConfig = new AdConfig();
-	config.setTransitionAnimationEnabled(false);
+	adConfig.setTransitionAnimationEnabled(false);
 	final int numberOfArguments = luaState.getTop();
         // get the lower case ad type if it exists:
         if (numberOfArguments >= 1 && luaState.isTable(1)) {
