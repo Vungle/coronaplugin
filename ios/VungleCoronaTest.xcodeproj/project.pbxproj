@@ -50,6 +50,8 @@
 		A9CAF0751767C34500CC76E7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CAF0741767C34500CC76E7 /* libz.dylib */; };
 		A9F4C575178F6AAE0075B743 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4C574178F6AAE0075B743 /* CoreVideo.framework */; };
 		B519EFB618E4A2F800F0E3A1 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A484112315114F700074BD57 /* GLKit.framework */; };
+		C3E841091CE4B11C000BB8F0 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3E841081CE4B11C000BB8F0 /* AssetsLibrary.framework */; };
+		C3E8410B1CE4B12B000BB8F0 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3E8410A1CE4B12B000BB8F0 /* Photos.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +119,8 @@
 		A4E253DA166DE7C800DCDC2C /* Plugin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Plugin.xcodeproj; sourceTree = "<group>"; };
 		A9CAF0741767C34500CC76E7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A9F4C574178F6AAE0075B743 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		C3E841081CE4B11C000BB8F0 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		C3E8410A1CE4B12B000BB8F0 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3E8410B1CE4B12B000BB8F0 /* Photos.framework in Frameworks */,
+				C3E841091CE4B11C000BB8F0 /* AssetsLibrary.framework in Frameworks */,
 				84A1412C1BA05F3C00A73D55 /* WebKit.framework in Frameworks */,
 				B519EFB618E4A2F800F0E3A1 /* GLKit.framework in Frameworks */,
 				A9F4C575178F6AAE0075B743 /* CoreVideo.framework in Frameworks */,
@@ -205,6 +211,8 @@
 		A484111C15114F700074BD57 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3E8410A1CE4B12B000BB8F0 /* Photos.framework */,
+				C3E841081CE4B11C000BB8F0 /* AssetsLibrary.framework */,
 				84A1412B1BA05F3C00A73D55 /* WebKit.framework */,
 				A9F4C574178F6AAE0075B743 /* CoreVideo.framework */,
 				A489DE2816854301007FB757 /* Accounts.framework */,
@@ -530,8 +538,10 @@
 		A484114315114F700074BD57 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Vungle, Inc.";
 				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
@@ -541,7 +551,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = "App-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Corona/ios/lib\"",
@@ -562,8 +572,10 @@
 		A484114415114F700074BD57 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Vungle, Inc.";
 				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Plugins/sdk-facebook/ios\"",
@@ -573,7 +585,7 @@
 				GCC_PREFIX_HEADER = Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = "App-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CoronaEnterprise/Corona/ios/lib\"",
