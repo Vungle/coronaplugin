@@ -25,7 +25,9 @@ package CoronaProvider.ads.vungle;
 
 import java.util.Locale;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Looper;
 
 import com.ansca.corona.CoronaEnvironment;
 import com.ansca.corona.CoronaLua;
@@ -50,7 +52,7 @@ import com.vungle.log.Logger;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "2.0.4";//plugin version. Do not delete this comment
+	private static final String VERSION = "2.2.2";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -155,7 +157,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	 * @return <code>1</code> (the number of return values).
 	 */
 	public int init(LuaState luaState) {
-		boolean isSuccess = false;
+		final boolean[] isSuccess = {false};
 		final String applicationId = this.applicationId = luaState.toString(2);
 		if (applicationId == null) {
 			Logger.w(TAG, "WARNING: " + INIT_METHOD + "() application ID was null");
@@ -170,10 +172,16 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			injector.setWrapperFramework(WrapperFramework.corona);
 			injector.setWrapperFrameworkVersion(VERSION);
 			final VunglePub vunglePub = this.vunglePub;
-			isSuccess = vunglePub.init(applicationContext, applicationId);
+			CoronaEnvironment.getCoronaActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					isSuccess[0] = vunglePub.init(applicationContext, applicationId);
+				}
+			});
+
 			vunglePub.setEventListeners(new EventListener() {
 				@Override
-				public void onAdEnd(final boolean wasCallToActionClicked) {
+				public void onAdEnd(boolean wasSuccessfulView, final boolean wasCallToActionClicked) {
 					if (luaListener != CoronaLua.REFNIL) {
 						taskDispatcher.send(
 							new CoronaRuntimeTask() {
@@ -286,7 +294,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			});
 			vunglePub.onResume();
 		}
-		luaState.pushBoolean(isSuccess);
+		luaState.pushBoolean(isSuccess[0]);
 		return 1;
 	}
 
@@ -395,7 +403,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		final int PARAM_TABLE_INDEX = 2;
 		final int numberOfArguments = luaState.getTop();
 		final AdConfig adConfig = new AdConfig();
-		adConfig.setTransitionAnimationEnabled(false);
 		// get the lower case ad type if it exists:
 		final String adType = 
 			(numberOfArguments >= AD_TYPE_INDEX ? 
@@ -476,8 +483,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     public int showEx(LuaState luaState) {
         final String METHOD_NAME = SHOW_METHOD + "(): ";
         final AdConfig adConfig = new AdConfig();
-	adConfig.setTransitionAnimationEnabled(false);
-	final int numberOfArguments = luaState.getTop();
+        final int numberOfArguments = luaState.getTop();
         // get the lower case ad type if it exists:
         if (numberOfArguments >= 1 && luaState.isTable(1)) {
             
