@@ -176,8 +176,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 				@Override
 				public void run() {
 					isSuccess[0] = vunglePub.init(applicationContext, applicationId);
-				}
-			});
 
 			vunglePub.setEventListeners(new EventListener() {
 				@Override
@@ -293,6 +291,9 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 				}
 			});
 			vunglePub.onResume();
+
+				}
+			});
 		}
 		luaState.pushBoolean(isSuccess[0]);
 		return 1;
