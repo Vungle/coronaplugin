@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.vungle.VungleCoronaTest"
           android:versionCode="1"
-          android:versionName="3.3.464894"
+          android:versionName="3.3"
 	      android:installLocation="auto">
 	<!--
 	 Set the minimum and target Android API levels here to inform the app store what OS versions this app supports.
