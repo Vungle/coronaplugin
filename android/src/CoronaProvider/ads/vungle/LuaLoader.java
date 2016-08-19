@@ -198,6 +198,30 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 								}
 							}
 						);
+						taskDispatcher.send(
+							new CoronaRuntimeTask() {
+								@Override
+								public void executeUsing(CoronaRuntime coronaRuntime) {
+									final String eventType = AD_VIEW_EVENT_TYPE;
+									try {
+										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, eventType, false);
+										asyncLuaState.pushBoolean(wasSuccessfulView);
+										asyncLuaState.setField(-2, AD_VIEW_IS_COMPLETED_VIEW_KEY);
+										if (wasSuccessfulView)
+											asyncLuaState.pushNumber(15);
+										else
+											asyncLuaState.pushNumber(1);
+										asyncLuaState.setField(-2, AD_VIEW_SECONDS_WATCHED_KEY);
+										asyncLuaState.pushNumber(15);
+										asyncLuaState.setField(-2, AD_VIEW_TOTAL_AD_SECONDS_KEY);
+										CoronaLua.dispatchEvent(asyncLuaState, luaListener, 0);
+									}
+									catch (Exception exception) {
+										Logger.e(TAG, "Unable to dispatch event " + eventType, exception);
+									}
+								}
+							}
+						);
 					}
 				}
 
