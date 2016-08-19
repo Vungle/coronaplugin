@@ -179,7 +179,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 
 			vunglePub.setEventListeners(new EventListener() {
 				@Override
-				public void onAdEnd(boolean wasSuccessfulView, final boolean wasCallToActionClicked) {
+				public void onAdEnd(final boolean wasSuccessfulView, final boolean wasCallToActionClicked) {
 					if (luaListener != CoronaLua.REFNIL) {
 						taskDispatcher.send(
 							new CoronaRuntimeTask() {
