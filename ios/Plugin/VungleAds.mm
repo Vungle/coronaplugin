@@ -181,7 +181,7 @@ int Vungle::Show(lua_State *L) {
 	bool isCloseShown = kIS_CLOSE_SHOWN_DEFAULT;
 	bool success = false;
     VungleSDK* sdk = [VungleSDK sharedSDK];
-	if ([sdk isCachedAdAvailable]) {
+	if ([sdk isAdPlayable]) {
 		if (numArgs >= kPARAM_TABLE_INDEX && lua_istable(L, kPARAM_TABLE_INDEX)) {
 			lua_getfield(L, kPARAM_TABLE_INDEX, kIS_ANIMATED_KEY);
 			if (!lua_isnil(L, -1)) {
@@ -396,7 +396,7 @@ int Vungle::showCacheFiles(lua_State* L) {
 }
 
 int Vungle::adIsAvailable(lua_State* L) {
-	bool available = [[VungleSDK sharedSDK] isCachedAdAvailable];
+	bool available = [[VungleSDK sharedSDK] isAdPlayable];
 	lua_pushboolean(L, available);
 	return 1;
 }
@@ -481,7 +481,7 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
 
 bool Vungle::Show(bool showClose, NSUInteger orientations) {
 	VungleSDK* sdk = [VungleSDK sharedSDK];
-    if ([sdk isCachedAdAvailable]) {
+    if ([sdk isAdPlayable]) {
         [sdk playAd:_controller withOptions:@{VunglePlayAdOptionKeyOrientations: @(orientations)}];
 		return true;
 	}
@@ -490,7 +490,7 @@ bool Vungle::Show(bool showClose, NSUInteger orientations) {
 	
 bool Vungle::ShowEx(NSDictionary* options) {
     VungleSDK* sdk = [VungleSDK sharedSDK];
-    if ([sdk isCachedAdAvailable]) {
+    if ([sdk isAdPlayable]) {
         [sdk playAd:_controller withOptions:options];
         return true;
     }
@@ -500,7 +500,7 @@ bool Vungle::ShowEx(NSDictionary* options) {
 bool Vungle::ShowIncentivized(bool showClose, NSUInteger orientations, const std::string& userTag) {
 	NSString* userString = [NSString stringWithUTF8String:userTag.c_str()];
     VungleSDK* sdk = [VungleSDK sharedSDK];
-	if ([sdk isCachedAdAvailable]) {
+	if ([sdk isAdPlayable]) {
         [sdk playAd:_controller withOptions:@{VunglePlayAdOptionKeyOrientations: @(orientations),
                                               VunglePlayAdOptionKeyIncentivized: @(YES),
                                               VunglePlayAdOptionKeyUser: userString}];
