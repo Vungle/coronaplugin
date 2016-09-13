@@ -482,7 +482,8 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
 bool Vungle::Show(bool showClose, NSUInteger orientations) {
 	VungleSDK* sdk = [VungleSDK sharedSDK];
     if ([sdk isAdPlayable]) {
-        [sdk playAd:_controller withOptions:@{VunglePlayAdOptionKeyOrientations: @(orientations)}];
+    	NSError* error = nil;
+        [sdk playAd:_controller withOptions:@{VunglePlayAdOptionKeyOrientations: @(orientations)} error:&error];
 		return true;
 	}
 	return false;
@@ -491,7 +492,8 @@ bool Vungle::Show(bool showClose, NSUInteger orientations) {
 bool Vungle::ShowEx(NSDictionary* options) {
     VungleSDK* sdk = [VungleSDK sharedSDK];
     if ([sdk isAdPlayable]) {
-        [sdk playAd:_controller withOptions:options];
+    	NSError* error = nil;
+        [sdk playAd:_controller withOptions:options error:&error];
         return true;
     }
     return false;
@@ -501,9 +503,10 @@ bool Vungle::ShowIncentivized(bool showClose, NSUInteger orientations, const std
 	NSString* userString = [NSString stringWithUTF8String:userTag.c_str()];
     VungleSDK* sdk = [VungleSDK sharedSDK];
 	if ([sdk isAdPlayable]) {
+    	NSError* error = nil;
         [sdk playAd:_controller withOptions:@{VunglePlayAdOptionKeyOrientations: @(orientations),
                                               VunglePlayAdOptionKeyIncentivized: @(YES),
-                                              VunglePlayAdOptionKeyUser: userString}];
+                                              VunglePlayAdOptionKeyUser: userString}  error:&error];
 		return true;
 	}
 	return false;
