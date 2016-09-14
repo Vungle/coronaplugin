@@ -78,6 +78,12 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
 	vungle->DispatchEvent(false, [kAD_AD_AVAILABLE_EVENT_TYPE UTF8String]);
 }
 
+- (void)vungleSDKAdPlayableChanged:(BOOL)isAdPlayable {
+	if (isAdPlayable) {
+		vungle->DispatchEvent(false, [kAD_AD_AVAILABLE_EVENT_TYPE UTF8String]);
+	}
+}
+
 @end
 
 @implementation VungleLogger
