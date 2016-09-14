@@ -91,6 +91,7 @@ class Vungle
 -(void)vungleSDKwillCloseProductSheet:(id)productSheet;
 -(void)vungleSDKwillShowAd;
 -(void)vungleSDKhasCachedAdAvailable;
+-(void)vungleSDKAdPlayableChanged:(BOOL)isAdPlayable;
 @end
 
 @interface VungleLogger : NSObject <VungleSDKLogger> {
