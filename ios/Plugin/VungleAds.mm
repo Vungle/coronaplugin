@@ -86,7 +86,7 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
 
 @end
 
-@implementation VungleLogger
+@implementation VungleCoronaLogger
 @synthesize vungle;
 
 - (void)vungleSDKLog:(NSString *)message {
@@ -442,7 +442,7 @@ Vungle::Vungle( id<CoronaRuntime> runtime )
 {
 	_controller = [runtime.appViewController retain];
 	_delegate = [[VungleDelegate alloc] init];
-    _logger = [[VungleLogger alloc] init];
+    _logger = [[VungleCoronaLogger alloc] init];
 }
 
 Vungle::~Vungle()
