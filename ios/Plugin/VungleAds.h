@@ -23,7 +23,7 @@ CORONA_EXPORT int luaopen_CoronaProvider_ads_vungle( lua_State *L );
 @protocol CoronaRuntime;
 
 @class VungleDelegate;
-@class VungleLogger;
+@class VungleCoronaLogger;
 
 namespace Corona
 {
@@ -74,7 +74,7 @@ class Vungle
 		CoronaLuaRef fListener;
         UIViewController* _controller;
 		VungleDelegate* _delegate;
-        VungleLogger* _logger;
+        VungleCoronaLogger* _logger;
 };
 
 // ----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ class Vungle
 -(void)vungleSDKAdPlayableChanged:(BOOL)isAdPlayable;
 @end
 
-@interface VungleLogger : NSObject <VungleSDKLogger> {
+@interface VungleCoronaLogger : NSObject <VungleSDKLogger> {
     Corona::Vungle* vungle;
 }
 @property Corona::Vungle* vungle;
