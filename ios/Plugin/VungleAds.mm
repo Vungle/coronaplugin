@@ -67,7 +67,7 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
 }
 
 - (void)vungleSDKwillCloseProductSheet:(id)productSheet {
-    vungle->DispatchEvent(false, [kAD_END_EVENT_TYPE UTF8String]);
+    vungle->DispatchEvent(false, [kAD_END_EVENT_TYPE UTF8String], @{@"wasCallToActionClicked": @YES});
 }
 
 - (void)vungleSDKwillShowAd {
