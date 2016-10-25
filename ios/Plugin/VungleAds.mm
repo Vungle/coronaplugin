@@ -63,7 +63,7 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
     int allTime = completedView ? [playTime intValue] : [playTime intValue]*2;
     vungle->DispatchEvent(false, [kAD_VIEW_EVENT_TYPE UTF8String], @{@"secondsWatched": playTime, @"isCompletedView": [viewInfo objectForKey:@"completedView"], @"totalAdSeconds": @(allTime)});
     if (!willPresentProductSheet) {
-        vungle->DispatchEvent(false, [kAD_END_EVENT_TYPE UTF8String], @{@"wasCallToActionClicked": [viewInfo objectForKey:@"didDownlaod"] ? @YES : @NO});
+        vungle->DispatchEvent(false, [kAD_END_EVENT_TYPE UTF8String], @{@"wasCallToActionClicked": [viewInfo objectForKey:@"didDownload"] ? @YES : @NO});
     }
 }
 
