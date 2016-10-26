@@ -60,7 +60,7 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
 - (void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo willPresentProductSheet:(BOOL)willPresentProductSheet {
     NSNumber* playTime = [viewInfo objectForKey:@"playTime"] ? [viewInfo objectForKey:@"playTime"] : @(0);
     bool completedView = [[viewInfo objectForKey:@"completedView"] boolValue];
-    int allTime = completedView ? [playTime intValue] : [playTime intValue]*2;
+    float allTime = completedView ? [playTime floatValue] : [playTime floatValue]*2;
     vungle->DispatchEvent(false, [kAD_VIEW_EVENT_TYPE UTF8String], @{@"secondsWatched": playTime, @"isCompletedView": [viewInfo objectForKey:@"completedView"], @"totalAdSeconds": @(allTime)});
     if (!willPresentProductSheet) {
         vungle->DispatchEvent(false, [kAD_END_EVENT_TYPE UTF8String], @{@"wasCallToActionClicked": [viewInfo objectForKey:@"didDownload"] ? @YES : @NO});
