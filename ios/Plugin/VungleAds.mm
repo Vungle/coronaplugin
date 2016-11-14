@@ -15,7 +15,6 @@
 #import <Foundation/Foundation.h>
 #import "VungleSDK.h"
 #import "CoronaRuntime.h"
-#import "VungleBytesAssetLoader.h"
 
 // Converts C style string to NSString
 #define GetStringParam( _x_ ) ( _x_ != NULL ) ? [NSString stringWithUTF8String:_x_] : [NSString stringWithUTF8String:""]
@@ -463,13 +462,7 @@ bool Vungle::Init(lua_State *L, const char *appId, int listenerIndex)
     if ( appId )
     {
         NSString* str = [NSString stringWithUTF8String:appId];
-        // set the new asset loader
-        VungleBytesAssetLoader* loader = [[VungleBytesAssetLoader alloc] init];
-        [VungleSDK setupSDKWithAssetLoader:loader];
         VungleSDK* sdk = [VungleSDK sharedSDK];
-
-		[sdk setAssetLoader:loader];
-		[loader release];
 
 		[sdk performSelector:@selector(setPluginName:version:) withObject:@"corona" withObject:kVERSION];
 		[sdk startWithAppId:str];
