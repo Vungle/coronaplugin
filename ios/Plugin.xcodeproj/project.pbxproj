@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A4E63355167568D500F37549 /* VungleAds.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4E63354167568D500F37549 /* VungleAds.mm */; };
 		A92EA0851937B437008C2C1F /* libvunglesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A92EA07D1937B437008C2C1F /* libvunglesdk.a */; };
+		A97CE74A17A083B800426A8F /* VungleBytesAssetLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A97CE74917A0835500426A8F /* VungleBytesAssetLoader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,8 @@
 		A4E63354167568D500F37549 /* VungleAds.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VungleAds.mm; path = Plugin/VungleAds.mm; sourceTree = "<group>"; };
 		A92EA07C1937B437008C2C1F /* VungleSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VungleSDK.h; sourceTree = "<group>"; };
 		A92EA07D1937B437008C2C1F /* libvunglesdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libvunglesdk.a; sourceTree = "<group>"; };
+		A97CE74817A0835500426A8F /* VungleBytesAssetLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VungleBytesAssetLoader.h; sourceTree = "<group>"; };
+		A97CE74917A0835500426A8F /* VungleBytesAssetLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VungleBytesAssetLoader.m; sourceTree = "<group>"; };
 		B519EFB918EB5BF300F0E3A1 /* vg_close.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_close.png.h; sourceTree = "<group>"; };
 		B519EFBA18EB5BF300F0E3A1 /* vg_cta.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_cta.png.h; sourceTree = "<group>"; };
 		B519EFBB18EB5BF300F0E3A1 /* vg_mute_off.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_mute_off.png.h; sourceTree = "<group>"; };
@@ -94,6 +97,22 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		A97CE74417A0835500426A8F /* VGBytesAssetLoader */ = {
+			isa = PBXGroup;
+			children = (
+				B52BED331A267F3E007ABC12 /* __vungle.db.h */,
+				B519EFB918EB5BF300F0E3A1 /* vg_close.png.h */,
+				84950E0C1B4BE15A004F8E1E /* vg_privacy.png.h */,
+				B519EFBA18EB5BF300F0E3A1 /* vg_cta.png.h */,
+				B519EFBB18EB5BF300F0E3A1 /* vg_mute_off.png.h */,
+				B519EFBC18EB5BF300F0E3A1 /* vg_mute_on.png.h */,
+				B519EFBD18EB5BF300F0E3A1 /* vg_timer.png.h */,
+				A97CE74817A0835500426A8F /* VungleBytesAssetLoader.h */,
+				A97CE74917A0835500426A8F /* VungleBytesAssetLoader.m */,
+			);
+			path = VGBytesAssetLoader;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -145,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4E63355167568D500F37549 /* VungleAds.mm in Sources */,
+				A97CE74A17A083B800426A8F /* VungleBytesAssetLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
