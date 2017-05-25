@@ -42,28 +42,23 @@ class Vungle
 		static int Finalizer( lua_State *L );
 
 	protected:
+        static int versionString(lua_State* L);
         static int Init(lua_State* L);
 		static int Show(lua_State* L);
-		static int setBackButtonEnabled(lua_State* L);
-		static int versionString(lua_State* L);
-		static int Hide(lua_State* L);
-		static int showCacheFiles(lua_State* L);
+        static int Load(lua_State* L);
 		static int adIsAvailable(lua_State* L);
         static int clearCache(lua_State* L);
         static int clearSleep(lua_State* L);
         static int setSoundEnabled(lua_State* L);
         static int enableLogging(lua_State* L);
-        static int showEx(lua_State* L);
 
 	public:
 		Vungle( id<CoronaRuntime> runtime );
 		virtual ~Vungle();
 
 	public:
-        bool Init(lua_State* L, const char* appId, int listenerIndex);
-		bool Show(bool showClose, NSUInteger orientations);
-        bool ShowEx(NSDictionary* options);
-		bool ShowIncentivized(bool showClose, NSUInteger orientations, const std::string& userTag="");
+        bool Init(lua_State* L, NSString* appId, NSMutableArray* placements, int listenerIndex);
+        bool Show(NSDictionary* options, NSString* placementID);
 
 	public:
 		void DispatchEvent(bool isError, const char* eventName, NSDictionary* opts = nil) const;
@@ -87,11 +82,10 @@ class Vungle
 	Corona::Vungle* vungle;
 }
 @property Corona::Vungle* vungle;
--(void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo willPresentProductSheet:(BOOL)willPresentProductSheet;
--(void)vungleSDKwillCloseProductSheet:(id)productSheet;
--(void)vungleSDKwillShowAd;
--(void)vungleSDKhasCachedAdAvailable;
--(void)vungleSDKAdPlayableChanged:(BOOL)isAdPlayable;
+- (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID;
+- (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID;
+- (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID;
+- (void)vungleSDKDidInitialize;
 @end
 
 @interface VungleCoronaLogger : NSObject <VungleSDKLogger> {

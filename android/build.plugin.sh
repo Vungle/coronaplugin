@@ -75,7 +75,7 @@ fi
 # Before we can do a build, we must update all Android project directories to use the given Android SDK.
 # We do this by running the "android" command line tool. This will add a "local.properties" file to all
 # project directories that is required by the Ant build system to compile these projects for Android.
-"$SDK_PATH/tools/android" update project -p . -t android-19
+"$SDK_PATH/tools/android" update project -p . -t android-23
 checkError
 
 #
