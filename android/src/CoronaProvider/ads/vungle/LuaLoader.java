@@ -253,32 +253,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 					}
 				}
 
-				@Override
-				public void onVideoView(final boolean isCompletedView, final int watchedMillis, final int videoMillis) {
-					if (luaListener != CoronaLua.REFNIL) {
-						taskDispatcher.send(
-							new CoronaRuntimeTask() {
-								@Override
-								public void executeUsing(CoronaRuntime coronaRuntime) {
-									final String eventType = AD_VIEW_EVENT_TYPE;
-									try {
-										final LuaState asyncLuaState = createBaseEvent(coronaRuntime, eventType, false);
-										asyncLuaState.pushBoolean(isCompletedView);
-										asyncLuaState.setField(-2, AD_VIEW_IS_COMPLETED_VIEW_KEY);
-										asyncLuaState.pushNumber(watchedMillis / 1000.0);
-										asyncLuaState.setField(-2, AD_VIEW_SECONDS_WATCHED_KEY);
-										asyncLuaState.pushNumber(videoMillis / 1000.0);
-										asyncLuaState.setField(-2, AD_VIEW_TOTAL_AD_SECONDS_KEY);
-										CoronaLua.dispatchEvent(asyncLuaState, luaListener, 0);
-									}
-									catch (Exception exception) {
-									}
-								}
-							}
-						);
-					}
-				}
-
 				private void sendEmptyEvent(final String eventType) {
 					if (luaListener != CoronaLua.REFNIL) {
 						taskDispatcher.send(
