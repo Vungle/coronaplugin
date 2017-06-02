@@ -236,6 +236,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                                             
                                             asyncLuaState.pushBoolean(wasCallToActionClicked);
                                             asyncLuaState.setField(-2, WAS_CALL_TO_ACTION_CLICKED_KEY);
+                                            CoronaLua.dispatchEvent(asyncLuaState, luaListener, 0);
                                         } catch (Exception exception) {
                                             Log.e(TAG, "Unable to dispatch event " + eventType, exception);
                                         }
