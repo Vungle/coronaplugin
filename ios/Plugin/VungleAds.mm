@@ -49,16 +49,22 @@ int luaopen_CoronaProvider_ads_vungle( lua_State *L )
     NSLog(@"vungleWillCloseAdWithViewInfo");
     NSNumber* completedView = [info completedView];
     NSNumber* didDownload = [info didDownload];
+    if (placementID == nil)
+        placementID = @"";
     vungle->DispatchEvent(false, [kAD_END_EVENT_TYPE UTF8String], @{@"placementID":placementID, @"completedView":completedView, @"didDownload":didDownload});
 }
 
 - (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID {
     NSLog(@"vungleWillShowAdForPlacementID");
+    if (placementID == nil)
+        placementID = @"";
     vungle->DispatchEvent(false, [kAD_START_EVENT_TYPE UTF8String], @{@"placementID":placementID});
 }
 
 - (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID {
     NSLog(@"vungleAdPlayabilityUpdate");
+    if (placementID == nil)
+        placementID = @"";
     vungle->DispatchEvent(false, [kAD_AVAILABLE_EVENT_TYPE UTF8String], @{@"placementID":placementID, @"isAdPlayable":[NSNumber numberWithBool:isAdPlayable]});
 }
 
