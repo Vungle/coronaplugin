@@ -36,7 +36,7 @@ static const NSString* kVERSION = @"2_2_17";//plugin version. Do not delete this
 // ----------------------------------------------------------------------------
 
 CORONA_EXPORT
-int luaopen_CoronaProvider_ads_vungle( lua_State *L )
+int luaopen_plugin_vungle( lua_State *L )
 {
 	return Corona::Vungle::Open( L );
 }
