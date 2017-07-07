@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "2.2.17";//plugin version. Do not delete this comment
+	private static final String VERSION = "2.3.2";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -140,7 +140,14 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	 * @return <code>1</code> (the number of return values).
 	 */
 	public int init(LuaState luaState) {
-        final String params = luaState.toString(2);
+		int nextArg = 1;
+		final String provider = luaState.toString(nextArg);
+		if(provider!=null && provider.equals("vungle")) {
+			// skip legacy provider name
+			nextArg++;
+		}
+
+        final String params = luaState.toString(nextArg++);
         
         final String[] parts = params.split(",");
         if (parts.length == 0)
@@ -172,9 +179,10 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         final String[] placements = placements_tmp.toArray(new String[placements_tmp.size()]);
          */
         
-		if (CoronaLua.isListener(luaState, 3, CoronaLuaEvent.ADSREQUEST_TYPE)) {
-			luaListener = CoronaLua.newRef(luaState, 3);
+		if (CoronaLua.isListener(luaState, nextArg, CoronaLuaEvent.ADSREQUEST_TYPE)) {
+			luaListener = CoronaLua.newRef(luaState, nextArg);
 		}
+		nextArg++;
         
 		final Context applicationContext = CoronaEnvironment.getApplicationContext();
 		final Injector injector = Injector.getInstance();
