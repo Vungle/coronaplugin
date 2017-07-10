@@ -31,12 +31,12 @@ static const NSString* kAD_AVAILABLE_EVENT_TYPE = @"adAvailable";
 static const NSString* kAD_INITIALIZE_EVENT_TYPE = @"adInitialize";
 static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
 
-static const NSString* kVERSION = @"2_2_17";//plugin version. Do not delete this comment
+static const NSString* kVERSION = @"2_3_2";//plugin version. Do not delete this comment
 
 // ----------------------------------------------------------------------------
 
 CORONA_EXPORT
-int luaopen_CoronaProvider_ads_vungle( lua_State *L )
+int luaopen_plugin_vungle( lua_State *L )
 {
 	return Corona::Vungle::Open( L );
 }
@@ -91,48 +91,43 @@ namespace Corona
 
 // ----------------------------------------------------------------------------
 
-const char Vungle::kName[] = "CoronaProvider.ads.vungle";
+const char Vungle::kName[] = "plugin.vungle";
 static const char kProviderName[] = "vungle";
 static const char kPublisherId[] = "com.vungle";
 
 Vungle* vungleProvider = NULL;
 
-static lua_State *sL;
 int Vungle::Open( lua_State *L ) {
 	void *platformContext = CoronaLuaGetContext( L ); // lua_touserdata( L, lua_upvalueindex( 1 ) );
 	id<CoronaRuntime> runtime = (id<CoronaRuntime>)platformContext;
+	const char kMetatableName[] = __FILE__;
 
-	const char *name = lua_tostring( L, 1 ); CORONA_ASSERT( 0 == strcmp( name, kName ) );
-	int result = CoronaLibraryProviderNew( L, "ads", name, kPublisherId );
+	const luaL_Reg kFunctions[] =
+	{
+		{ "init", Vungle::Init },
+		{ "show", Vungle::Show },
+		{ "load", Vungle::Load },
+		{ "getVersionString", Vungle::versionString },
+		{ "isAdAvailable", Vungle::adIsAvailable },
+		{ "clearCache", Vungle::clearCache },
+		{ "clearSleep", Vungle::clearSleep },
+		{ "enableLogging", Vungle::enableLogging },
+		{ NULL, NULL }
+	};
 
-	if (result) {
-        const luaL_Reg kFunctions[] =
-		{
-			{ "init", Vungle::Init },
-			{ "show", Vungle::Show },
-            { "load", Vungle::Load },
-			{ "getVersionString", Vungle::versionString },
-			{ "isAdAvailable", Vungle::adIsAvailable },
-            { "clearCache", Vungle::clearCache },
-            { "clearSleep", Vungle::clearSleep },
-            { "enableLogging", Vungle::enableLogging },
-			{ NULL, NULL }
-		};
-        
-		CoronaLuaInitializeGCMetatable( L, kName, Finalizer );
-        
-		// Use 'provider' in closure for kFunctions
-		if (!vungleProvider)
-			vungleProvider = new Vungle( runtime );
-		CoronaLuaPushUserdata( L, vungleProvider, kName );
-		luaL_openlib( L, NULL, kFunctions, 1 );
-        
-		const char kTestAppId[] = "someDefaultAppId";
-		lua_pushstring( L, kTestAppId );
-		lua_setfield( L, -2, "testAppId" );
-	}
+	CoronaLuaInitializeGCMetatable( L, kMetatableName, Finalizer );
+	
+	// Use 'provider' in closure for kFunctions
+	if (!vungleProvider)
+		vungleProvider = new Vungle( runtime );
+	CoronaLuaPushUserdata( L, vungleProvider, kMetatableName );
+	luaL_openlib( L, kName, kFunctions, 1 );
 
-	return result;
+	const char kTestAppId[] = "someDefaultAppId";
+	lua_pushstring( L, kTestAppId );
+	lua_setfield( L, -2, "testAppId" );
+
+	return 1;
 }
 
 int
@@ -146,7 +141,16 @@ Vungle::Finalizer( lua_State *L )
 // ads.init( plugin, "appId, placements" [, listener] )
 int Vungle::Init( lua_State *L )
 {
-    const char *params = lua_tostring(L, 2);
+	int nextArg = 1;
+
+	const char *provider = lua_tostring(L, 1);
+	NSString * providerStr = GetStringParam(provider);
+	if([providerStr isEqualToString:@"vungle"]) {
+		// skip "vungle" as legacy argument
+		nextArg++;
+	}
+
+    const char *params = lua_tostring(L, nextArg++);
     NSArray* array = [GetStringParam(params) componentsSeparatedByString:@","];
     if ([array count] == 0)
         return 0;
@@ -166,7 +170,7 @@ int Vungle::Init( lua_State *L )
         }
     }
     */
-    bool success = vungleProvider->Init(L, appId, placements, 3);
+    bool success = vungleProvider->Init(L, appId, placements, nextArg);
     lua_pushboolean( L, success );
     
     return 1;

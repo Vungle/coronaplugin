@@ -15,7 +15,7 @@
 
 // ----------------------------------------------------------------------------
 
-CORONA_EXPORT int luaopen_CoronaProvider_ads_vungle( lua_State *L );
+CORONA_EXPORT int luaopen_plugin_vungle( lua_State *L );
 
 // ----------------------------------------------------------------------------
 

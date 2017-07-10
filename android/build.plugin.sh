@@ -91,8 +91,8 @@ PLUGIN_NAME=`echo $PLUGIN_NAME | sed -E "s#src/##" | sed -E "s#/LuaLoader.java##
 #Update plugin version in the LuaLoader.java according to plugin_version.txt file
 pluginVersion=$(cat ../plugin_version.txt)
 sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
-sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/CoronaProvider/ads/vungle/LuaLoader.java
-rm src/CoronaProvider/ads/vungle/LuaLoader.java.bak
+sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/plugin/vungle/LuaLoader.java
+rm src/plugin/vungle/LuaLoader.java.bak
 
 ## Clean
 ant -buildfile build.plugin.xml -D"manifest.file"="$ANDROID_MANIFEST" -DCoronaEnterpriseDir="$CORONA_PATH" clean
@@ -117,7 +117,5 @@ else
 	exit -1	
 fi
 
-cp ./bin/CoronaProvider.ads.vungle.jar ../plugins/2014.2264/android/CoronaProvider.ads.vungle.jar
-cp ./libs/vunglePub.jar ../plugins/2014.2264/android/vunglePub.jar
-cp ./bin/CoronaProvider.ads.vungle.jar ../plugins/2014.2430/android/CoronaProvider.ads.vungle.jar
+cp ./bin/plugin.vungle.jar ../plugins/2014.2430/android/plugin.vungle.jar
 cp ./libs/vunglePub.jar ../plugins/2014.2430/android/vunglePub.jar
