@@ -117,5 +117,5 @@ else
 	exit -1	
 fi
 
-cp ./bin/plugin.vungle.jar ../plugins/2014.2430/android/plugin.vungle.jar
-cp ./libs/vunglePub.jar ../plugins/2014.2430/android/vunglePub.jar
+cp ./bin/plugin.vungle.jar ../plugins/2017.3081/android/plugin.vungle.jar
+cp ./libs/vunglePub.jar ../plugins/2017.3081/android/vunglePub.jar
