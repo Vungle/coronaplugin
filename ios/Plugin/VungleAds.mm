@@ -98,14 +98,16 @@ int luaopen_plugin_vungle( lua_State *L )
 @end
 
 @implementation VungleHeaderBidding
-    @synthesize vungle;
+@synthesize vungle;
 - (void)placementPrepared:(NSString *)placement withBidToken:(NSString *)bidToken {
     NSLog(@"placementPrepared");
     if (placement == nil)
         placement = @"";
     if (bidToken == nil)
         bidToken = @"";
-    vungle->DispatchEvent(false, [kAD_PLACEMENT_PREPARED_EVENT_TYPE UTF8String], @{@"placementID":placement, @"bidToken":bidToken});
+    dispatch_async(dispatch_get_main_queue(), ^{
+        vungle->DispatchEvent(false, [kAD_PLACEMENT_PREPARED_EVENT_TYPE UTF8String], @{@"placementID":placement, @"bidToken":bidToken});
+    });
 }
 @end
 
