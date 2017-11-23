@@ -25,6 +25,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		846FFA231FC206A20087BBA1 /* VungleSDKCreativeTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VungleSDKCreativeTracking.h; sourceTree = "<group>"; };
+		846FFA241FC206A20087BBA1 /* VungleSDKHeaderBidding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VungleSDKHeaderBidding.h; sourceTree = "<group>"; };
 		84950E0C1B4BE15A004F8E1E /* vg_privacy.png.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vg_privacy.png.h; sourceTree = "<group>"; };
 		A4E253B6166D6FB300DCDC2C /* libplugin_vungle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libplugin_vungle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4E63353167568D500F37549 /* VungleAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VungleAds.h; path = Plugin/VungleAds.h; sourceTree = "<group>"; };
@@ -92,6 +94,8 @@
 		A92EA07B1937B437008C2C1F /* include */ = {
 			isa = PBXGroup;
 			children = (
+				846FFA231FC206A20087BBA1 /* VungleSDKCreativeTracking.h */,
+				846FFA241FC206A20087BBA1 /* VungleSDKHeaderBidding.h */,
 				A92EA07C1937B437008C2C1F /* VungleSDK.h */,
 			);
 			path = include;
