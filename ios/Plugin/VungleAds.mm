@@ -261,11 +261,11 @@ int Vungle::Show(lua_State *L) {
     if (!lua_isnil(L, -1))
         options[VunglePlayAdOptionKeyIncentivizedAlertBodyText] = GetStringParam(lua_tostring(L, -1));
     lua_pop(L, 1);
-    lua_getfield(L, 1, "closeText");
+    lua_getfield(L, 1, "alertClose");
     if (!lua_isnil(L, -1))
         options[VunglePlayAdOptionKeyIncentivizedAlertCloseButtonText] = GetStringParam(lua_tostring(L, -1));
     lua_pop(L, 1);
-    lua_getfield(L, 1, "continueText");
+    lua_getfield(L, 1, "alertContinue");
     if (!lua_isnil(L, -1))
         options[VunglePlayAdOptionKeyIncentivizedAlertContinueButtonText] = GetStringParam(lua_tostring(L, -1));
     lua_pop(L, 1);
