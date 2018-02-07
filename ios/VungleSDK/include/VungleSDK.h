@@ -1,10 +1,9 @@
 //
 //  VungleSDK.h
 //  Vungle iOS SDK
-//  SDK Version: 5.0.0
+//  SDK Version: 5.3.2
 //
-//  Created by Rolando Abarca on 11/19/13.
-//  Copyright (c) 2013 Vungle Inc. All rights reserved.
+//  Copyright (c) 2013-Present Vungle Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -43,6 +42,7 @@ extern NSString *VunglePlayAdOptionKeyIncentivizedAlertBodyText;
 extern NSString *VunglePlayAdOptionKeyIncentivizedAlertCloseButtonText;
 extern NSString *VunglePlayAdOptionKeyIncentivizedAlertContinueButtonText;
 extern NSString *VunglePlayAdOptionKeyOrientations;
+extern NSString *VunglePlayAdOptionKeyStartMuted;
 extern NSString *VunglePlayAdOptionKeyUser;
 extern NSString *VunglePlayAdOptionKeyExtraInfoDictionary;
 extern NSString *VunglePlayAdOptionKeyExtra1;
@@ -54,17 +54,25 @@ extern NSString *VunglePlayAdOptionKeyExtra6;
 extern NSString *VunglePlayAdOptionKeyExtra7;
 extern NSString *VunglePlayAdOptionKeyExtra8;
 extern NSString *VunglePlayAdOptionKeyLargeButtons;
+extern NSString *VunglePlayAdOptionKeyOrdinal;
+extern NSString *VunglePlayAdOptionKeyFlexViewAutoDismissSeconds;
 
 typedef enum {
     VungleSDKErrorInvalidPlayAdOption = 1,
     VungleSDKErrorInvalidPlayAdExtraKey,
     VungleSDKErrorCannotPlayAd,
+    VungleSDKErrorCannotPlayAdAlreadyPlaying,
+    VungleSDKErrorCannotPlayAdWaiting,
+    VungleSDKErrorInvalidAdTypeForFeedBasedAdExperience,
     VungleSDKErrorNoAppID,
+    VungleSDKErrorFlexFeedContainerViewSizeError,
+    VungleSDKErrorFlexFeedContainerViewSizeRatioError,
     InvalidPlacementsArray,
     VungleSDKErrorInvalidiOSVersion,
     VungleSDKErrorTopMostViewControllerMismatch,
     VungleSDKErrorUnknownPlacementID,
-    VungleSDKErrorSDKNotInitialized
+    VungleSDKErrorSDKNotInitialized,
+    VungleSDKErrorSleepingPlacement,
 } VungleSDKErrorCode;
 
 @protocol VungleSDKLogger <NSObject>
@@ -75,18 +83,6 @@ typedef enum {
 
 @protocol VungleSDKDelegate <NSObject>
 @optional
-/**
- * If implemented, this will get called when the SDK is about to show an ad. This point
- * might be a good time to pause your game, and turn off any sound you might be playing.
- * @param placementID The placement which is about to be shown.
- */
-- (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID;
-
-/**
- * If implemented, this method gets called when a Vungle Ad Unit is completely dismissed.
- * At this point, it's recommended to resume your Game or App.
- */
-- (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID;
 
 /**
  * If implemented, this will get called when the SDK has an ad ready to be displayed. Also it will
@@ -98,6 +94,23 @@ typedef enum {
  * @param placementID The ID of a placement which is ready to be played
  */
 - (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID;
+/**
+ * If implemented, this will get called when the SDK is about to show an ad. This point
+ * might be a good time to pause your game, and turn off any sound you might be playing.
+ * @param placementID The placement which is about to be shown.
+ */
+- (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID;
+
+/**
+ * If implemented, this method gets called when a Vungle Ad Unit is about to be completely dismissed.
+ * At this point, it's recommended to resume your Game or App.
+ */
+- (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID;
+
+- (void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo
+                 willPresentProductSheet:(BOOL)willPresentProductSheet __attribute__((deprecated("Use vungleSDKWillCloseAdWithViewInfo: instead.")));
+
+- (void)vungleSDKwillCloseProductSheet:(id)productSheet __attribute__((deprecated("Use vungleSDKWillCloseAdWithViewInfo: instead.")));
 
 /**
  * If implemented, this will get called when VungleSDK has finished initialization.
@@ -105,11 +118,19 @@ typedef enum {
  * and `loadPlacementWithID:` without getting initialization errors
  */
 - (void)vungleSDKDidInitialize;
+
+/**
+ * If implemented, this will get called if the VungleSDK fails to initialize.
+ * The included NSError object should give some information as to the failure reason.
+ * @note If initialization fails, you will need to restart the VungleSDK.
+ */
+- (void)vungleSDKFailedToInitializeWithError:(NSError *)error;
+
 @end
 
 @interface VungleSDK : NSObject
 @property (strong) NSDictionary *userData;
-@property (strong) id<VungleSDKDelegate> delegate;
+@property (nullable, strong) id<VungleSDKDelegate> delegate;
 @property (strong) id<VungleAssetLoader> assetLoader;
 @property (assign) BOOL muted;
 @property (atomic, readonly, getter=isInitialized) BOOL initialized;
@@ -144,6 +165,26 @@ typedef enum {
  * @warning Should be called from the main-thread.
  */
 - (BOOL)playAd:(UIViewController *)controller options:(nullable NSDictionary *)options placementID:(nullable NSString *)placementID error:( NSError *__autoreleasing _Nullable *_Nullable)error;
+
+#pragma mark - Flex Feed
+/**
+ * Pass in an UIView which acts as a container for the ad experience. This view container may be placed in random positions.
+ * @param publisherView container view in which an ad will be displayed
+ * @param options A reference to an instance of NSDictionary with customized ad playback options
+ * @param placementID The placement defined on the Vungle dashboard
+ * @param error An optional double reference to an NSError. In case this method returns `NO` it will be non-nil
+ * @return YES/NO in case of success/error while presenting an AdUnit
+ */
+- (BOOL)addAdViewToView:(UIView *)publisherView withOptions:(nullable NSDictionary *)options placementID:(nullable NSString *)placementID error:( NSError *__autoreleasing _Nullable *_Nullable)error;
+
+/**
+ * This method will dismiss the currently playing Flex View or Flex Feed advertisement. If you have added an advertisement with `addAdViewToView:`
+ * or you are playing a placement that has been configured as a Flex View placement, then this method will remove the advertisement
+ * from the screen and perform any necessary clean up steps.
+ *
+ * This method will call the existing delegate callbacks as part of the lifecycle.
+ */
+- (void)finishedDisplayingAd;
 
 /**
  * Returns `YES` when there is certainty that an ad will be able to play for a given placementID.

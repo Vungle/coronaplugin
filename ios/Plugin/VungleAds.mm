@@ -14,6 +14,8 @@
 
 #import <Foundation/Foundation.h>
 #import "VungleSDK.h"
+#import "VungleSDKCreativeTracking.h"
+#import "VungleSDKHeaderBidding.h"
 #import "CoronaRuntime.h"
 #import "VungleBytesAssetLoader.h"
 
@@ -30,8 +32,10 @@ static const NSString* kAD_END_EVENT_TYPE = @"adEnd";
 static const NSString* kAD_AVAILABLE_EVENT_TYPE = @"adAvailable";
 static const NSString* kAD_INITIALIZE_EVENT_TYPE = @"adInitialize";
 static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
+static const NSString* kAD_PLACEMENT_PREPARED_EVENT_TYPE = @"adPlacementPrepared";
+static const NSString* kAD_VUNGLE_CREATIVE_EVENT_TYPE = @"adVungleCreative";
 
-static const NSString* kVERSION = @"2_3_2";//plugin version. Do not delete this comment
+static const NSString* kVERSION = @"5_3_2";//plugin version. Do not delete this comment
 
 // ----------------------------------------------------------------------------
 
@@ -72,16 +76,39 @@ int luaopen_plugin_vungle( lua_State *L )
     NSLog(@"vungleSDKDidInitialize");
     vungle->DispatchEvent(false, [kAD_INITIALIZE_EVENT_TYPE UTF8String]);
 }
-    
 @end
 
 @implementation VungleCoronaLogger
 @synthesize vungle;
-
 - (void)vungleSDKLog:(NSString *)message {
     vungle->DispatchEvent(false, [kAD_LOG_EVENT_TYPE UTF8String], @{@"message": message});
 }
+@end
 
+@implementation VungleCreativeTracking
+@synthesize vungle;
+- (void)vungleCreative:(nullable NSString *)creativeID readyForPlacement:(nullable NSString *)placementID {
+    NSLog(@"vungleCreative");
+    if (placementID == nil)
+        placementID = @"";
+    if (creativeID == nil)
+        creativeID = @"";
+    vungle->DispatchEvent(false, [kAD_VUNGLE_CREATIVE_EVENT_TYPE UTF8String], @{@"placementID":placementID, @"creativeID":creativeID});
+}
+@end
+
+@implementation VungleHeaderBidding
+@synthesize vungle;
+- (void)placementPrepared:(NSString *)placement withBidToken:(NSString *)bidToken {
+    NSLog(@"placementPrepared");
+    if (placement == nil)
+        placement = @"";
+    if (bidToken == nil)
+        bidToken = @"";
+    dispatch_async(dispatch_get_main_queue(), ^{
+        vungle->DispatchEvent(false, [kAD_PLACEMENT_PREPARED_EVENT_TYPE UTF8String], @{@"placementID":placement, @"bidToken":bidToken});
+    });
+}
 @end
 
 // ----------------------------------------------------------------------------
@@ -107,11 +134,13 @@ int Vungle::Open( lua_State *L ) {
 		{ "init", Vungle::Init },
 		{ "show", Vungle::Show },
 		{ "load", Vungle::Load },
+        { "closeAd", Vungle::closeAd },
 		{ "getVersionString", Vungle::versionString },
 		{ "isAdAvailable", Vungle::adIsAvailable },
 		{ "clearCache", Vungle::clearCache },
 		{ "clearSleep", Vungle::clearSleep },
 		{ "enableLogging", Vungle::enableLogging },
+        { "subscribeHB", Vungle::subscribeHB },
 		{ NULL, NULL }
 	};
 
@@ -232,13 +261,22 @@ int Vungle::Show(lua_State *L) {
     if (!lua_isnil(L, -1))
         options[VunglePlayAdOptionKeyIncentivizedAlertBodyText] = GetStringParam(lua_tostring(L, -1));
     lua_pop(L, 1);
-    lua_getfield(L, 1, "closeText");
+    lua_getfield(L, 1, "alertClose");
     if (!lua_isnil(L, -1))
         options[VunglePlayAdOptionKeyIncentivizedAlertCloseButtonText] = GetStringParam(lua_tostring(L, -1));
     lua_pop(L, 1);
-    lua_getfield(L, 1, "continueText");
+    lua_getfield(L, 1, "alertContinue");
     if (!lua_isnil(L, -1))
         options[VunglePlayAdOptionKeyIncentivizedAlertContinueButtonText] = GetStringParam(lua_tostring(L, -1));
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "flexCloseSec");
+    if (!lua_isnil(L, -1))
+        options[VunglePlayAdOptionKeyFlexViewAutoDismissSeconds] = GetStringParam(lua_tostring(L, -1));
+//        options[VunglePlayAdOptionKeyFlexViewAutoDismissSeconds] = [NSNumber numberWithUnsignedInteger:[GetStringParam(lua_tostring(L, -1)) integerValue]];
+    lua_pop(L, 1);
+    lua_getfield(L, 1, "ordinal");
+    if (!lua_isnil(L, -1))
+        options[VunglePlayAdOptionKeyOrdinal] = [NSNumber numberWithUnsignedInteger:[GetStringParam(lua_tostring(L, -1)) integerValue]];
     lua_pop(L, 1);
     lua_getfield(L, 1, "isSoundEnabled");
     if (!lua_isnil(L, -1)) {
@@ -305,9 +343,14 @@ int Vungle::Load(lua_State* L) {
     lua_pushboolean(L, load);
     return 1;
 }
+
+int Vungle::closeAd(lua_State* L) {
+    const char *str = lua_tostring( L, 1 );
+    [[VungleSDK sharedSDK] finishedDisplayingAd];
+    lua_pushboolean(L, true);
+    return 1;
+}
     
-
-
 int Vungle::versionString(lua_State* L) {
 	NSString* version = [NSString stringWithFormat:@"%@ (%@)", kVERSION, VungleSDKVersion];
 	const char* cVersion = [version UTF8String];
@@ -340,6 +383,11 @@ int Vungle::enableLogging(lua_State* L) {
     lua_pushboolean(L, true);
     return 1;
 }
+
+int Vungle::subscribeHB(lua_State* L) {
+    vungleProvider->subscribeHB();
+    return 1;
+}
     
 // ----------------------------------------------------------------------------
 
@@ -350,6 +398,8 @@ Vungle::Vungle( id<CoronaRuntime> runtime )
 {
 	_controller = [runtime.appViewController retain];
 	_delegate = [[VungleDelegate alloc] init];
+    _creativeTracking = [[VungleCreativeTracking alloc] init];
+    _headerBidding = [[VungleHeaderBidding alloc] init];
     _logger = [[VungleCoronaLogger alloc] init];
 }
 
@@ -357,11 +407,17 @@ Vungle::~Vungle() {
 	CoronaLuaDeleteRef( fRuntime.L, fListener );
     [_controller release];
     [_delegate release];
+    [_creativeTracking release];
+    [_headerBidding release];
     [[VungleSDK sharedSDK] detachLogger:_logger];
 	[_logger release];
 	[fAppId release];
 }
 
+void Vungle::subscribeHB() {
+    [VungleSDK sharedSDK].headerBiddingDelegate = _headerBidding;
+}
+    
 bool Vungle::Init(lua_State *L, NSString* appId, NSMutableArray* placements, int listenerIndex) {
     bool result = false;
     if (appId) {
@@ -377,6 +433,8 @@ bool Vungle::Init(lua_State *L, NSString* appId, NSMutableArray* placements, int
         NSError* err;
         [sdk startWithAppId:appId placements:placements error:&err];
 		sdk.delegate = _delegate;
+        sdk.creativeTrackingDelegate = _creativeTracking;
+        //sdk.headerBiddingDelegate = _headerBidding;
         _logger.vungle = this;
         [sdk attachLogger:_logger];
         [sdk setLoggingEnabled:true];
@@ -384,6 +442,8 @@ bool Vungle::Init(lua_State *L, NSString* appId, NSMutableArray* placements, int
 		fListener = ( CoronaLuaIsListener( L, listenerIndex, "adsRequest" ) ? CoronaLuaNewRef( L, listenerIndex ) : NULL );
 
 		_delegate.vungle = this;
+        _creativeTracking.vungle = this;
+        _headerBidding.vungle = this;
 		result = true;
 	}
 

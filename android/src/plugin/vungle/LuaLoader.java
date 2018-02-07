@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "2.3.2";//plugin version. Do not delete this comment
+	private static final String VERSION = "5.3.2";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -59,9 +59,11 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	static final String IS_AD_AVAILABLE_METHOD = "isAdAvailable";
 	static final String SHOW_METHOD = "show";
     static final String LOAD_METHOD = "load";
+    static final String CLOSE_METHOD = "closeAd";
     static final String CLEAR_CACHE_METHOD = "clearCache";
     static final String CLEAR_SLEEP_METHOD = "clearSleep";
     static final String ENABLE_LOGGING_METHOD = "enableLogging";
+    static final String SUBSCRIBE_HB_METHOD = "subscribeHB";
 
 	// events
 	static final String EVENT_TYPE_KEY = "type";
@@ -104,9 +106,11 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			new IsAdAvailableWrapper(),
 			new ShowWrapper(),
             new LoadWrapper(),
+            new CloseWrapper(),
             new ClearCacheWrapper(),
             new ClearSleepWrapper(),
-            new EnableLoggingWrapper()
+            new EnableLoggingWrapper(),
+            new SubscribeHBWrapper(),
 		});
 		// add fallback test app id
 		luaState.pushString(DEFAULT_CORONA_APPLICATION_ID);
@@ -159,26 +163,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         
         final String[] placements = placements_tmp.toArray(new String[placements_tmp.size()]);
 
-        /*
-		final String applicationId = this.applicationId = luaState.toString(2);
-		if (applicationId == null) {
-			Log.w(TAG, "WARNING: " + INIT_METHOD + "() application ID was null");
-            luaState.pushBoolean(false);
-            return 1;
-		}
-        List<String> placements_tmp = new ArrayList<String>();
-        int luaTableStackIndex = 3;
-        luaState.checkType(luaTableStackIndex, com.naef.jnlua.LuaType.TABLE);
-        int arrayLength = luaState.length(luaTableStackIndex);
-        if (arrayLength > 0)
-            for (int index = 1; index <= arrayLength; index++) {
-                luaState.rawGet(luaTableStackIndex, index);
-                placements_tmp.add(luaState.toString(-1));
-                luaState.pop(1);
-            }
-        final String[] placements = placements_tmp.toArray(new String[placements_tmp.size()]);
-         */
-        
 		if (CoronaLua.isListener(luaState, nextArg, CoronaLuaEvent.ADSREQUEST_TYPE)) {
 			luaListener = CoronaLua.newRef(luaState, nextArg);
 		}
@@ -379,6 +363,27 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		return 1;
 	}
     
+    private class CloseWrapper implements NamedJavaFunction {
+        CloseWrapper() {}
+        
+        @Override
+        public String getName() {
+            return CLOSE_METHOD;
+        }
+        
+        // N.B. not called on UI thread
+        @Override
+        public int invoke(LuaState luaState) {
+            return closeAd(luaState);
+        }
+    }
+    public int closeAd(LuaState luaState) {
+        final String placementId = luaState.toString(1);
+        
+        vunglePub.closeFlexViewAd(placementId);
+        return 1;
+    }
+    
     private class LoadWrapper implements NamedJavaFunction {
         LoadWrapper() {}
         
@@ -468,48 +473,22 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                 adConfig.setIncentivizedCancelDialogKeepWatchingButtonText(luaState.toString(-1));
             }
             luaState.pop(1);
-/*
-            luaState.getField(1, "key1");
+            luaState.getField(1, "flexCloseSec");
             if (!luaState.isNil(-1)) {
-                adConfig.setExtra1(luaState.toString(-1));
+                String flexCloseSec = luaState.toString(-1);
+                try {
+                    adConfig.setFlexViewCloseTimeInSec(Integer.parseInt(flexCloseSec));
+                } catch (Exception e) {}
             }
             luaState.pop(1);
-            luaState.getField(1, "key2");
+            luaState.getField(1, "ordinal");
             if (!luaState.isNil(-1)) {
-                adConfig.setExtra2(luaState.toString(-1));
+                String ordinal = luaState.toString(-1);
+                try {
+                    adConfig.setOrdinalViewCount(Integer.parseInt(ordinal));
+                } catch (Exception e) {}
             }
             luaState.pop(1);
-            luaState.getField(1, "key3");
-            if (!luaState.isNil(-1)) {
-                adConfig.setExtra3(luaState.toString(-1));
-            }
-            luaState.pop(1);
-            luaState.getField(1, "key4");
-            if (!luaState.isNil(-1)) {
-                adConfig.setExtra4(luaState.toString(-1));
-            }
-            luaState.pop(1);
-            luaState.getField(1, "key5");
-            if (!luaState.isNil(-1)) {
-                adConfig.setExtra5(luaState.toString(-1));
-            }
-            luaState.pop(1);
-            luaState.getField(1, "key6");
-            if (!luaState.isNil(-1)) {
-                adConfig.setExtra6(luaState.toString(-1));
-            }
-            luaState.pop(1);
-            luaState.getField(1, "key7");
-            if (!luaState.isNil(-1)) {
-                adConfig.setExtra7(luaState.toString(-1));
-            }
-            luaState.pop(1);
-            luaState.getField(1, "key8");
-            if (!luaState.isNil(-1)) {
-                adConfig.setExtra8(luaState.toString(-1));
-            }
-            luaState.pop(1);
- */
         }
         vunglePub.playAd(placementId, adConfig);
         return 0;
@@ -551,6 +530,21 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         @Override
         public String getName() {
             return ENABLE_LOGGING_METHOD;
+        }
+        
+        // N.B. not called on UI thread
+        @Override
+        public int invoke(LuaState luaState) {
+            return 0;
+        }
+    }
+    
+    private class SubscribeHBWrapper implements NamedJavaFunction {
+        SubscribeHBWrapper() {}
+        
+        @Override
+        public String getName() {
+            return SUBSCRIBE_HB_METHOD;
         }
         
         // N.B. not called on UI thread
