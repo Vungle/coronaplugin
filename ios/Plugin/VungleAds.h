@@ -53,6 +53,7 @@ class Vungle
         static int closeAd(lua_State* L);
 		static int adIsAvailable(lua_State* L);
         static int clearCache(lua_State* L);
+        static int setViralUser(lua_State* L);
         static int clearSleep(lua_State* L);
         static int setSoundEnabled(lua_State* L);
         static int enableLogging(lua_State* L);
