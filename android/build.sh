@@ -68,7 +68,7 @@ fi
 echo "Version:" $version
 d1=$(date +%s)
 #25.05.2015 16:00 MSK
-build=$(expr $d1 / 60 - 23875980)
+build=$(expr $d1 / 60 - 25225980)
 echo "Build:" $build
 
 sed -E -i .bak "s/android:versionName=\"[0-9]+\.[0-9]+\"/android:versionName=\"$version.$build\"/g" AndroidManifest.xml
