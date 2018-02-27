@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "5.3.2";//plugin version. Do not delete this comment
+	private static final String VERSION = "5.4.0";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -192,7 +192,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                                     }
                                 }
                             });
-                        vunglePub.addEventListeners(new VungleAdEventListener() {
+                        vunglePub.clearAndSetEventListeners(new VungleAdEventListener() {
                             @Override
                             public void onAdStart(final String placementId) {
                                 if (luaListener == CoronaLua.REFNIL) return;
@@ -612,6 +612,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	@Override
 	public void onExiting(CoronaRuntime coronaRuntime) {
 		Log.d(TAG, "onExiting(): invalidating Lua state");
+		vunglePub.clearEventListeners();
 		final LuaState luaState = coronaRuntime.getLuaState();
 		CoronaLua.deleteRef(luaState, luaListener);
 		luaListener = CoronaLua.REFNIL;
