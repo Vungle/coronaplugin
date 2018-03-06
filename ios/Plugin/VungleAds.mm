@@ -136,7 +136,6 @@ int Vungle::Open( lua_State *L ) {
 		{ "load", Vungle::Load },
         { "closeAd", Vungle::closeAd },
 		{ "getVersionString", Vungle::versionString },
-		{ "setViralUser", Vungle::setViralUser },
 		{ "isAdAvailable", Vungle::adIsAvailable },
 		{ "clearCache", Vungle::clearCache },
 		{ "clearSleep", Vungle::clearSleep },
@@ -357,13 +356,6 @@ int Vungle::versionString(lua_State* L) {
 	const char* cVersion = [version UTF8String];
 	lua_pushstring(L, cVersion);
 	return 1;
-}
-
-int Vungle::setViralUser(lua_State* L) {
-    bool viral = lua_toboolean( L, 1 );
-    [[VungleSDK sharedSDK] setViralUser: viral];
-    lua_pushboolean(L, true);
-    return 1;
 }
 
 int Vungle::adIsAvailable(lua_State* L) {
