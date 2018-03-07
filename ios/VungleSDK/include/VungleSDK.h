@@ -134,7 +134,6 @@ typedef enum {
 
 @interface VungleSDK : NSObject
 @property (strong) NSDictionary *userData;
-@property (nonatomic, getter=isViralUser) BOOL viralUser;
 @property (nullable, strong) id<VungleSDKDelegate> delegate;
 @property (strong) id<VungleAssetLoader> assetLoader;
 @property (assign) BOOL muted;
