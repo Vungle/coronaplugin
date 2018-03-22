@@ -13,17 +13,17 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.vungle.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>3.4.1051239</string>
+	<string>5.4.95727</string>
 	<key>CFBundleName</key>
 	<string>VungleCoronaTest</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.4.1051239</string>
+	<string>5.4.95727</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3.4.1051239</string>
+	<string>5.4.95727</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>

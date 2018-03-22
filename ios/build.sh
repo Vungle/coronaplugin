@@ -13,7 +13,7 @@ d1=$(date +%s)
 build=$(expr $d1 / 60 - 23875980)
 echo "Build:" $build
 
-sed -E -i .bak "s/\<string\>[0-9]+\.[0-9]+\<\/string\>/<string>$version.$build<\/string>/g" App-Info.plist
+sed -E -i .bak "s/\<string\>[0-9]+\.[0-9]+\.[0-9]+\<\/string\>/<string>$version.$build<\/string>/g" App-Info.plist
 
 pluginVersion=$(cat ../plugin_version.txt)
 _pluginVersion=$(echo "$pluginVersion" | sed "s/\./_/g")

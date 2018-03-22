@@ -1,0 +1,567 @@
+local widget = require( "widget" )
+
+local vungle = require("plugin.vungle")
+
+_H = display.contentHeight
+_W = display.contentWidth
+
+platform = system.getInfo( "platformName" )
+local eh = 30
+local fontSize = 20
+if ("Android" == platform) then
+    eh = _H/15
+    fontSize = eh/2
+end
+local ew = display.contentWidth - 20
+local pos = 30
+--platform = "Android"
+if (platform == "Android") then
+    pos = _H
+end
+
+local margin = 10
+local lastPos = pos
+checkboxSize  = 50
+placements = {}
+
+if (platform == "Android") then
+appData = {
+appID="591236625b2480ac40000028",
+placements="DEFAULT18080,PLMT02I58745,PLMT03R02739"
+}
+else
+appData = {
+appID="5912326f0e96c1a540000014",
+placements="DEFAULT63997,PLMT02I58266,PLMT03R65406"
+}
+end
+display.setStatusBar( display.HiddenStatusBar )
+display.setDefault( "background", 0.5 )
+
+local function scrollListener( event )
+    if (platform == "Android") then
+        local x, y = scrollView:getContentPosition()
+        print (tostring( y ))
+        if ( event.direction == "up" and y < -lastPos+_H) then
+            scrollView:scrollToPosition( { y = -lastPos+_H } )
+        elseif ( event.direction == "down" and y > -_H) then
+            scrollView:scrollToPosition( { y = -_H } )
+        end
+    end
+
+    return true
+end
+
+-- Create the widget
+scrollView = widget.newScrollView
+{
+    top = 0,
+    left = 0,
+    width = _W,
+    height = _H,
+    scrollWidth = _W,
+    scrollHeight = _H*5,
+    horizontalScrollDisabled = true,
+    backgroundColor = { 0.5, 0.5, 0.5 },
+    listener = scrollListener
+}
+
+main = display.newGroup()
+log = display.newGroup()
+
+local function handleLog( event )
+    if ( "ended" == event.phase ) then
+        log.isVisible = true
+        scrollView.isVisible = false
+        setMainTextVisible(false)
+    end
+end
+
+local function handleMain( event )
+    if ( "ended" == event.phase ) then
+        log.isVisible = false
+        scrollView.isVisible = true
+        setMainTextVisible(true)
+    end
+end
+
+local function onKeyEvent( event )
+    if (event.phase=="up" and event.keyName=="back") then
+        log.isVisible = false
+        scrollView.isVisible = true
+        setMainTextVisible(true)
+    end
+    return true
+end
+Runtime:addEventListener( "key", onKeyEvent )
+
+local function addButton(event, label, enable, y)
+    return widget.newButton {
+        onEvent = event,
+        label = label,
+        defaultFile = "buttonDefault.png",
+        overFile = "buttonSelected.png",
+        width = ew,
+        height = eh,
+        fontSize = fontSize,
+        isEnabled = enable,
+        x = _W / 2,
+        y = y
+    }
+end
+
+local logButton = addButton(handleLog, "Log", true, pos)
+main:insert( logButton )
+local mainButton = addButton(handleMain, "Main", true, pos)
+log:insert( mainButton )
+pos = pos + eh + margin
+
+if (platform == "iPhone OS") then
+logText = display.newText( { text = "", x = _W/2, y = _H/2 + pos/2, font = native.systemFont, width = _W, height = _H - pos, fontSize = fontSize/2, align = "left" } )
+else
+logText = display.newText( { text = "", x = _W/2, y = _H/2 + eh, font = native.systemFont, width = _W, height = _H - eh*2, fontSize = fontSize/2, align = "left" } )
+end
+log:insert( logText )
+
+scrollView:insert(main)
+log.isVisible = false
+logStrings = {}
+logStringsIndex = 0;
+
+if (platform == "Android") then
+    scrollView:scrollToPosition( { y = -_H } )
+end
+-- AD EVENT LISTENER
+-- Set this up before vungle.init
+local function vungleAdListener( event )
+    if ( event.type == "adStart" and event.isError ) then
+        logStrings[logStringsIndex] = "adStart: " .. tostring(event.message)
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "adLog") then
+        logStrings[logStringsIndex] = event.message
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "adInitialize") then
+        logStrings[logStringsIndex] = "adInitialize: "
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "adStart" and not event.isError) then
+        logStrings[logStringsIndex] = "adStart: " .. tostring(event.placementID)
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "adAvailable" ) then
+        logStrings[logStringsIndex] = "adAvailable: " .. tostring(event.placementID) .. ", isAvailable: " .. tostring(event.isAdPlayable)
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "adEnd" ) then
+        logStrings[logStringsIndex] = "placementID: " .. tostring(event.placementID)
+        logStringsIndex = logStringsIndex + 1
+        logStrings[logStringsIndex] = "didDownload: " .. tostring(event.didDownload)
+        logStringsIndex = logStringsIndex + 1
+        logStrings[logStringsIndex] = "complited: " .. tostring(event.completedView)
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "vungleSDKlog" ) then
+        logStrings[logStringsIndex] = "vungleSDKlog: " .. tostring(event.message)
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "adPlacementPrepared" ) then
+        logStrings[logStringsIndex] = "adPlacementPrepared: " .. tostring(event.placementID) .. ", bidToken: " .. string.sub(tostring(event.bidToken), 1, 10)
+        logStringsIndex = logStringsIndex + 1
+    end
+    if ( event.type == "adVungleCreative" ) then
+        logStrings[logStringsIndex] = "adVungleCreative: " .. tostring(event.placementID) .. ", creativeID: " .. tostring(event.creativeID)
+        logStringsIndex = logStringsIndex + 1
+    end
+    logStrings[logStringsIndex] = event.type
+    logStringsIndex = logStringsIndex + 1
+    if logStringsIndex > 50 then
+        logStringsIndex = 0
+    end
+    local count = 0
+    local text = ""
+    local endFor = 0
+
+--    if logStringsIndex > 10 then
+--        endFor = logStringsIndex - 10
+--    end
+    for i = logStringsIndex - 1, endFor, -1 do
+        local st = logStrings[i]
+        text = text .. "\n" .. st
+    end
+    logText.text = text
+
+end
+
+function setMainTextVisible(v)
+    appID.isVisible = v
+    placementsText.isVisible = v
+    alertTitle.isVisible = v
+    alertText.isVisible = v
+    alertClose.isVisible = v
+    alertContinue.isVisible = v
+    placement.isVisible = v
+    flexCloseSec.isVisible = v
+    ordinal.isVisible = v
+    key1.isVisible = v
+    key2.isVisible = v
+    key3.isVisible = v
+    key4.isVisible = v
+    key5.isVisible = v
+    key6.isVisible = v
+    key7.isVisible = v
+    key8.isVisible = v
+end
+
+rewritePos = pos
+
+local function rewrite()
+pos = rewritePos
+main:insert( display.newText( { text = "App ID:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+appID = native.newTextField( _W/2, pos, ew, eh )
+appID.text = appData.appID
+main:insert( appID )
+pos = pos + eh + margin
+
+main:insert( display.newText( { text = "Placements:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+placementsText = native.newTextField( _W/2, pos, ew, eh )
+placementsText.text = appData.placements
+main:insert( placementsText )
+pos = pos + eh + margin
+
+function trim(s)
+    return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+local function handleInit( event )
+    if ( "ended" == event.phase ) then
+        placements = {}
+        placements1 = string.gmatch(placementsText.text, "[^,]+")
+        for w in placements1 do
+            table.insert(placements, trim(w))
+        end
+        vungle.init(appID.text .. "," .. placementsText.text, vungleAdListener)
+        count = main.numChildren
+        for i=2,count do
+            main:remove(2);
+        end
+        rewrite()
+    end
+end
+local initButton = addButton(handleInit, "Init", true, pos)
+main:insert( initButton )
+pos = pos + eh + margin
+
+local function handleSubscribeHB( event )
+    if ( "ended" == event.phase ) then
+        vungle.subscribeHB()
+    end
+end
+local subscribeHBButton = addButton(handleSubscribeHB, "Subscribe Heade Bidding", true, pos)
+main:insert( subscribeHBButton )
+pos = pos + eh + margin
+
+main:insert( display.newText( { text = "Options:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+
+isAutoRotate = false
+isImmersive = false
+isIncentivized = false
+isMuted = false
+isLarge = false
+if (platform == "Android") then
+    function handleRotation( event )
+        if ( "ended" == event.phase ) then
+            isAutoRotate = not isAutoRotate
+            rotationButton:setLabel("AutoRotation " .. tostring(isAutoRotate))
+        end
+    end
+    rotationButton = addButton(handleRotation, "AutoRotation " .. tostring(isAutoRotate), true, pos)
+    main:insert( rotationButton )
+    pos = pos + eh + margin
+
+    function handleImmersive( event )
+        if ( "ended" == event.phase ) then
+            isImmersive = not isImmersive
+            immersiveButton:setLabel("Immersive " .. tostring(isImmersive))
+        end
+    end
+    immersiveButton = addButton(handleImmersive, "Immersive " .. tostring(isImmersive), true, pos)
+    main:insert( immersiveButton )
+    pos = pos + eh + margin
+
+    function handleMuted( event )
+        if ( "ended" == event.phase ) then
+            isMuted = not isMuted
+            mutedButton:setLabel("Muted " .. tostring(isMuted))
+        end
+    end
+    mutedButton = addButton(handleMuted, "Muted " .. tostring(isMuted), true, pos)
+    main:insert( mutedButton )
+    pos = pos + eh + margin
+else
+    landscape = widget.newSwitch( { x = checkboxSize, y = pos, style = "checkbox", isEnabled = false } )
+    main:insert( display.newText( { text = "Force landscape", x = _W/2 + checkboxSize, y = pos, font = native.systemFont, width = ew - checkboxSize, height = eh, fontSize = fontSize, align = "left" } ) )
+    main:insert( landscape )
+    pos = pos + eh + margin
+
+    portrait = widget.newSwitch( { x = checkboxSize, y = pos, style = "checkbox" } )
+    main:insert( display.newText( { text = "Force portrait", x = _W/2 + checkboxSize, y = pos, font = native.systemFont, width = ew - checkboxSize, height = eh, fontSize = fontSize, align = "left" } ) )
+    main:insert( portrait )
+    pos = pos + eh + margin
+
+    incentivized = widget.newSwitch( { x = checkboxSize, y = pos, style = "checkbox" } )
+    main:insert( display.newText( { text = "Incentivized ad", x = _W/2 + checkboxSize, y = pos, font = native.systemFont, width = ew - checkboxSize, height = eh, fontSize = fontSize, align = "left" } ) )
+    main:insert( incentivized )
+    pos = pos + eh + margin
+
+    muted = widget.newSwitch( { x = checkboxSize, y = pos, style = "checkbox" } )
+    main:insert( display.newText( { text = "Start muted", x = _W/2 + checkboxSize, y = pos, font = native.systemFont, width = ew - checkboxSize, height = eh, fontSize = fontSize, align = "left" } ) )
+    main:insert( muted )
+    pos = pos + eh + margin
+
+    local viral = widget.newSwitch( { x = checkboxSize, y = pos, style = "checkbox" } )
+    main:insert( display.newText( { text = "Viral User", x = _W/2 + checkboxSize, y = pos, font = native.systemFont, width = ew - checkboxSize, height = eh, fontSize = fontSize, align = "left" } ) )
+    main:insert( viral )
+    pos = pos + eh + margin
+
+    local function handleViral( event )
+	if ( "ended" == event.phase ) then
+		vungle.setViralUser(viral.isOn)
+	end
+    end
+    local viralButton = addButton(handleViral, "Set Viral", true, pos)
+    main:insert( viralButton )
+    pos = pos + eh + margin
+
+    large = widget.newSwitch( { x = checkboxSize, y = pos, style = "checkbox" } )
+    main:insert( display.newText( { text = "Large buttons", x = _W/2 + checkboxSize, y = pos, font = native.systemFont, width = ew - checkboxSize, height = eh, fontSize = fontSize, align = "left" } ) )
+    main:insert( large )
+    pos = pos + eh + margin
+end
+
+local function isempty(s)
+    return s == nil or s == ''
+end
+main:insert( display.newText( { text = "Controls:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+
+for i=1,table.getn(placements) do
+main:insert( display.newText( { text = "PlacementID: " .. placements[i], x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+
+local function handleLoad( event )
+    if ( "ended" == event.phase ) then
+        vungle.load(placements[i])
+    end
+end
+local loadButton = addButton(handleLoad, "Load Ad", true, pos)
+main:insert( loadButton )
+pos = pos + eh + margin
+
+local function handleClose( event )
+    if ( "ended" == event.phase ) then
+        vungle.closeAd(placements[i])
+    end
+end
+local closeButton = addButton(handleClose, "Close Flex Ad", true, pos)
+main:insert( closeButton )
+pos = pos + eh + margin
+
+local function handlePlay( event )
+print(placements[i])
+    if ( "ended" == event.phase ) then
+        if (platform == "Android") then
+            options = {
+                placementId = placements[i],
+                incentivized = isIncentivized,
+                isAutoRotation = isAutoRotate,
+                immersive = isImmersive,
+                isSoundEnabled = not isMuted
+            }
+        else
+            options = {
+                placementId = placements[i],
+                incentivized = incentivized.isOn,
+                large = large.isOn,
+                isSoundEnabled = not muted.isOn
+            }
+        end
+        if (not isempty(alertTitle.text)) then
+            options.alertTitle = alertTitle.text
+        end
+        if (not isempty(alertText.text)) then
+            options.alertText = alertText.text
+        end
+        if (not isempty(alertClose.text)) then
+            options.alertClose = alertClose.text
+        end
+        if (not isempty(alertContinue.text)) then
+            options.alertContinue = alertContinue.text
+        end
+        if (not isempty(flexCloseSec.text)) then
+            options.flexCloseSec = flexCloseSec.text
+        end
+        if (not isempty(ordinal.text)) then
+            options.ordinal = ordinal.text
+        end
+        if (not isempty(placement.text)) then
+            options.placement = placement.text
+        end
+        if (not isempty(key1.text)) then
+            options.key1 = key1.text
+        end
+        if (not isempty(key2.text)) then
+            options.key2 = key2.text
+        end
+        if (not isempty(key3.text)) then
+            options.key3 = key3.text
+        end
+        if (not isempty(key4.text)) then
+            options.key4 = key4.text
+        end
+        if (not isempty(key5.text)) then
+            options.key5 = key5.text
+        end
+        if (not isempty(key6.text)) then
+            options.key6 = key6.text
+        end
+        if (not isempty(key7.text)) then
+            options.key7 = key7.text
+        end
+        if (not isempty(key8.text)) then
+            options.key8 = key8.text
+        end
+        if (platform == "Android") then
+        else
+            if (landscape.isOn) then
+                options.orientation = 4
+            else
+                if (portrait.isOn) then
+                    options.orientation = 0
+                else
+                    options.orientation = 5
+                end
+            end
+        end
+        vungle.show(options)
+    end
+end
+local playButton = addButton(handlePlay, "Play Ad", true, pos)
+main:insert( playButton )
+pos = pos + eh + margin
+end
+
+
+if (not platform == "Android") then
+
+local function handleCache( event )
+    if ( "ended" == event.phase ) then
+        vungle.clearCache()
+    end
+end
+local cacheButton = addButton(handleCache, "Clear cache", true, pos)
+main:insert( cacheButton )
+pos = pos + eh + margin
+
+local function handleSleep( event )
+    if ( "ended" == event.phase ) then
+        vungle.clearSleep( )
+    end
+end
+local sleepButton = addButton(handleSleep, "Clear sleep", true, pos)
+main:insert( sleepButton )
+pos = pos + eh + margin
+end
+main:insert( display.newText( { text = "Incentivized options:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+
+main:insert( display.newText( { text = "Alert title:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+alertTitle = native.newTextField( _W/2, pos, ew, eh )
+main:insert( alertTitle )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Alert text:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+alertText = native.newTextField( _W/2, pos, ew, eh )
+main:insert( alertText )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Alert 'Close' text:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+alertClose = native.newTextField( _W/2, pos, ew, eh )
+main:insert( alertClose )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Alert 'Continue' text:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+alertContinue = native.newTextField( _W/2, pos, ew, eh )
+main:insert( alertContinue )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Flex Close Sec:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+flexCloseSec = native.newTextField( _W/2, pos, ew, eh )
+main:insert( flexCloseSec )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Ordinal:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+ordinal = native.newTextField( _W/2, pos, ew, eh )
+main:insert( ordinal )
+pos = pos + eh + margin
+
+main:insert( display.newText( { text = "More options:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+
+main:insert( display.newText( { text = "Placement:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+placement = native.newTextField( _W/2, pos, ew, eh )
+main:insert( placement )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 1:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key1 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key1 )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 2:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key2 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key2 )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 3:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key3 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key3 )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 4:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key4 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key4 )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 5:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key5 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key5 )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 6:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key6 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key6 )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 7:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key7 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key7 )
+pos = pos + eh + margin
+main:insert( display.newText( { text = "Key 8:", x = _W/2, y = pos, font = native.systemFont, width = ew, height = eh, fontSize = fontSize, align = "left" } ) )
+pos = pos + eh + margin
+key8 = native.newTextField( _W/2, pos, ew, eh )
+main:insert( key8 )
+pos = pos + eh + margin
+
+
+lastPos = pos
+scrollView:setScrollHeight(lastPos+2*_H)
+end
+
+rewrite()
