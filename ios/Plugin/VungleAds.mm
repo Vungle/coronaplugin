@@ -35,7 +35,7 @@ static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
 static const NSString* kAD_PLACEMENT_PREPARED_EVENT_TYPE = @"adPlacementPrepared";
 static const NSString* kAD_VUNGLE_CREATIVE_EVENT_TYPE = @"adVungleCreative";
 
-static const NSString* kVERSION = @"5_3_2";//plugin version. Do not delete this comment
+static const NSString* kVERSION = @"5_4_0";//plugin version. Do not delete this comment
 
 // ----------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ int luaopen_plugin_vungle( lua_State *L )
     vungle->DispatchEvent(false, [kAD_START_EVENT_TYPE UTF8String], @{@"placementID":placementID});
 }
 
-- (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID {
+- (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID error:(nullable NSError *)error {
     NSLog(@"vungleAdPlayabilityUpdate");
     if (placementID == nil)
         placementID = @"";
