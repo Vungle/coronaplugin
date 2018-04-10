@@ -26,9 +26,9 @@ rm plugin/src/main/java/plugin/vungle/LuaLoader.java.bak
 
 ./gradlew build
 
-[ -f ./plugin.vungle.jar ] && rm ./plugin.vungle.jar
-cp ./plugin/build/outputs/jar/plugin.vungle.jar ./corona_plugin/plugin.vungle.jar
+#[ -f ./plugin.vungle.jar ] && rm ./plugin.vungle.jar
+#cp ./plugin/build/outputs/jar/plugin.vungle.jar ./corona_plugin/plugin.vungle.jar
 [ -f ./VungleCoronaTest.apk ] && rm ./VungleCoronaTest.apk
 cp ./app/build/outputs/apk/VungleCoronaTest-debug.apk ./VungleCoronaTest.apk
 
-puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
+/usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
