@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "6.1.0";//plugin version. Do not delete this comment
+	private static final String VERSION = "5.3.2";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names

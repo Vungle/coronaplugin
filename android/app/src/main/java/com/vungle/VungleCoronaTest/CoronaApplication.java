@@ -5,7 +5,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-package com.mycompany.app;
+package com.vungle.VungleCoronaTest;
 
 /**
  * Extends the Application class to receive Corona runtime events and to extend the Lua API.

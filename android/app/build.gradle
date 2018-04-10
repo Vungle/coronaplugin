@@ -14,14 +14,14 @@ def coronaEnterpriseAndroidLibDir = "$coronaEnterpriseDir/Corona/android/lib/Cor
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "$appName"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 6
+        versionName "6.0.163357"
     }
 
     applicationVariants.all { variant ->
@@ -29,19 +29,12 @@ android {
             output.outputFile = file(output.outputFile.getPath().replace('/app-', "/${apkName}-"))
         }
     }
+
     lintOptions {
 	abortOnError false
-     }
-}
-
-repositories {
-    jcenter()
-    // Add other repositories here
-    maven {
-        url "https://jitpack.io"
     }
 }
-                            
+
 task cleanAssets(type: Delete, description: 'remove Corona assets and libcorona.so') {
     delete "$assetsDir"
     delete "$jniLibsDir"
@@ -72,7 +65,7 @@ task compileLua(type: Exec, description: 'compile Lua source code') {
             PROJECT_DIR                 : "$rootDir",
             CORONA_COPY_PNG_PRESERVE    : '--preserve',
             CONFIGURATION               : 'release',
-            CORONA_ASSETS_DIR           : "$rootDir/../Corona",
+            CORONA_ASSETS_DIR           : "$rootDir/../../corona-test-app/app",
             CORONA_TARGET_RESOURCES_DIR : "$assetsDir",
             CORONA_TARGET_EXECUTABLE_DIR: "$assetsDir"
     ]
@@ -129,6 +122,6 @@ tasks.preBuild.dependsOn('certifyBuild')
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-//    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.1.0'
     compile project(':plugin')
 }
