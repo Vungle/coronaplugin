@@ -34,5 +34,9 @@
             </intent-filter>
         </activity>
 
+        <provider android:name="com.ansca.corona.storage.FileContentProvider"
+	    android:authorities="com.vungle.VungleCoronaTest.files"
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" />
     </application>
 </manifest>
