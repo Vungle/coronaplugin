@@ -1,7 +1,7 @@
 //
 //  VungleSDK.h
 //  Vungle iOS SDK
-//  SDK Version: 5.3.2
+//  SDK Version: 6.2.0
 //
 //  Copyright (c) 2013-Present Vungle Inc. All rights reserved.
 //
@@ -33,8 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSNumber *didDownload;
 
 @end
-
-@protocol VungleAssetLoader;
 
 extern NSString *VungleSDKVersion;
 extern NSString *VunglePlayAdOptionKeyIncentivizedAlertTitleText;
@@ -73,7 +71,13 @@ typedef enum {
     VungleSDKErrorUnknownPlacementID,
     VungleSDKErrorSDKNotInitialized,
     VungleSDKErrorSleepingPlacement,
+    VungleSDKErrorNoAdsAvailable,
 } VungleSDKErrorCode;
+
+typedef NS_ENUM (NSInteger, VungleConsentStatus) {
+    VungleConsentAccepted = 1,
+    VungleConsentDenied,
+};
 
 @protocol VungleSDKLogger <NSObject>
 - (void)vungleSDKLog:(NSString *)message;
@@ -92,8 +96,11 @@ typedef enum {
  * opted-out of our Exchange, you might be able to get a streaming ad if you call `play`.
  * @param isAdPlayable A boolean indicating if an ad is currently in a playable state
  * @param placementID The ID of a placement which is ready to be played
+ * @param error The error that was encountered.  This is only sent when the placementID is nil.
  */
-- (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID;
+- (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID error:(nullable NSError *)error;
+
+- (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID __attribute__((deprecated("Use vungleAdPlayabilityUpdate:isAdPlayable:plaementID:error: instead.")));
 /**
  * If implemented, this will get called when the SDK is about to show an ad. This point
  * might be a good time to pause your game, and turn off any sound you might be playing.
@@ -111,6 +118,12 @@ typedef enum {
                  willPresentProductSheet:(BOOL)willPresentProductSheet __attribute__((deprecated("Use vungleSDKWillCloseAdWithViewInfo: instead.")));
 
 - (void)vungleSDKwillCloseProductSheet:(id)productSheet __attribute__((deprecated("Use vungleSDKWillCloseAdWithViewInfo: instead.")));
+
+/**
+ * If implemented, this method gets called when a Vungle Ad Unit has been completely dismissed.
+ * At this point, you can load another ad for non-auto-cahced placement if necessary.
+ */
+- (void)vungleDidCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID;
 
 /**
  * If implemented, this will get called when VungleSDK has finished initialization.
@@ -131,7 +144,6 @@ typedef enum {
 @interface VungleSDK : NSObject
 @property (strong) NSDictionary *userData;
 @property (nullable, strong) id<VungleSDKDelegate> delegate;
-@property (strong) id<VungleAssetLoader> assetLoader;
 @property (assign) BOOL muted;
 @property (atomic, readonly, getter=isInitialized) BOOL initialized;
 
@@ -141,22 +153,25 @@ typedef enum {
 + (VungleSDK *)sharedSDK;
 
 /**
- * Setup the SDK with an asset loader. This must be called before any call to sharedSDK in order
- * to properly set the asset loader.
- */
-+ (VungleSDK *)setupSDKWithAssetLoader:(id<VungleAssetLoader>)loader;
-
-/**
  * Initializes the SDK. You can get your app id on Vungle's dashboard: https://v.vungle.com
  * @param appID the unique identifier for your app
  * @param placements An array of strings representing placements defined in the dashboard.
  * @param error An error object containing information about why initialization failed
  * @return YES if the SDK has started, NO otherwise
  */
-- (BOOL)startWithAppId:(nonnull NSString *)appID placements:(nonnull NSArray<NSString *> *)placements error:(NSError **)error;
+- (BOOL)startWithAppId:(nonnull NSString *)appID placements:(nullable NSArray<NSString *> *)placements error:(NSError **)error  __attribute__((deprecated("Use startWithAppId:appID:error: instead.")));
+
+/**
+ * Initializes the SDK. You can get your app id on Vungle's dashboard: https://v.vungle.com
+ * @param appID the unique identifier for your app
+ * @param error An error object containing information about why initialization failed
+ * @return YES if the SDK has started, NO otherwise
+ */
+- (BOOL)startWithAppId:(nonnull NSString *)appID error:(NSError **)error;
 
 /**
  * Will play Ad Unit presenting it over the `controller` parameter
+ * @note This method should only be called using placements with `fullscreen` or `flexview` template types
  * @param controller A subclass of UIViewController. Should correspond to the ViewControler at the top of the ViewController hierarchy
  * @param options A reference to an instance of NSDictionary with customized ad playback options
  * @param placementID The placement defined on the Vungle dashboard
@@ -169,6 +184,7 @@ typedef enum {
 #pragma mark - Flex Feed
 /**
  * Pass in an UIView which acts as a container for the ad experience. This view container may be placed in random positions.
+ * @note This method should only be called using placements that have the `flexfeed` template type.
  * @param publisherView container view in which an ad will be displayed
  * @param options A reference to an instance of NSDictionary with customized ad playback options
  * @param placementID The placement defined on the Vungle dashboard
@@ -214,7 +230,7 @@ typedef enum {
 /**
  * Log a new message. The message will be sent to all loggers.
  */
-- (void)log:(NSString *)message, ...NS_FORMAT_FUNCTION(1, 2);
+- (void)log:(NSString *)message, ... NS_FORMAT_FUNCTION(1, 2);
 
 /**
  * Attach a new logger. It will get called on every log generated by Vungle (internally and externally).
@@ -230,6 +246,17 @@ typedef enum {
  * This only works on the simulator
  */
 - (void)clearSleep;
+
+/**
+ * This method takes consent status of users. If consented, Vungle will be able to send target ads.
+ * @param enum type of user consent status.
+ */
+- (void)updateConsentStatus:(VungleConsentStatus)status;
+
+/**
+ * This method returns the current consent status recorded in SDK. If not status is not known return 0. 
+ */
+- (VungleConsentStatus) getCurrentConsentStatus;
 
 @end
 

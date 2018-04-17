@@ -17,7 +17,6 @@
 #import "VungleSDKCreativeTracking.h"
 #import "VungleSDKHeaderBidding.h"
 #import "CoronaRuntime.h"
-#import "VungleBytesAssetLoader.h"
 
 // Converts C style string to NSString
 #define GetStringParam( _x_ ) ( _x_ != NULL ) ? [NSString stringWithUTF8String:_x_] : [NSString stringWithUTF8String:""]
@@ -35,7 +34,7 @@ static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
 static const NSString* kAD_PLACEMENT_PREPARED_EVENT_TYPE = @"adPlacementPrepared";
 static const NSString* kAD_VUNGLE_CREATIVE_EVENT_TYPE = @"adVungleCreative";
 
-static const NSString* kVERSION = @"5_4_0";//plugin version. Do not delete this comment
+static const NSString* kVERSION = @"6_2_0";//plugin version. Do not delete this comment
 
 // ----------------------------------------------------------------------------
 
@@ -347,7 +346,7 @@ int Vungle::Load(lua_State* L) {
 }
 
 int Vungle::updateConsentStatus(lua_State* L) {
-    const char *str = lua_tostring( L, 1 );
+    int status = lua_tointeger( L, 1 );
     if (status == 1)
         [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentAccepted];
     else if (status == 2)
@@ -443,13 +442,7 @@ void Vungle::subscribeHB() {
 bool Vungle::Init(lua_State *L, NSString* appId, NSMutableArray* placements, int listenerIndex) {
     bool result = false;
     if (appId) {
-        // set the new asset loader
-        VungleBytesAssetLoader* loader = [[VungleBytesAssetLoader alloc] init];
-        [VungleSDK setupSDKWithAssetLoader:loader];
         VungleSDK* sdk = [VungleSDK sharedSDK];
-
-		[sdk setAssetLoader:loader];
-		[loader release];
 
 		[sdk performSelector:@selector(setPluginName:version:) withObject:@"corona" withObject:kVERSION];
         NSError* err;

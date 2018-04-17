@@ -21,7 +21,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 6
-        versionName "6.0.163532"
+        versionName "6.2.173474"
     }
 
     applicationVariants.all { variant ->
