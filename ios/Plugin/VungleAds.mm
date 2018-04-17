@@ -134,6 +134,8 @@ int Vungle::Open( lua_State *L ) {
 		{ "init", Vungle::Init },
 		{ "show", Vungle::Show },
 		{ "load", Vungle::Load },
+        { "updateConsentStatus", Vungle::updateConsentStatus },
+        { "getConsentStatus", Vungle::getConsentStatus },
         { "closeAd", Vungle::closeAd },
 		{ "getVersionString", Vungle::versionString },
 		{ "isAdAvailable", Vungle::adIsAvailable },
@@ -344,6 +346,26 @@ int Vungle::Load(lua_State* L) {
     return 1;
 }
 
+int Vungle::updateConsentStatus(lua_State* L) {
+    const char *str = lua_tostring( L, 1 );
+    if (status == 1)
+        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentAccepted];
+    else if (status == 2)
+        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentDenied];
+    lua_pushboolean(L, TRUE);
+    return 1;
+}
+
+int Vungle::getConsentStatus(lua_State* L) {
+    VungleConsentStatus consent = [[VungleSDK sharedSDK] getCurrentConsentStatus];
+    if (consent == NULL) {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+    lua_pushinteger(L, (consent == VungleConsentAccepted)?1:2);
+    return 1;
+}
+    
 int Vungle::closeAd(lua_State* L) {
     const char *str = lua_tostring( L, 1 );
     [[VungleSDK sharedSDK] finishedDisplayingAd];

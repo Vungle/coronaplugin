@@ -66,6 +66,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     static final String CLEAR_SLEEP_METHOD = "clearSleep";
     static final String ENABLE_LOGGING_METHOD = "enableLogging";
     static final String SUBSCRIBE_HB_METHOD = "subscribeHB";
+    static final String UPDATE_CONSENT_STATUS = "updateConsentStatus";
+    static final String GET_CONSENT_STATUS = "getConsentStatus";
 
 	// events
 	static final String EVENT_TYPE_KEY = "type";
@@ -107,6 +109,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			new IsAdAvailableWrapper(),
 			new ShowWrapper(),
             new LoadWrapper(),
+            new UpdateConsentStatusWrapper(),
+            new GetConsentStatusWrapper(),
             new CloseWrapper(),
             new ClearCacheWrapper(),
             new ClearSleepWrapper(),
@@ -330,6 +334,38 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                     });
                 }
             });
+            return 1;
+        }
+    }
+    
+    private class UpdateConsentStatusWrapper implements NamedJavaFunction {
+        ShowWrapper() {}
+        @Override
+        public String getName() {
+            return UPDATE_CONSENT_STATUS;
+        }
+        @Override
+        public int invoke(LuaState luaState) {
+            Vungle.updateConsentStatus((luaState.toInteger(1) == 1)?Vungle.Consent.OPTED_IN:Vungle.Consent.OPTED_OUT);
+            return 1;
+        }
+    }
+
+    private class GetConsentStatusWrapper implements NamedJavaFunction {
+        ShowWrapper() {}
+        @Override
+        public String getName() {
+            return GET_CONSENT_STATUS;
+        }
+        @Override
+        public int invoke(LuaState luaState) {
+            Vungle.Consent consent = Vungle.getConsentStatus();
+            luaState.pushBoolean(Vungle.canPlayAd(luaState.toString(1)));
+            if (consent == null)  {
+                luaState.pushInteger(0);
+                return 1;
+            }
+            luaState.pushInteger((consent == Vungle.Consent.OPTED_IN)?1:2);
             return 1;
         }
     }
