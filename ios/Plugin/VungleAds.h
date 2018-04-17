@@ -94,7 +94,7 @@ class Vungle
 }
 @property Corona::Vungle* vungle;
 - (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID;
-- (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID;
+- (void)vungleDidCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID;
 - (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID;
 - (void)vungleSDKDidInitialize;
 @end

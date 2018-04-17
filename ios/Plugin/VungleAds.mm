@@ -47,9 +47,9 @@ int luaopen_plugin_vungle( lua_State *L )
 @implementation VungleDelegate
 @synthesize vungle;
 
-- (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID {
+- (void)vungleDidCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID {
 //    NSNumber* playTime = [info playTime];
-    NSLog(@"vungleWillCloseAdWithViewInfo");
+    NSLog(@"vungleDidCloseAdWithViewInfo");
     NSNumber* completedView = [info completedView];
     NSNumber* didDownload = [info didDownload];
     if (placementID == nil)
@@ -446,7 +446,7 @@ bool Vungle::Init(lua_State *L, NSString* appId, NSMutableArray* placements, int
 
 		[sdk performSelector:@selector(setPluginName:version:) withObject:@"corona" withObject:kVERSION];
         NSError* err;
-        [sdk startWithAppId:appId placements:placements error:&err];
+        [sdk startWithAppId:appId error:&err];
 		sdk.delegate = _delegate;
         sdk.creativeTrackingDelegate = _creativeTracking;
         //sdk.headerBiddingDelegate = _headerBidding;
