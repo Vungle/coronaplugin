@@ -360,7 +360,6 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         @Override
         public int invoke(LuaState luaState) {
             Vungle.Consent consent = Vungle.getConsentStatus();
-            luaState.pushBoolean(Vungle.canPlayAd(luaState.toString(1)));
             if (consent == null)  {
                 luaState.pushInteger(0);
                 return 1;
