@@ -339,7 +339,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     }
     
     private class UpdateConsentStatusWrapper implements NamedJavaFunction {
-        ShowWrapper() {}
+        UpdateConsentStatusWrapper() {}
         @Override
         public String getName() {
             return UPDATE_CONSENT_STATUS;
@@ -352,7 +352,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     }
 
     private class GetConsentStatusWrapper implements NamedJavaFunction {
-        ShowWrapper() {}
+        GetConsentStatusWrapper() {}
         @Override
         public String getName() {
             return GET_CONSENT_STATUS;
