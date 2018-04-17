@@ -282,7 +282,7 @@ int Vungle::Show(lua_State *L) {
     lua_getfield(L, 1, "isSoundEnabled");
     if (!lua_isnil(L, -1)) {
         bool b = lua_toboolean(L, -1);
-        [VungleSDK sharedSDK].muted = !lua_toboolean(L, -1);
+        [VungleSDK sharedSDK].muted = !b;
     } else
         [VungleSDK sharedSDK].muted = false;
     lua_pop(L, 1);
@@ -357,7 +357,7 @@ int Vungle::updateConsentStatus(lua_State* L) {
 
 int Vungle::getConsentStatus(lua_State* L) {
     VungleConsentStatus consent = [[VungleSDK sharedSDK] getCurrentConsentStatus];
-    if (consent == NULL) {
+    if (consent == 0) {
         lua_pushinteger(L, 0);
         return 1;
     }
