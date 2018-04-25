@@ -27,12 +27,7 @@ rm plugin/src/main/java/plugin/vungle/LuaLoader.java.bak
 ./gradlew :plugin:build
 ./gradlew :plugin:exportPluginJar
 
-[ -f ./plugin.vungle.jar ] && rm ./plugin.vungle.jar
-cp ./plugin/build/outputs/jar/plugin.vungle.jar ./corona_plugin/plugin.vungle.jar
-#[ -f ./VungleCoronaTest.apk ] && rm ./VungleCoronaTest.apk
-#cp ./app/build/outputs/apk/VungleCoronaTest-debug.apk ./VungleCoronaTest.apk
-
 for version in $CORONA_RELEASES; do
-    cp ./corona_plugin/*.* ../plugins/${version}/android/
+    cp ./plugin/build/outputs/jar/plugin.vungle.jar ../plugins/${version}/android/
 done
 	
