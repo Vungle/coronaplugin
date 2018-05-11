@@ -11,11 +11,13 @@
 #include <string>
 #import <UIKit/UIKit.h>
 #import "VungleSDK.h"
+#import "VungleSDKCreativeTracking.h"
+#import "VungleSDKHeaderBidding.h"
 #include "CoronaLua.h"
 
 // ----------------------------------------------------------------------------
 
-CORONA_EXPORT int luaopen_CoronaProvider_ads_vungle( lua_State *L );
+CORONA_EXPORT int luaopen_plugin_vungle( lua_State *L );
 
 // ----------------------------------------------------------------------------
 
@@ -24,6 +26,8 @@ CORONA_EXPORT int luaopen_CoronaProvider_ads_vungle( lua_State *L );
 
 @class VungleDelegate;
 @class VungleCoronaLogger;
+@class VungleCreativeTracking;
+@class VungleHeaderBidding;
 
 namespace Corona
 {
@@ -42,28 +46,26 @@ class Vungle
 		static int Finalizer( lua_State *L );
 
 	protected:
+        static int versionString(lua_State* L);
         static int Init(lua_State* L);
 		static int Show(lua_State* L);
-		static int setBackButtonEnabled(lua_State* L);
-		static int versionString(lua_State* L);
-		static int Hide(lua_State* L);
-		static int showCacheFiles(lua_State* L);
+        static int Load(lua_State* L);
+        static int closeAd(lua_State* L);
 		static int adIsAvailable(lua_State* L);
         static int clearCache(lua_State* L);
         static int clearSleep(lua_State* L);
         static int setSoundEnabled(lua_State* L);
         static int enableLogging(lua_State* L);
-        static int showEx(lua_State* L);
+        static int subscribeHB(lua_State* L);
 
 	public:
 		Vungle( id<CoronaRuntime> runtime );
 		virtual ~Vungle();
 
 	public:
-        bool Init(lua_State* L, const char* appId, int listenerIndex);
-		bool Show(bool showClose, NSUInteger orientations);
-        bool ShowEx(NSDictionary* options);
-		bool ShowIncentivized(bool showClose, NSUInteger orientations, const std::string& userTag="");
+        bool Init(lua_State* L, NSString* appId, NSMutableArray* placements, int listenerIndex);
+        bool Show(NSDictionary* options, NSString* placementID);
+        void subscribeHB();
 
 	public:
 		void DispatchEvent(bool isError, const char* eventName, NSDictionary* opts = nil) const;
@@ -74,6 +76,8 @@ class Vungle
 		CoronaLuaRef fListener;
         UIViewController* _controller;
 		VungleDelegate* _delegate;
+        VungleCreativeTracking* _creativeTracking;
+        VungleHeaderBidding* _headerBidding;
         VungleCoronaLogger* _logger;
 };
 
@@ -87,11 +91,10 @@ class Vungle
 	Corona::Vungle* vungle;
 }
 @property Corona::Vungle* vungle;
--(void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo willPresentProductSheet:(BOOL)willPresentProductSheet;
--(void)vungleSDKwillCloseProductSheet:(id)productSheet;
--(void)vungleSDKwillShowAd;
--(void)vungleSDKhasCachedAdAvailable;
--(void)vungleSDKAdPlayableChanged:(BOOL)isAdPlayable;
+- (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID;
+- (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID;
+- (void)vungleAdPlayabilityUpdate:(BOOL)isAdPlayable placementID:(nullable NSString *)placementID;
+- (void)vungleSDKDidInitialize;
 @end
 
 @interface VungleCoronaLogger : NSObject <VungleSDKLogger> {
@@ -101,5 +104,18 @@ class Vungle
 - (void)vungleSDKLog:(NSString *)message;
 @end
 
+@interface VungleCreativeTracking : NSObject <VungleSDKCreativeTracking> {
+    Corona::Vungle* vungle;
+}
+@property Corona::Vungle* vungle;
+- (void)vungleCreative:(nullable NSString *)creativeID readyForPlacement:(nullable NSString *)placementID;
+@end
+
+@interface VungleHeaderBidding : NSObject <VungleSDKHeaderBidding> {
+    Corona::Vungle* vungle;
+}
+@property Corona::Vungle* vungle;
+- (void)placementPrepared:(NSString *)placement withBidToken:(NSString *)bidToken;
+ @end
 
 #endif // _IOSMyAdsProvider_H__

@@ -75,7 +75,7 @@ fi
 # Before we can do a build, we must update all Android project directories to use the given Android SDK.
 # We do this by running the "android" command line tool. This will add a "local.properties" file to all
 # project directories that is required by the Ant build system to compile these projects for Android.
-"$SDK_PATH/tools/android" update project -p . -t android-19
+"$SDK_PATH/tools/android" update project -p . -t android-23
 checkError
 
 #
@@ -91,8 +91,8 @@ PLUGIN_NAME=`echo $PLUGIN_NAME | sed -E "s#src/##" | sed -E "s#/LuaLoader.java##
 #Update plugin version in the LuaLoader.java according to plugin_version.txt file
 pluginVersion=$(cat ../plugin_version.txt)
 sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
-sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/CoronaProvider/ads/vungle/LuaLoader.java
-rm src/CoronaProvider/ads/vungle/LuaLoader.java.bak
+sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/plugin/vungle/LuaLoader.java
+rm src/plugin/vungle/LuaLoader.java.bak
 
 ## Clean
 ant -buildfile build.plugin.xml -D"manifest.file"="$ANDROID_MANIFEST" -DCoronaEnterpriseDir="$CORONA_PATH" clean
@@ -117,7 +117,5 @@ else
 	exit -1	
 fi
 
-cp ./bin/CoronaProvider.ads.vungle.jar ../plugins/2014.2264/android/CoronaProvider.ads.vungle.jar
-cp ./libs/vunglePub.jar ../plugins/2014.2264/android/vunglePub.jar
-cp ./bin/CoronaProvider.ads.vungle.jar ../plugins/2014.2430/android/CoronaProvider.ads.vungle.jar
-cp ./libs/vunglePub.jar ../plugins/2014.2430/android/vunglePub.jar
+cp ./bin/plugin.vungle.jar ../plugins/2017.3081/android/plugin.vungle.jar
+cp ./libs/vunglePub.jar ../plugins/2017.3081/android/vunglePub.jar

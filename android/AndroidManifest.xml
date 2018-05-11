@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.vungle.VungleCoronaTest"
           android:versionCode="1"
-          android:versionName="3.3"
+          android:versionName="3.4.1048447"
 	      android:installLocation="auto">
 	<!--
 	 Set the minimum and target Android API levels here to inform the app store what OS versions this app supports.
@@ -37,9 +37,12 @@
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 		<activity android:name="com.vungle.publisher.MraidFullScreenAdActivity"
-		      android:configChanges="keyboardHidden|orientation|screenSize"/>
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
+		<activity android:name="com.vungle.publisher.FlexViewAdActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
 		<service android:name="com.vungle.publisher.VungleService" android:exported="false"/>
-		      android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
 		<!-- The main Corona activity that runs the Corona project. -->
 		<activity android:name="com.ansca.corona.CoronaActivity"
 		          android:screenOrientation="portrait"

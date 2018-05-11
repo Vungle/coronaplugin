@@ -68,15 +68,15 @@ fi
 echo "Version:" $version
 d1=$(date +%s)
 #25.05.2015 16:00 MSK
-build=$(expr $d1 / 60 - 23875980)
+build=$(expr $d1 / 60 - 25225980)
 echo "Build:" $build
 
 sed -E -i .bak "s/android:versionName=\"[0-9]+\.[0-9]+\"/android:versionName=\"$version.$build\"/g" AndroidManifest.xml
 
 pluginVersion=$(cat ../plugin_version.txt)
 sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
-sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/CoronaProvider/ads/vungle/LuaLoader.java
-rm src/CoronaProvider/ads/vungle/LuaLoader.java.bak
+sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/plugin/vungle/LuaLoader.java
+rm src/plugin/vungle/LuaLoader.java.bak
 
 # Do not continue if we do not have the path to the Android SDK.
 if [ -z "$SDK_PATH" ]
@@ -94,7 +94,7 @@ fi
 # Before we can do a build, we must update all Android project directories to use the given Android SDK.
 # We do this by running the "android" command line tool. This will add a "local.properties" file to all
 # project directories that is required by the Ant build system to compile these projects for Android.
-"$SDK_PATH/tools/android" update project -p . -t android-19
+"$SDK_PATH/tools/android" update project -p . -t android-23
 checkError
 
 "$SDK_PATH/tools/android" update lib-project -p "$CORONA_PATH/Corona/android/lib/Corona"

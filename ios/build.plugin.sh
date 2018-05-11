@@ -1,7 +1,7 @@
 #!/bin/sh
 
-IOS_SDK=9.2
-CORONA_RELEASES="2013.1137 2014.2264 2014.2430"
+IOS_SDK=11.1
+CORONA_RELEASES="2017.3081"
 
 #Update plugin version in the VungleAds.mm according to plugin_version.txt file
 pluginVersion=$(cat ../plugin_version.txt)
@@ -10,11 +10,11 @@ sub="@\"$_pluginVersion\";//plugin version. Do not delete this comment"
 sed -E -i .bak "s#@\"[0-9]+_[0-9]+_[0-9]+\";//plugin version. Do not delete this comment#$sub#g" Plugin/VungleAds.mm
 rm Plugin/VungleAds.mm.bak
 
-xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj clean
-xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj clean
-xcodebuild -target ads-vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj build
-xcodebuild -target ads-vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj build
+xcodebuild -target plugin_vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj clean
+xcodebuild -target plugin_vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj clean
+xcodebuild -target plugin_vungle -sdk iphoneos${IOS_SDK} -project Plugin.xcodeproj build
+xcodebuild -target plugin_vungle -sdk iphonesimulator${IOS_SDK} -project Plugin.xcodeproj build
 for version in $CORONA_RELEASES; do
-	cp build/Release-iphoneos/libads-vungle.a ../plugins/${version}/iphone/libads-vungle.a
-	cp build/Release-iphonesimulator/libads-vungle.a ../plugins/${version}/iphone-sim/libads-vungle.a
+	cp build/Release-iphoneos/libplugin_vungle.a ../plugins/${version}/iphone/libplugin_vungle.a
+	cp build/Release-iphonesimulator/libplugin_vungle.a ../plugins/${version}/iphone-sim/libplugin_vungle.a
 done
