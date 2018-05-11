@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "5.4.0";//plugin version. Do not delete this comment
+	private static final String VERSION = "5.4.1";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -173,9 +173,9 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		injector.setWrapperFramework(WrapperFramework.corona);
 		injector.setWrapperFrameworkVersion(VERSION);
 		final VunglePub vunglePub = this.vunglePub;
-		CoronaEnvironment.getCoronaActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
+//		CoronaEnvironment.getCoronaActivity().runOnUiThread(new Runnable() {
+//			@Override
+//			public void run() {
                 vunglePub.init(applicationContext, applicationId, placements, new VungleInitListener() {
                     @Override
                     public void onSuccess() {
@@ -303,9 +303,9 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                         return currentLuaState;
                     }
                 });
-                vunglePub.onResume();
-            }
-        });
+//                vunglePub.onResume();
+//            }
+//        });
 		luaState.pushBoolean(true);
 		return 1;
 	}
