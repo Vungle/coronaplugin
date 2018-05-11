@@ -17,7 +17,6 @@
 #import "VungleSDKCreativeTracking.h"
 #import "VungleSDKHeaderBidding.h"
 #import "CoronaRuntime.h"
-#import "VungleBytesAssetLoader.h"
 
 // Converts C style string to NSString
 #define GetStringParam( _x_ ) ( _x_ != NULL ) ? [NSString stringWithUTF8String:_x_] : [NSString stringWithUTF8String:""]
@@ -35,7 +34,7 @@ static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
 static const NSString* kAD_PLACEMENT_PREPARED_EVENT_TYPE = @"adPlacementPrepared";
 static const NSString* kAD_VUNGLE_CREATIVE_EVENT_TYPE = @"adVungleCreative";
 
-static const NSString* kVERSION = @"5_4_0";//plugin version. Do not delete this comment
+static const NSString* kVERSION = @"6_2_0";//plugin version. Do not delete this comment
 
 // ----------------------------------------------------------------------------
 
@@ -48,9 +47,9 @@ int luaopen_plugin_vungle( lua_State *L )
 @implementation VungleDelegate
 @synthesize vungle;
 
-- (void)vungleWillCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID {
+- (void)vungleDidCloseAdWithViewInfo:(nonnull VungleViewInfo *)info placementID:(nonnull NSString *)placementID {
 //    NSNumber* playTime = [info playTime];
-    NSLog(@"vungleWillCloseAdWithViewInfo");
+    NSLog(@"vungleDidCloseAdWithViewInfo");
     NSNumber* completedView = [info completedView];
     NSNumber* didDownload = [info didDownload];
     if (placementID == nil)
@@ -134,6 +133,8 @@ int Vungle::Open( lua_State *L ) {
 		{ "init", Vungle::Init },
 		{ "show", Vungle::Show },
 		{ "load", Vungle::Load },
+        { "updateConsentStatus", Vungle::updateConsentStatus },
+        { "getConsentStatus", Vungle::getConsentStatus },
         { "closeAd", Vungle::closeAd },
 		{ "getVersionString", Vungle::versionString },
 		{ "isAdAvailable", Vungle::adIsAvailable },
@@ -281,7 +282,7 @@ int Vungle::Show(lua_State *L) {
     lua_getfield(L, 1, "isSoundEnabled");
     if (!lua_isnil(L, -1)) {
         bool b = lua_toboolean(L, -1);
-        [VungleSDK sharedSDK].muted = !lua_toboolean(L, -1);
+        [VungleSDK sharedSDK].muted = !b;
     } else
         [VungleSDK sharedSDK].muted = false;
     lua_pop(L, 1);
@@ -344,6 +345,26 @@ int Vungle::Load(lua_State* L) {
     return 1;
 }
 
+int Vungle::updateConsentStatus(lua_State* L) {
+    int status = lua_tointeger( L, 1 );
+    if (status == 1)
+        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentAccepted];
+    else if (status == 2)
+        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentDenied];
+    lua_pushboolean(L, TRUE);
+    return 1;
+}
+
+int Vungle::getConsentStatus(lua_State* L) {
+    VungleConsentStatus consent = [[VungleSDK sharedSDK] getCurrentConsentStatus];
+    if (consent == 0) {
+        lua_pushinteger(L, 0);
+        return 1;
+    }
+    lua_pushinteger(L, (consent == VungleConsentAccepted)?1:2);
+    return 1;
+}
+    
 int Vungle::closeAd(lua_State* L) {
     const char *str = lua_tostring( L, 1 );
     [[VungleSDK sharedSDK] finishedDisplayingAd];
@@ -421,17 +442,11 @@ void Vungle::subscribeHB() {
 bool Vungle::Init(lua_State *L, NSString* appId, NSMutableArray* placements, int listenerIndex) {
     bool result = false;
     if (appId) {
-        // set the new asset loader
-        VungleBytesAssetLoader* loader = [[VungleBytesAssetLoader alloc] init];
-        [VungleSDK setupSDKWithAssetLoader:loader];
         VungleSDK* sdk = [VungleSDK sharedSDK];
-
-		[sdk setAssetLoader:loader];
-		[loader release];
 
 		[sdk performSelector:@selector(setPluginName:version:) withObject:@"corona" withObject:kVERSION];
         NSError* err;
-        [sdk startWithAppId:appId placements:placements error:&err];
+        [sdk startWithAppId:appId error:&err];
 		sdk.delegate = _delegate;
         sdk.creativeTrackingDelegate = _creativeTracking;
         //sdk.headerBiddingDelegate = _headerBidding;

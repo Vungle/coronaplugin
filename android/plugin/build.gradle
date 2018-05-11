@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+
+    lintOptions {
+	abortOnError false
+    }
+}
+
+repositories {
+    jcenter()
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+def coronaEnterpriseDir = "$rootDir/CoronaEnterprise"
+
+task exportPluginJar (type: Copy, description: 'place the plugin JAR file in the outputs directory and give it a name from the AndroidManifest.xml') {
+    def pluginName = new XmlSlurper().parse(file('src/main/AndroidManifest.xml')).@package.text()
+    from "$buildDir/intermediates/bundles/default/"
+    into "$buildDir/outputs/jar"
+    include 'classes.jar'
+    rename 'classes.jar', "${pluginName}.jar"
+
+    doFirst {
+        println '== exportPluginJar =='
+    }
+}
+
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn('exportPluginJar')
+}
+
+dependencies {
+    compile 'com.github.vungle:vungle-android-sdk:6.2.5'
+    compile fileTree(dir: "$coronaEnterpriseDir/Corona/android/lib/Corona/libs", include: '*.jar')
+//    compile fileTree(dir: 'libs', include: '*.jar')
+}

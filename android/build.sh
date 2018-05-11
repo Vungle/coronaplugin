@@ -1,65 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-set -ve
-# ------------------------------------------------------------------------------------------
-# Builds the sample project from the command line.
-#
-# You must provide the path to the root Android SDK directory by doing one of the following:
-# 1) Provide the path as a comman line argument. For example:  build.sh <MyAndroidSdkPath>
-# 2) Set the path to an environment variable named "ANDROID_SDK".
-# ------------------------------------------------------------------------------------------
-
-PATH="$PATH:/usr/local/bin"
-
-#
-# Checks exit value for error
-# 
-checkError() {
-    if [ $? -ne 0 ]
-    then
-        echo "Exiting due to errors (above)"
-        exit -1
-    fi
-}
-
-script=`basename $0`
-path=`dirname $0`
-
-# 
-# Canonicalize relative paths to absolute paths
-# 
-pushd $path > /dev/null
-dir=`pwd`
-path=$dir
-popd > /dev/null
-
-# Fetch the Android SDK path from the first command line argument.
-# If not provided from the command line, then attempt to fetch it from environment variable ANDROID_SDK.
-SDK_PATH=
-if [ ! -z "$1" ]
-then
-	SDK_PATH=$1
-else
-	SDK_PATH=$ANDROID_SDK
-fi
-
-if [ -z "$CORONA_ENTERPRISE_DIR" ]
-then
-	CORONA_ENTERPRISE_DIR=/Applications/CoronaEnterprise
-fi
-
-if [ ! -z "$2" ]
-then
-	CORONA_PATH=$2
-else
-	CORONA_PATH=$CORONA_ENTERPRISE_DIR
-fi
-
-RELATIVE_PATH_TOOL=$CORONA_PATH/Corona/mac/bin/relativePath.sh
-
-CORONA_PATH=`"$RELATIVE_PATH_TOOL" "$path" "$CORONA_PATH"`
-echo CORONA_PATH: $CORONA_PATH
-
+CORONA_RELEASES="2017.3081"
 if [ -f ../version.ver ]; then
     version=$(cat ../version.ver)
 else
@@ -71,46 +12,23 @@ d1=$(date +%s)
 build=$(expr $d1 / 60 - 25225980)
 echo "Build:" $build
 
-sed -E -i .bak "s/android:versionName=\"[0-9]+\.[0-9]+\"/android:versionName=\"$version.$build\"/g" AndroidManifest.xml
-
+code=$(expr "$version" : '\([0-9]*\)')
+echo "Code:" $code
+        
+sed -E -i .bak "s/versionName \"[0-9]+\.[0-9]+\.[0-9]+\"/versionName \"$version.$build\"/g" ./app/build.gradle
+sed -E -i .bak "s/versionCode [0-9]+/versionCode $code/g" ./app/build.gradle
+        
+#Update plugin version in the LuaLoader.java according to plugin_version.txt file
 pluginVersion=$(cat ../plugin_version.txt)
 sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
-sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" src/plugin/vungle/LuaLoader.java
-rm src/plugin/vungle/LuaLoader.java.bak
+sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" plugin/src/main/java/plugin/vungle/LuaLoader.java
+rm plugin/src/main/java/plugin/vungle/LuaLoader.java.bak
 
-# Do not continue if we do not have the path to the Android SDK.
-if [ -z "$SDK_PATH" ]
-then
+./gradlew build
 
-	echo ""
-	echo "USAGE:  $script"
-	echo "USAGE:  $script android_sdk_path"
-	echo "\tandroid_sdk_path: Path to the root Android SDK directory."
-	echo "\tcorona_enterprise_path: Path to the CoronaEnterprise directory."
-	exit -1
-fi
-
-
-# Before we can do a build, we must update all Android project directories to use the given Android SDK.
-# We do this by running the "android" command line tool. This will add a "local.properties" file to all
-# project directories that is required by the Ant build system to compile these projects for Android.
-"$SDK_PATH/tools/android" update project -p . -t android-23
-checkError
-
-"$SDK_PATH/tools/android" update lib-project -p "$CORONA_PATH/Corona/android/lib/Corona"
-checkError
-
-# Uncomment if using facebook
-# "$SDK_PATH/tools/android" update lib-project -p "$CORONA_PATH/Corona/android/lib/facebook/facebook"
-# checkError
-
-
-echo "Using Corona Enterprise Dir: $CORONA_PATH"
-
-# Build the Test project via the Ant build system.
-ant clean release -D"CoronaEnterpriseDir"="$CORONA_PATH"
-checkError
-
+#[ -f ./plugin.vungle.jar ] && rm ./plugin.vungle.jar
+#cp ./plugin/build/outputs/jar/plugin.vungle.jar ./corona_plugin/plugin.vungle.jar
 [ -f ./VungleCoronaTest.apk ] && rm ./VungleCoronaTest.apk
-cp ./bin/VungleCoronaTest-release.apk ./VungleCoronaTest.apk
-puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
+cp ./app/build/outputs/apk/VungleCoronaTest-debug.apk ./VungleCoronaTest.apk
+
+/usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk

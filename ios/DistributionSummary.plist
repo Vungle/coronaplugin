@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>VungleCoronaTest.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>1439B81A91C28F0E3E3478422B07A46FFC490CF1</string>
+				<key>dateExpires</key>
+				<string>27.09.2018</string>
+				<key>type</key>
+				<string>iOS Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>GTA9LK7P23.com.vungle.VungleCoronaTest</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>GTA9LK7P23</string>
+				<key>get-task-allow</key>
+				<false/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>GTA9LK7P23.com.vungle.VungleCoronaTest</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>VungleCoronaTest.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>04c6cb0d-a6c3-410d-a0ed-de4418d2266c</string>
+				<key>name</key>
+				<string>iOS Team Inhouse Provisioning Profile: com.vungle.VungleCoronaTest</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>GTA9LK7P23</string>
+				<key>name</key>
+				<string></string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
