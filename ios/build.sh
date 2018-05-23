@@ -26,6 +26,7 @@ rm Plugin/VungleAds.mm.bak
 tar -cvzf ios.tgz -C ../plugins/2017.3081/iphone .
 /usr/local/aws/bin/aws s3 cp ./ios.tgz s3://vungle-pad-artifacts
 
+<<<<<<< HEAD
 sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$build\'/g" ./buildiOS.lua
 /Applications/Corona/Native/Corona/mac/bin/CoronaBuilder.app/Contents/MacOS/CoronaBuilder build --lua ./buildiOS.lua
 
@@ -33,3 +34,6 @@ sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$b
 #xcodebuild -exportArchive -archivePath "./VungleCoronaTest.xcarchive/" -exportPath "." -exportOptionsPlist "./exportOptions.plist" -allowProvisioningUpdates
 
 /usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=a63c146c01e7fd8eeebe15fad3dfc269 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.ipa
+=======
+#/usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=a63c146c01e7fd8eeebe15fad3dfc269 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.ipa
+>>>>>>> 5444f50... Modified for Jenkins build
