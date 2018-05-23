@@ -26,4 +26,4 @@ rm Plugin/VungleAds.mm.bak
 xcodebuild -project VungleCoronaTest.xcodeproj -scheme VungleCoronaTest archive -archivePath ./VungleCoronaTest.xcarchive -allowProvisioningUpdates
 xcodebuild -exportArchive -archivePath "./VungleCoronaTest.xcarchive/" -exportPath "." -exportOptionsPlist "./exportOptions.plist" -allowProvisioningUpdates
 
-/usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=a63c146c01e7fd8eeebe15fad3dfc269 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.ipa
+#/usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=a63c146c01e7fd8eeebe15fad3dfc269 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.ipa

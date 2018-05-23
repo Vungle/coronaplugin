@@ -2,12 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>provisioningProfiles</key>
+    <dict>
+        <key>com.vungle.VungleCoronaTest</key>
+        <string>VungleCoronaTest</string>
+    </dict>
 	<key>compileBitcode</key>
 	<false/>
 	<key>method</key>
 	<string>enterprise</string>
 	<key>signingStyle</key>
-	<string>automatic</string>
+	<string>manual</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
 	<key>teamID</key>
