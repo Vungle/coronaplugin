@@ -44,5 +44,6 @@ tasks.withType(JavaCompile) {
 dependencies {
     compile 'com.github.vungle:vungle-android-sdk:6.2.5'
     compile fileTree(dir: "$coronaEnterpriseDir/Corona/android/lib/Corona/libs", include: '*.jar')
+    compile 'com.android.support:appcompat-v7:25.1.0'
 //    compile fileTree(dir: 'libs', include: '*.jar')
 }
