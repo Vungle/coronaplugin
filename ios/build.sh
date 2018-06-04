@@ -24,7 +24,7 @@ rm Plugin/VungleAds.mm.bak
 [ -f ./VungleCoronaTest.ipa ] && rm ./VungleCoronaTest.ipa
 
 tar -cvzf ios.tgz -C ../plugins/2017.3081/iphone .
-aws s3 cp ./ios.tgz s3://kosyakow --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+/usr/local/aws/bin/aws s3 cp ./ios.tgz s3://kosyakow --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 
 sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$build\'/g" ./buildiOS.lua
 /Applications/Corona/Native/Corona/mac/bin/CoronaBuilder.app/Contents/MacOS/CoronaBuilder build --lua ./buildiOS.lua
