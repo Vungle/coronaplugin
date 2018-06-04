@@ -27,7 +27,7 @@ tar -cvzf ios.tgz -C ../plugins/2017.3081/ios .
 aws s3 cp ./ios.tgz s3://kosyakow --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
 
 sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$build\'/g" ./buildiOS.lua
-/Applications/Corona-3306/Native/Corona/mac/bin/CoronaBuilder.app/Contents/MacOS/CoronaBuilder build --lua ./buildiOS.lua
+/Applications/Corona/Native/Corona/mac/bin/CoronaBuilder.app/Contents/MacOS/CoronaBuilder build --lua ./buildiOS.lua
 
 #xcodebuild -project VungleCoronaTest.xcodeproj -scheme VungleCoronaTest archive -archivePath ./VungleCoronaTest.xcarchive -allowProvisioningUpdates
 #xcodebuild -exportArchive -archivePath "./VungleCoronaTest.xcarchive/" -exportPath "." -exportOptionsPlist "./exportOptions.plist" -allowProvisioningUpdates

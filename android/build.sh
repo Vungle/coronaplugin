@@ -36,6 +36,6 @@ aws s3 cp ./android.tgz s3://kosyakow --grants read=uri=http://acs.amazonaws.com
 sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$build\'/g" ./buildAndroid.lua
 sed -E -i .bak "s/androidVersionCode=\'[0-9]+\'/androidVersionCode=\'$code\'/g" ./buildAndroid.lua
 
-/Applications/Corona-3306/Native/Corona/mac/bin/CoronaBuilder.app/Contents/MacOS/CoronaBuilder build --lua ./buildAndroid.lua
+/Applications/Corona/Native/Corona/mac/bin/CoronaBuilder.app/Contents/MacOS/CoronaBuilder build --lua ./buildAndroid.lua
 
 /usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
