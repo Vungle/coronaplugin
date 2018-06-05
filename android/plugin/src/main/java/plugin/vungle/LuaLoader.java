@@ -403,11 +403,11 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                 adConfig.setImmersiveMode(luaState.toBoolean(-1));
             }
             luaState.pop(1);
-            String userId = "";
-            String title = "";
-            String body = "";
-            String close = "";
-            String keepWatching = "";
+            String userId = null;
+            String title = null;
+            String body = null;
+            String close = null;
+            String keepWatching = null;
             luaState.getField(1, "userTag");
             if (!luaState.isNil(-1)) {
                 userId = luaState.toString(-1);
