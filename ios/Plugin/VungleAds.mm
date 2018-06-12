@@ -135,6 +135,7 @@ int Vungle::Open( lua_State *L ) {
 		{ "load", Vungle::Load },
         { "updateConsentStatus", Vungle::updateConsentStatus },
         { "getConsentStatus", Vungle::getConsentStatus },
+        { "getConsentVersion", Vungle::getConsentVersion},
         { "closeAd", Vungle::closeAd },
 		{ "getVersionString", Vungle::versionString },
 		{ "isAdAvailable", Vungle::adIsAvailable },
@@ -347,10 +348,12 @@ int Vungle::Load(lua_State* L) {
 
 int Vungle::updateConsentStatus(lua_State* L) {
     int status = lua_tointeger( L, 1 );
+    const char *str = lua_tostring( L, 2 );
+    NSString* versionString= [NSString stringWithUTF8String:str];
     if (status == 1)
-        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentAccepted];
+        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentAccepted consentMessageVersion:versionString];
     else if (status == 2)
-        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentDenied];
+        [[VungleSDK sharedSDK] updateConsentStatus:VungleConsentDenied consentMessageVersion:versionString];
     lua_pushboolean(L, TRUE);
     return 1;
 }
@@ -364,7 +367,14 @@ int Vungle::getConsentStatus(lua_State* L) {
     lua_pushinteger(L, (consent == VungleConsentAccepted)?1:2);
     return 1;
 }
-    
+
+int Vungle::getConsentVersion(lua_State* L) {
+        NSString* versionString = [[VungleSDK sharedSDK] getConsentMessageVersion];
+        const char* consentVersion = [versionString UTF8String];
+        lua_pushstring(L, consentVersion);
+        return 1;
+    }
+
 int Vungle::closeAd(lua_State* L) {
     const char *str = lua_tostring( L, 1 );
     [[VungleSDK sharedSDK] finishedDisplayingAd];
