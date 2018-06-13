@@ -34,7 +34,7 @@ static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
 static const NSString* kAD_PLACEMENT_PREPARED_EVENT_TYPE = @"adPlacementPrepared";
 static const NSString* kAD_VUNGLE_CREATIVE_EVENT_TYPE = @"adVungleCreative";
 
-static const NSString* kVERSION = @"6_2_0";//plugin version. Do not delete this comment
+static const NSString* kVERSION = @"6_3_0";//plugin version. Do not delete this comment
 
 // ----------------------------------------------------------------------------
 
