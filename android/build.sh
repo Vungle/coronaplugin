@@ -43,7 +43,7 @@ cp -r /Users/administrator/Documents/xml ./VungleCoronaTest/res
 sed -E -i .bak "s/android:name=\"android.support.multidex.MultiDexApplication\"/android:name=\"android.support.multidex.MultiDexApplication\" android:networkSecurityConfig=\"@xml\/network_security_config\"/g" ./VungleCoronaTest/AndroidManifest.xml
 rm ./VungleCoronaTest/AndroidManifest.xml.bak 
 rm ./VungleCoronaTest.apk
-java -jar /Users/administrator/Documents/apktool_2.3.3.jar b VungleCoronaTest VungleCoronaTest-unsign.apk
+java -jar /Users/administrator/Documents/apktool_2.3.3.jar b VungleCoronaTest -o VungleCoronaTest-unsign.apk
 /Users/administrator/Library/Android/sdk/build-tools/27.0.3/apksigner sign --ks /Users/administrator/.android/debug.keystore --out VungleCoronaTest.apk --ks-pass pass:android VungleCoronaTest-unsign.apk
 
 /usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
