@@ -31,7 +31,7 @@ rm plugin/src/main/java/plugin/vungle/LuaLoader.java.bak
 
 
 tar -cvzf android.tgz -C ../plugins/2017.3081/android .
-/usr/local/aws/bin/aws s3 cp ./android.tgz s3://kosyakow --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+/usr/local/aws/bin/aws s3 cp ./android.tgz s3://vungle-pad-artifacts
 
 sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$build\'/g" ./buildAndroid.lua
 sed -E -i .bak "s/androidVersionCode=\'[0-9]+\'/androidVersionCode=\'$code\'/g" ./buildAndroid.lua
