@@ -13,25 +13,36 @@ def coronaEnterpriseSharedDir = "$coronaEnterpriseDir/Corona/shared"
 def coronaEnterpriseAndroidLibDir = "$coronaEnterpriseDir/Corona/android/lib/Corona"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "$appName"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 6
         versionName "6.2.173474"
     }
 
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            output.outputFile = file(output.outputFile.getPath().replace('/app-', "/${apkName}-"))
+//        }
+//    }
+
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.outputFile = file(output.outputFile.getPath().replace('/app-', "/${apkName}-"))
+        variant.outputs.all {
+            outputFileName = "${variant.name}-${variant.versionName}.apk"
         }
     }
 
     lintOptions {
 	abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -121,7 +132,9 @@ task certifyBuild(type: Exec, description: 'certify libcorona.so with resource.c
 tasks.preBuild.dependsOn('certifyBuild')
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile project(':plugin')
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation fileTree(dir: "$coronaEnterpriseDir/Corona/android/lib/Corona/libs", include: '*.jar')
+    implementation project(':plugin')
+
 }
