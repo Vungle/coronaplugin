@@ -32,7 +32,7 @@ def coronaEnterpriseDir = "$rootDir/CoronaEnterprise"
 
 task exportPluginJar (type: Copy, description: 'place the plugin JAR file in the outputs directory and give it a name from the AndroidManifest.xml') {
     def pluginName = new XmlSlurper().parse(file('src/main/AndroidManifest.xml')).@package.text()
-    from "$buildDir/intermediates/bundles/default/"
+    from "$buildDir/intermediates/packaged-classes/release"
     into "$buildDir/outputs/jar"
     include 'classes.jar'
     rename 'classes.jar', "${pluginName}.jar"
