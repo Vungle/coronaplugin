@@ -18,6 +18,10 @@ local metadata =
                 [[<activity android:name="com.vungle.warren.ui.VungleActivity"
                     android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
                     android:launchMode="singleTop"
+                    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>]],
+                [[<activity android:name="com.vungle.warren.ui.VungleFlexViewActivity"
+                    android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+                    android:launchMode="singleTop"
                     android:theme="@android:style/Theme.Translucent.NoTitleBar"/>]],
                 [[<service android:name="com.evernote.android.job.v21.PlatformJobService" android:exported="false" android:permission="android.permission.BIND_JOB_SERVICE"/>]],
                 [[<service android:name="com.evernote.android.job.v14.PlatformAlarmService" android:exported="false" android:permission="android.permission.BIND_JOB_SERVICE" />]],
