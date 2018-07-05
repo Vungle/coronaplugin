@@ -33,7 +33,6 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "${apkName}-${variant.name}.apk"
-            println("----->> outputFileName ==  " + outputFileName)
         }
     }
 
