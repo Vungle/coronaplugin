@@ -40,10 +40,13 @@ import com.naef.jnlua.JavaFunction;
 import com.naef.jnlua.LuaState;
 import com.naef.jnlua.NamedJavaFunction;
 import com.vungle.warren.AdConfig;
+import com.vungle.warren.BuildConfig;
 import com.vungle.warren.InitCallback;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
+import com.vungle.warren.network.VungleApiClient;
+
 import android.util.Log;
 import java.util.*;
 
@@ -181,7 +184,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			luaListener = CoronaLua.newRef(luaState, nextArg);
 		}
 		nextArg++;
-        
+        VungleApiClient.addWrapperInfo(VungleApiClient.WrapperFramework.corona, VERSION);
         Vungle.init(placements, applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
             @Override
             public void onSuccess() {
