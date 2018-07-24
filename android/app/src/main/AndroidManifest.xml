@@ -19,7 +19,6 @@
         android:fullBackupContent="false"
         android:hardwareAccelerated="true"
         tools:targetApi="honeycomb"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:replace="android:fullBackupContent"
         tools:ignore="GoogleAppIndexingWarning">
 
