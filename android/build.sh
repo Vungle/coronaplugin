@@ -29,25 +29,8 @@ rm plugin/src/main/java/plugin/vungle/LuaLoader.java.bak
 #[ -f ./plugin.vungle.jar ] && rm ./plugin.vungle.jar
 #cp ./plugin/build/outputs/jar/plugin.vungle.jar ./corona_plugin/plugin.vungle.jar
 [ -f ./VungleCoronaTest.apk ] && rm ./VungleCoronaTest.apk
-#cp ./app/build/outputs/apk/debug/VungleCoronaTest-debug.apk ./VungleCoronaTest.apk
-
-tar -cvzf android.tgz -C ../plugins/2017.3081/android .
-/usr/local/aws/bin/aws s3 cp ./android.tgz s3://kosyakow --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
-
-sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$build\'/g" ./buildAndroid.lua
-sed -E -i .bak "s/androidVersionCode=\'[0-9]+\'/androidVersionCode=\'$code\'/g" ./buildAndroid.lua
-
-java -jar /Users/administrator/Documents/apktool_2.3.3.jar d VungleCoronaTest.apk
-cp -r /Users/administrator/Documents/xml ./VungleCoronaTest/res
-sed -E -i .bak "s/android:name=\"android.support.multidex.MultiDexApplication\"/android:name=\"android.support.multidex.MultiDexApplication\" android:networkSecurityConfig=\"@xml\/network_security_config\"/g" ./VungleCoronaTest/AndroidManifest.xml
-rm ./VungleCoronaTest/AndroidManifest.xml.bak 
-rm ./VungleCoronaTest.apk
-java -jar /Users/administrator/Documents/apktool_2.3.3.jar b VungleCoronaTest VungleCoronaTest-unsign.apk
-/Users/administrator/Library/Android/sdk/build-tools/27.0.3/apksigner sign --ks /Users/administrator/.android/debug.keystore --out VungleCoronaTest.apk --ks-pass pass:android VungleCoronaTest-unsign.apk
+cp ./app/build/outputs/apk/debug/VungleCoronaTest-debug.apk ./VungleCoronaTest.apk
 
 
-/Applications/Corona/Native/Corona/mac/bin/CoronaBuilder.app/Contents/MacOS/CoronaBuilder build --lua ./buildAndroid.lua
-
-/usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
 
 #/usr/local/bin/puck -api_token=d6cb4cec883a44a5a39a0ed21a845ff3 -app_id=3887b118a4ab23e2b88b7a0be99087a3 -submit=auto -download=true -notify=false -open=nothing VungleCoronaTest.apk
