@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CORONA_RELEASES="2017.3081"
+CORONA_RELEASES="2017.3184"
 if [ -f ../version.ver ]; then
     version=$(cat ../version.ver)
 else

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 IOS_SDK=11.2
-CORONA_RELEASES="2017.3081"
+CORONA_RELEASES="2017.3184"
 
 #Update plugin version in the VungleAds.mm according to plugin_version.txt file
 pluginVersion=$(cat ../plugin_version.txt)
