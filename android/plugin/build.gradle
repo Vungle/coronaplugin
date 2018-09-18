@@ -65,7 +65,7 @@ task exportPluginJar {
 exportPluginJar.dependsOn("assembleRelease")
 
 dependencies {
-    implementation 'com.github.vungle:vungle-android-sdk:6.3.17'
+    implementation 'com.github.vungle:vungle-android-sdk:6.3.20'
     implementation fileTree(dir: "$coronaEnterpriseDir/Corona/android/lib/Corona/libs", include: '*.jar')
 
 //    compile 'com.android.support:appcompat-v7:25.1.0'
