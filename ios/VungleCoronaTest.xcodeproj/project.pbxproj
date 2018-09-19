@@ -319,7 +319,7 @@
 				TargetAttributes = {
 					A484111815114F700074BD57 = {
 						DevelopmentTeam = GTA9LK7P23;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -545,8 +545,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Vungle, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = GTA9LK7P23;
 				ENABLE_BITCODE = NO;
@@ -569,8 +570,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = VungleCoronaTest;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "2f6eb67e-9eb8-4f19-9647-958060e6679f";
+				PROVISIONING_PROFILE_SPECIFIER = VungleCoronaTest;
 				SEPARATE_STRIP = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
@@ -582,8 +583,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Vungle, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = GTA9LK7P23;
 				ENABLE_BITCODE = NO;
@@ -606,8 +608,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = VungleCoronaTest;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "2f6eb67e-9eb8-4f19-9647-958060e6679f";
+				PROVISIONING_PROFILE_SPECIFIER = VungleCoronaTest;
 				SEPARATE_STRIP = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
