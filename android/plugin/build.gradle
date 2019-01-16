@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -25,24 +25,49 @@ repositories {
 
 def coronaEnterpriseDir = "$rootDir/CoronaEnterprise"
 
-task exportPluginJar (type: Copy, description: 'place the plugin JAR file in the outputs directory and give it a name from the AndroidManifest.xml') {
-    def pluginName = new XmlSlurper().parse(file('src/main/AndroidManifest.xml')).@package.text()
-    from "$buildDir/intermediates/bundles/default/"
-    into "$buildDir/outputs/jar"
-    include 'classes.jar'
-    rename 'classes.jar', "${pluginName}.jar"
+task exportPluginJar {
+    doLast {
+        def pluginName = new XmlSlurper().parse(file('src/main/AndroidManifest.xml')).@package.text()
 
-    doFirst {
-        println '== exportPluginJar =='
+        copy {
+            from "${buildDir}/outputs/aar"
+            into "${buildDir}/outputs/jar"
+            include 'plugin-release.aar'
+            rename 'plugin-release.aar', "plugin-release.zip"
+        }
+
+        def aarFile = file("${buildDir}/outputs/jar/plugin-release.zip")
+        if(aarFile.exists()) {
+            Integer sep = aarFile.name.lastIndexOf('.')
+            def name = aarFile.name.substring(0, sep)
+            println("found aar: " + name)
+            def unzip = "${buildDir}/outputs/jar/${name}_unpack"
+            copy {
+                from zipTree(aarFile)
+                into "${unzip}/"
+            }
+            aarFile.delete()
+
+            File unzipDir = new File(unzip)
+            unzipDir.listFiles().findAll { it.name.endsWith('.jar') }.each {
+                File jarFile ->
+                    jarFile.renameTo(new File("${buildDir}/outputs/jar/", "${pluginName}.jar"))
+            }
+
+            delete fileTree(unzipDir)
+            delete unzipDir
+        }
+        else {
+            println("No aar found.")
+        }
     }
 }
-
-tasks.withType(JavaCompile) {
-    compileTask -> compileTask.dependsOn('exportPluginJar')
-}
+exportPluginJar.dependsOn("assembleRelease")
 
 dependencies {
-    compile 'com.github.vungle:vungle-android-sdk:6.2.5'
-    compile fileTree(dir: "$coronaEnterpriseDir/Corona/android/lib/Corona/libs", include: '*.jar')
+    implementation 'com.github.vungle:vungle-android-sdk:6.3.24'
+    implementation fileTree(dir: "$coronaEnterpriseDir/Corona/android/lib/Corona/libs", include: '*.jar')
+
+//    compile 'com.android.support:appcompat-v7:25.1.0'
 //    compile fileTree(dir: 'libs', include: '*.jar')
 }

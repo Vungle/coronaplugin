@@ -40,6 +40,7 @@ import com.naef.jnlua.JavaFunction;
 import com.naef.jnlua.LuaState;
 import com.naef.jnlua.NamedJavaFunction;
 import com.vungle.warren.AdConfig;
+import com.vungle.warren.BuildConfig;
 import com.vungle.warren.InitCallback;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
@@ -53,7 +54,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "5.3.2";//plugin version. Do not delete this comment
+	private static final String VERSION = "6.3.0";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -69,6 +70,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     static final String SUBSCRIBE_HB_METHOD = "subscribeHB";
     static final String UPDATE_CONSENT_STATUS = "updateConsentStatus";
     static final String GET_CONSENT_STATUS = "getConsentStatus";
+    static final String GET_CONSENT_MESSAGE_VERSION = "getConsentMessageVersion";
 
 	// events
 	static final String EVENT_TYPE_KEY = "type";
@@ -112,6 +114,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
             new LoadWrapper(),
             new UpdateConsentStatusWrapper(),
             new GetConsentStatusWrapper(),
+            new GetConsentMessageVersionWrapper(),
             new CloseWrapper(),
             new ClearCacheWrapper(),
             new ClearSleepWrapper(),
@@ -181,7 +184,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		}
 		nextArg++;
         VungleApiClient.addWrapperInfo(VungleApiClient.WrapperFramework.corona, VERSION);
-        Vungle.init(placements, applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
+        Vungle.init(applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
             @Override
             public void onSuccess() {
                 if (luaListener != CoronaLua.REFNIL)
@@ -341,7 +344,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         }
         @Override
         public int invoke(LuaState luaState) {
-            Vungle.updateConsentStatus((luaState.toInteger(1) == 1)?Vungle.Consent.OPTED_IN:Vungle.Consent.OPTED_OUT);
+            Vungle.updateConsentStatus((luaState.toInteger(1) == 1)?Vungle.Consent.OPTED_IN:Vungle.Consent.OPTED_OUT,luaState.toString(2));
             return 1;
         }
     }
@@ -360,6 +363,19 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                 return 1;
             }
             luaState.pushInteger((consent == Vungle.Consent.OPTED_IN)?1:2);
+            return 1;
+        }
+    }
+    private class GetConsentMessageVersionWrapper implements NamedJavaFunction {
+        GetConsentMessageVersionWrapper(){}
+        @Override
+        public  String getName(){
+            return  GET_CONSENT_MESSAGE_VERSION;
+        }
+        @Override
+        public int invoke(LuaState luaState) {
+            String consentVersion = Vungle.getConsentMessageVersion();
+            luaState.pushString(consentVersion);
             return 1;
         }
     }

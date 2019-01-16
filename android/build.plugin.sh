@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CORONA_RELEASES="2017.3081"
+CORONA_RELEASES="2018.3326"
 if [ -f ../version.ver ]; then
     version=$(cat ../version.ver)
 else
@@ -24,7 +24,7 @@ sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
 sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" plugin/src/main/java/plugin/vungle/LuaLoader.java
 rm plugin/src/main/java/plugin/vungle/LuaLoader.java.bak
 
-./gradlew :plugin:build
+#./gradlew :plugin:build
 ./gradlew :plugin:exportPluginJar
 
 for version in $CORONA_RELEASES; do

@@ -52,6 +52,7 @@ class Vungle
         static int Load(lua_State* L);
         static int updateConsentStatus(lua_State* L);
         static int getConsentStatus(lua_State* L);
+        static int getConsentMessageVersion(lua_State* L);
         static int closeAd(lua_State* L);
 		static int adIsAvailable(lua_State* L);
         static int clearCache(lua_State* L);
