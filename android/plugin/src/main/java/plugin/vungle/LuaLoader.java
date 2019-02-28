@@ -45,7 +45,7 @@ import com.vungle.warren.InitCallback;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
-import com.vungle.warren.VungleApiClient.WrapperFramework
+import com.vungle.warren.VungleApiClient.WrapperFramework;
 import com.vungle.warren.Plugin;
 import android.util.Log;
 import java.util.*;
