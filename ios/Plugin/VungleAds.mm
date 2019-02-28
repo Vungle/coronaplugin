@@ -34,7 +34,7 @@ static const NSString* kAD_LOG_EVENT_TYPE = @"adLog";
 static const NSString* kAD_PLACEMENT_PREPARED_EVENT_TYPE = @"adPlacementPrepared";
 static const NSString* kAD_VUNGLE_CREATIVE_EVENT_TYPE = @"adVungleCreative";
 
-static const NSString* kVERSION = @"6_3_0";//plugin version. Do not delete this comment
+static const NSString* kVERSION = @"6_4_0";//plugin version. Do not delete this comment
 
 // ----------------------------------------------------------------------------
 
@@ -345,6 +345,20 @@ int Vungle::Load(lua_State* L) {
     lua_pushboolean(L, load);
     return 1;
 }
+
+    int Vungle::setPublishPrivacy(lua_State* L) {
+        bool status = lua_tointeger( L, 1 );
+        [VungleSDK setPublishIDFV:status];
+        lua_pushboolean(L, TRUE);
+        return 1;
+    }
+
+    int Vungle::getPublishPrivacySetting(lua_State* L) {
+        bool status = [VungleSDK shouldPublishIDFV];
+        lua_pushboolean(L, status);
+        return 1;
+    }
+
 
 int Vungle::updateConsentStatus(lua_State* L) {
     int status = lua_tointeger( L, 1 );
