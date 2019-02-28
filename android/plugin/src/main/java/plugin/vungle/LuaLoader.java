@@ -46,6 +46,7 @@ import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
 import com.vungle.warren.network.VungleApiClient;
+import com.vungle.warren.Plugin;
 import android.util.Log;
 import java.util.*;
 
@@ -54,7 +55,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "6.3.0";//plugin version. Do not delete this comment
+	private static final String VERSION = "6.4.0";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -183,7 +184,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			luaListener = CoronaLua.newRef(luaState, nextArg);
 		}
 		nextArg++;
-        VungleApiClient.addWrapperInfo(VungleApiClient.WrapperFramework.corona, VERSION);
+        Plugin.addWrapperInfo(VungleApiClient.WrapperFramework.corona, VERSION);
         Vungle.init(applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
             @Override
             public void onSuccess() {
