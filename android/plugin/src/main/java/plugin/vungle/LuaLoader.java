@@ -72,6 +72,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     static final String UPDATE_CONSENT_STATUS = "updateConsentStatus";
     static final String GET_CONSENT_STATUS = "getConsentStatus";
     static final String GET_CONSENT_MESSAGE_VERSION = "getConsentMessageVersion";
+    static final String SET_PUBLISH_PRIVACY = "setPublishPrivacy";
+    static final String GET_PUBLISH_PRIVACY_SETTING = "getPublishPrivacySetting";
 
 	// events
 	static final String EVENT_TYPE_KEY = "type";
@@ -103,6 +105,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	CoronaRuntimeTaskDispatcher taskDispatcher;
 	int luaListener = CoronaLua.REFNIL;
 
+	private VungleSettings vungleSettings;
+
 	// N.B. not called on UI thread 
 	@Override
 	public int invoke(LuaState luaState) {
@@ -116,6 +120,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
             new UpdateConsentStatusWrapper(),
             new GetConsentStatusWrapper(),
             new GetConsentMessageVersionWrapper(),
+            new SetPublishPrivacy(),
+            new GetPublishPrivacySetting(),
             new CloseWrapper(),
             new ClearCacheWrapper(),
             new ClearSleepWrapper(),
@@ -185,6 +191,9 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		}
 		nextArg++;
         Plugin.addWrapperInfo(WrapperFramework.corona, VERSION);
+
+        vungleSettings = VungleSettings.Builder().build();
+
         Vungle.init(applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
             @Override
             public void onSuccess() {
@@ -238,7 +247,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                     }
                 });
             }
-        });
+        }, vungleSettings);
 		luaState.pushBoolean(true);
 		return 1;
 	}
@@ -380,7 +389,32 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
             return 1;
         }
     }
-    
+    private class SetPublishPrivacy implements NamedJavaFunction {
+        SetPublishPrivacy(){}
+        @Override
+        public String getName() {
+            return SET_PUBLISH_PRIVACY;
+        }
+        @Override
+        public  int invoke(LuaState luaState) {
+            vungleSettings.setAndroidIdOptOut(luaState.toBoolean(1));
+        }
+        return 1;
+	}
+
+    private class GetPublishPrivacySetting implements NamedJavaFunction {
+        GetPublishPrivacySetting(){}
+        @Override
+        public String getName() {
+            return SET_PUBLISH_PRIVACY;
+        }
+        @Override
+        public  int invoke(LuaState luaState) {
+            boolean optedOut = vungleSettings.getAndroidIdOptOut();
+            luaState.pushBoolean(optedOut);
+        }
+        return 1;
+    }
     private class ShowWrapper implements NamedJavaFunction {
         ShowWrapper() {}
         @Override
