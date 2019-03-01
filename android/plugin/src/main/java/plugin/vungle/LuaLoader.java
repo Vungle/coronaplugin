@@ -398,8 +398,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         @Override
         public  int invoke(LuaState luaState) {
             vungleSettings.setAndroidIdOptOut(luaState.toBoolean(1));
+            return 1;
         }
-        return 1;
 	}
 
     private class GetPublishPrivacySetting implements NamedJavaFunction {
@@ -412,8 +412,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         public  int invoke(LuaState luaState) {
             boolean optedOut = vungleSettings.getAndroidIdOptOut();
             luaState.pushBoolean(optedOut);
+            return 1;
         }
-        return 1;
     }
     private class ShowWrapper implements NamedJavaFunction {
         ShowWrapper() {}
