@@ -106,7 +106,10 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	CoronaRuntimeTaskDispatcher taskDispatcher;
 	int luaListener = CoronaLua.REFNIL;
 
+	//Android Specific Workaround
 	private VungleSettings vungleSettings;
+	private boolean androidIdOptOut;
+
 
 	// N.B. not called on UI thread 
 	@Override
@@ -193,7 +196,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		nextArg++;
         Plugin.addWrapperInfo(WrapperFramework.corona, VERSION);
 
-        vungleSettings = new VungleSettings.Builder().build();
+        vungleSettings = new VungleSettings.Builder().setAndroidIdOptOut(androidIdOptOut).build();
 
         Vungle.init(applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
             @Override
@@ -398,7 +401,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         }
         @Override
         public  int invoke(LuaState luaState) {
-            vungleSettings.setAndroidIdOptOut(luaState.toBoolean(1));
+            androidIdOptOut = luaState.toBoolean(1);
             return 1;
         }
 	}
