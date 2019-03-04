@@ -193,7 +193,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		nextArg++;
         Plugin.addWrapperInfo(WrapperFramework.corona, VERSION);
 
-        vungleSettings = VungleSettings.Builder().build();
+        vungleSettings = new VungleSettings.Builder().build();
 
         Vungle.init(applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
             @Override
