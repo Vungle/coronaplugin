@@ -24,7 +24,7 @@ sub="\"$pluginVersion\";//plugin version. Do not delete this comment"
 sed -E -i .bak "s#\"[0-9]+\.[0-9]+\.[0-9]+\";//plugin version. Do not delete this comment#$sub#g" plugin/src/main/java/plugin/vungle/LuaLoader.java
 rm plugin/src/main/java/plugin/vungle/LuaLoader.java.bak
 
-#./gradlew build
+./gradlew build
 
 [ -f ./VungleCoronaTest.apk ] && rm ./VungleCoronaTest.apk
 cp ./app/build/outputs/apk/debug/VungleCoronaTest-debug.apk ./VungleCoronaTest.apk
