@@ -23,7 +23,7 @@ rm Plugin/VungleAds.mm.bak
 
 [ -f ./VungleCoronaTest.ipa ] && rm ./VungleCoronaTest.ipa
 
-tar -cvzf ios.tgz -C ../plugins/2017.3081/iphone .
+tar -cvzf ios.tgz -C ../plugins/2018.3326/iphone .
 /usr/local/aws/bin/aws s3 cp ./ios.tgz s3://vungle-pad-artifacts
 
 sed -E -i .bak "s/appVersion=\'[0-9]+\.[0-9]+\.[0-9]+\'/appVersion=\'$version.$build\'/g" ./buildiOS.lua
