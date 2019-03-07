@@ -46,7 +46,8 @@ import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
 import com.vungle.warren.network.VungleApiClient;
-
+import com.vungle.warren.VungleSettings;
+import com.vungle.warren.Plugin;
 import android.util.Log;
 import java.util.*;
 
@@ -55,7 +56,7 @@ import java.util.*;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	private static final String TAG = "VungleCorona";
-	private static final String VERSION = "6.3.0";//plugin version. Do not delete this comment
+	private static final String VERSION = "6.4.0";//plugin version. Do not delete this comment
 	private static final Locale LOCALE = Locale.US;
 
 	// LUA method names
@@ -72,8 +73,10 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     static final String UPDATE_CONSENT_STATUS = "updateConsentStatus";
     static final String GET_CONSENT_STATUS = "getConsentStatus";
     static final String GET_CONSENT_MESSAGE_VERSION = "getConsentMessageVersion";
+    static final String SET_PUBLISH_PRIVACY = "setPublishPrivacy";
+    static final String GET_PUBLISH_PRIVACY_SETTING = "getPublishPrivacySetting";
 
-	// events
+    // events
 	static final String EVENT_TYPE_KEY = "type";
 	static final String AD_START_EVENT_TYPE = "adStart";
     static final String AD_END_EVENT_TYPE = "adEnd";
@@ -103,7 +106,11 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 	CoronaRuntimeTaskDispatcher taskDispatcher;
 	int luaListener = CoronaLua.REFNIL;
 
-	// N.B. not called on UI thread 
+    //Android Specific Workaround
+    private VungleSettings vungleSettings;
+    private boolean androidIdOptOut;
+
+    // N.B. not called on UI thread
 	@Override
 	public int invoke(LuaState luaState) {
 		final String libName = luaState.toString(1);
@@ -116,6 +123,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
             new UpdateConsentStatusWrapper(),
             new GetConsentStatusWrapper(),
             new GetConsentMessageVersionWrapper(),
+            new SetPublishPrivacy(),
+            new GetPublishPrivacySetting(),
             new CloseWrapper(),
             new ClearCacheWrapper(),
             new ClearSleepWrapper(),
@@ -185,6 +194,8 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 		}
 		nextArg++;
         VungleApiClient.addWrapperInfo(VungleApiClient.WrapperFramework.corona, VERSION);
+
+        vungleSettings = new VungleSettings.Builder().setAndroidIdOptOut(androidIdOptOut).build();
         Vungle.init(applicationId, CoronaEnvironment.getApplicationContext(), new InitCallback() {
             @Override
             public void onSuccess() {
@@ -380,7 +391,34 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
             return 1;
         }
     }
-    
+
+    private class SetPublishPrivacy implements NamedJavaFunction {
+        SetPublishPrivacy(){}
+        @Override
+        public String getName() {
+            return SET_PUBLISH_PRIVACY;
+        }
+        @Override
+        public  int invoke(LuaState luaState) {
+            androidIdOptOut = luaState.toBoolean(1);
+            return 1;
+        }
+    }
+
+    private class GetPublishPrivacySetting implements NamedJavaFunction {
+        GetPublishPrivacySetting(){}
+        @Override
+        public String getName() {
+            return SET_PUBLISH_PRIVACY;
+        }
+        @Override
+        public  int invoke(LuaState luaState) {
+            boolean optedOut = vungleSettings.getAndroidIdOptOut();
+            luaState.pushBoolean(optedOut);
+            return 1;
+        }
+    }
+
     private class ShowWrapper implements NamedJavaFunction {
         ShowWrapper() {}
         @Override
