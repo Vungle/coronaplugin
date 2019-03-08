@@ -136,6 +136,8 @@ int Vungle::Open( lua_State *L ) {
         { "updateConsentStatus", Vungle::updateConsentStatus },
         { "getConsentStatus", Vungle::getConsentStatus },
         { "getConsentMessageVersion", Vungle::getConsentMessageVersion},
+        { "getPublishPrivacySetting", Vungle::getPublishPrivacySetting},
+        { "setPublishPrivacy", Vungle::setPublishPrivacy},
         { "closeAd", Vungle::closeAd },
 		{ "getVersionString", Vungle::versionString },
 		{ "isAdAvailable", Vungle::adIsAvailable },
@@ -347,13 +349,13 @@ int Vungle::Load(lua_State* L) {
 }
 
 int Vungle::setPublishPrivacy(lua_State* L) {
-    bool status = lua_tointeger( L, 1 );
+    int status = lua_tointeger( L, 1 );
     [VungleSDK setPublishIDFV:status];
-    lua_pushboolean(L, TRUE);
     return 1;
 }
 
 int Vungle::getPublishPrivacySetting(lua_State* L) {
+    [VungleSDK sharedSDK];
     bool status = [VungleSDK shouldPublishIDFV];
     lua_pushboolean(L, status);
     return 1;
