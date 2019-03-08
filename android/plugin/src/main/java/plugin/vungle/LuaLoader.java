@@ -408,7 +408,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
         GetPublishPrivacySetting(){}
         @Override
         public String getName() {
-            return SET_PUBLISH_PRIVACY;
+            return GET_PUBLISH_PRIVACY_SETTING;
         }
         @Override
         public  int invoke(LuaState luaState) {
