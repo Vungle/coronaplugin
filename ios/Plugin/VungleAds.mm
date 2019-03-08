@@ -349,7 +349,7 @@ int Vungle::Load(lua_State* L) {
 }
 
 int Vungle::setPublishPrivacy(lua_State* L) {
-    int status = lua_tointeger( L, 1 );
+    bool status = lua_toboolean( L, 1 );
     [VungleSDK setPublishIDFV:status];
     return 1;
 }
